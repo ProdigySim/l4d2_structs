@@ -1,22 +1,25 @@
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
 
-
+#include "director_vtables.h"
 #include "timers.h"
 
 // 1128 bytes
 struct CDirectorItemManager {
-	char unknown[1128];
+	CDirectorItemManager_vtable * vptr;
+	char unknown[1124];
 };
 
 // 92 bytes
 struct CDirectorMusicBanks {
-	char unknown[92];
+	CDirectorMusicBanks_vtable * vptr;
+	char unknown[88];
 };
 
 // 76 bytes
 struct CDirectorSessionManager {
-	char unknown[76];
+	CDirectorSessionManager_vtable * vptr;
+	char unknown[72];
 };
 
 // 156 bytes
@@ -84,7 +87,8 @@ struct CDirectorTacticalServices {
 // Lin: 1480 bytes
 
 struct CDirector {
-	char unknown[256]; // 0x0
+	CDirector_vtable * vptr; // 0x0
+	char unknown[252]; // 0x04
 	int m_iTankCount; // 0x100
 	float m_fTankFlowDistance; // 0x104
 	char unknown2[160]; // 0x108
