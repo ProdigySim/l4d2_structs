@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_TERROR_PLAYER_ifaceS_H_
-#define _INCLUDE_TERROR_PLAYER_ifaceS_H_
+#ifndef _INCLUDE_TERROR_PLAYER_VTABLES_H_
+#define _INCLUDE_TERROR_PLAYER_VTABLES_H_
 
 struct IHandleEntity_iface
 {
@@ -660,4 +660,4 @@ struct CAI_ExpresserSink_vtable
 	void * UseSemaphore;
 };
 
-#endif // _INCLUDE_TERROR_PLAYER_H_
+#endif // _INCLUDE_TERROR_PLAYER_VTABLES_H_
