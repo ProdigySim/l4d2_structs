@@ -4,6 +4,7 @@
 #define PLATFORM_WINDOWS
 #include "typestuff.h"
 #include "director.h"
+#include "terror_player.h"
 
 
 #endif
