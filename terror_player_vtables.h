@@ -116,9 +116,9 @@ struct CBaseEntity_iface
 	void * ChangeTeam;
 	void * OnEntityEvent;
 	void * CanStandOn;
-	void * CanStandOn;
+	void * CanStandOn2;
 	void * GetEnemy;
-	void * GetEnemy;
+	void * GetEnemy2;
 	void * Use;
 	void * StartTouch;
 	void * Touch;
@@ -166,7 +166,7 @@ struct CBaseEntity_iface
 	void * GetVelocity;
 	void * GetFriction;
 	void * FVisible;
-	void * FVisible;
+	void * FVisible2;
 	void * CanBeSeenBy;
 	void * GetAttackDamageScale;
 	void * GetReceivedDamageScale;
@@ -266,9 +266,9 @@ struct CBaseCombatCharacter_iface
 {
 	void * GetPhysicsImpactDamageTable;
 	void * FInViewCone;
-	void * FInViewCone;
+	void * FInViewCone2;
 	void * FInAimCone;
-	void * FInAimCone;
+	void * FInAimCone2;
 	void * ShouldShootMissTarget;
 	void * FindMissTarget;
 	void * HandleInteraction;
@@ -287,11 +287,11 @@ struct CBaseCombatCharacter_iface
 	void * GetFogObscuredRatio3;
 	void * GetFogParams;
 	void * IsLookingTowards;
-	void * IsLookingTowards;
+	void * IsLookingTowards2;
 	void * IsInFieldOfView;
-	void * IsInFieldOfView;
+	void * IsInFieldOfView2;
 	void * IsLineOfSightClear;
-	void * IsLineOfSightClear;
+	void * IsLineOfSightClear2;
 	void * OnFootstep;
 	void * GetGroundSurface;
 	void * GetFootstepSound;
@@ -457,7 +457,7 @@ struct CBasePlayer_iface
 	void * BumpWeapon;
 	void * SelectLastItem;
 	void * SelectItem;
-	void * SelectItem;
+	void * SelectItem2;
 	void * ItemPostFrame;
 	void * GiveNamedItem;
 	void * CheckTrainUpdate;
@@ -476,9 +476,9 @@ struct CBasePlayer_iface
 	void * IsHoldingEntity;
 	void * UpdateGeigerCounter;
 	void * GetAutoaimVector;
-	void * GetAutoaimVector;
-	void * GetAutoaimVector;
-	void * GetAutoaimVector;
+	void * GetAutoaimVector2;
+	void * GetAutoaimVector3;
+	void * GetAutoaimVector4;
 	void * ShouldAutoaim;
 	void * ForceClientDllUpdate;
 	void * ProcessUsercmds;
@@ -504,7 +504,7 @@ struct CBasePlayer_iface
 	void * RemoveSuit;
 	void * OnUseEntityChanged;
 	void * CommitSuicide;
-	void * CommitSuicide;
+	void * CommitSuicide2;
 	void * IsBot;
 	void * GetExpresser;
 	void * SpawnArmorValue;
