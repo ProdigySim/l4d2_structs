@@ -648,8 +648,7 @@ struct CTerrorPlayer_vtable
 	void * ScoreKilledZombie;
 };
 
-// CAI_ExpresserSink vtable
-struct CTerrorPlayer_vtable2
+struct CAI_ExpresserSink_vtable
 {
 	void * OnSpokeConcept;
 	void * OnStartSpeaking;
