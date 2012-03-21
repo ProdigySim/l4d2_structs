@@ -19,9 +19,62 @@ struct CBaseFlex_data
 	char unknown[996]; // 5096
 };
 
+
+struct CAI_MoveMonitor
+{
+	float m_vMark[3]; // Vector
+	float m_flMarkTolerance;
+};
+
+// size 644, offset 6092 in CTerrorPlayer
 struct CBaseCombatCharacter_data
 {
-	char unknown[644]; // 6092
+	bool m_bForceServerRagdoll; // 0
+	bool m_bPreventWeaponPickup; // 1
+	float m_flNextAttack; // 4 CNetworkVar( float, m_flNextAttack );
+	unsigned int m_eHull; // 8 Hull_t
+	int m_bloodColor; // 12
+	float m_flFieldOfView; // 16
+	float m_HackedGunPos[3]; // 20 Vector
+	char * m_RelationshipString; // 32 string_t
+	float m_impactEnergyScale; // 36
+	unsigned char m_weaponIDToIndex[38]; // 40
+	
+	char padding78[2]; // 78, padding will probably be automatic
+	
+	char unknown80[76]; // 80 I'll do these later
+	
+	// later
+	/*
+	int m_LastHitGroup;
+	float m_flDamageAccumulator;
+	int m_iDamageCount;
+	unsigned int m_CurrentWeaponProficiency; // WeaponProficiency_t
+	CUtlVector m_iRelationship;	// CUtlVector<Relationship_t> m_Relationship;
+	int	m_nFaction;
+	CUtlVector m_hTriggerFogList; // CUtlVector<EHANDLE>
+	unsigned int m_hLastFogTrigger; // EHANDLE */
+	
+	int m_iAmmo[32]; // 156 CNetworkArrayForDerived( int, m_iAmmo, MAX_AMMO_SLOTS );
+	unsigned int m_hMyWeapons[64]; // 284 CNetworkArray( CBaseCombatWeaponHandle, m_hMyWeapons, MAX_WEAPONS );
+	int m_hActiveWeapon; // 540 CNetworkHandle( CBaseCombatWeapon, m_hActiveWeapon );
+	
+	IntervalTimer UnknownITimer1; // 544
+	int m_iUnknown1; // 552
+	int m_iUnknown2; // 556
+	IntervalTimer UnknownITimer2; // 560
+	int m_iUnknown3; // 568
+	IntervalTimer UnknownITimer3; // 572
+	int m_iUnknown4; // 580
+	IntervalTimer UnknownITimer4; // 584
+	int m_iUnknown5; // 592
+	IntervalTimer UnknownITimer5; // 596
+	
+	void *m_lastNavArea; // 604 CNavArea *
+	CAI_MoveMonitor m_NavAreaUpdateMonitor; // 608
+	int m_registeredNavTeam; // 624
+	CountdownTimer UnknownCTimer1; // 628
+	int m_iLastUnknown; // 640 set to -1 in constructor
 };
 
 struct CBasePlayer_data
