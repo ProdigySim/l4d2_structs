@@ -1,14 +1,10 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
-// Purpose: Shared util code between client and server.
-//
-//=============================================================================//
-
 #ifndef L4D2SDK_TIMERS_H
 #define L4D2SDK_TIMERS_H
 
+#include "network_var.h"
+
 struct IntervalTimer {
-	void * vtableptr; // Because hl2sdk's timers don't use the networkvar magic
+	NetworkVar_iface *vptr;
 	float m_timestamp;
 };
 
@@ -19,7 +15,7 @@ struct IntervalTimer {
  * Upon creation, the timer is invalidated.  Invalidated countdown timers are considered to have elapsed.
  */
 struct CountdownTimer {
-	void * vtableptr; // Because hl2sdk's timers don't use the networkvar magic
+	NetworkVar_iface *vptr;
 	float m_duration;
 	float m_timestamp;
 };
