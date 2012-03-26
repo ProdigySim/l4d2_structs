@@ -5,6 +5,7 @@
 #include "typestuff.h"
 #include "director.h"
 #include "terror_player.h"
+#include "eiface.h"
 
 
 #endif
