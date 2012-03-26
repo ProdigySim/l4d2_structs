@@ -151,12 +151,18 @@ struct CTerrorPlayer_data
 	CountdownTimer m_vocalizationSubjectTimer; // 256 doubly network'd? vtable overwritten twice in ctor
 	CountdownTimer m_unknownCTimer268; // 268
 	CountdownTimer m_unknownCTimer280; // 280
-	char unknown292[36]; // 292
+	char unknown292[24]; // 292
+	int m_zombieClass; // 316
+	char unknown320[8]; // 320
 	int m_iUnknown328; // 328 set to -1 in ctor
 	CountdownTimer m_unknownCTimer332; // 332
 	char unknown344[96]; // 344
 	CountdownTimer m_unknownCTimer440; // 440
-	char unknown452[136]; // 452
+	char unknown452[120]; // 452
+	bool m_bUnknown572; // 572 could be any other byte struct
+	bool m_bIsGhost; // 573
+	char padding[2]; // 574
+	char unknown576[12]; // 576
 	CountdownTimer m_unknownCTimer588; // 588
 	CountdownTimer m_unknownCTimer600; // 600
 	char unknown612[24]; // 612
@@ -181,6 +187,12 @@ struct CTerrorPlayer_data
 	char unknown1040[4]; // 1040
 	CountdownTimer m_unknownCTimer1044; // 1044
 	char unknown1056[4492]; // 1056
+};
+
+struct CBaseEntity
+{
+	CBaseEntity_vtable * vptr; // 0
+	CBaseEntity_data CBaseEntity; // 4
 };
 
 // size 16392

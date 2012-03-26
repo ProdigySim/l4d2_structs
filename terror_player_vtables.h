@@ -622,6 +622,16 @@ struct CTerrorPlayer_iface
 	void * ScoreKilledZombie;
 };
 
+struct CBaseEntity_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+};
+
 struct CTerrorPlayer_vtable
 {
 	void * dtor1;
