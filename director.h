@@ -88,38 +88,41 @@ struct CDirectorTacticalServices {
 
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
-	char unknown[252]; // 0x04
+	char unknown4[252]; // 0x04
 	int m_iTankCount; // 0x100
 	float m_fTankFlowDistance; // 0x104
-	char unknown2[160]; // 0x108
+	char unknown264[160]; // 0x108
 	CountdownTimer unk_Timer1; // 0x1a8
-	char unknown2_2[32]; // 0x1b4
+	char unknown436[32]; // 0x1b4
 	CountdownTimer MobSpawnTimer; // 0x1d4
-	char unknown3[20]; // 0x1e0
+	char unknown480[20]; // 0x1e0
 	IntervalTimer SmokerDeathTimer; // 0x1f4
 	IntervalTimer BoomerDeathTimer;
 	IntervalTimer HunterDeathTimer;
 	IntervalTimer SpitterDeathTimer;
 	IntervalTimer JockeyDeathTimer;
 	IntervalTimer ChargerDeathTimer;
-	char unknown4[16]; // 0x224
+	char unknown548[16]; // 0x224
 	CountdownTimer SmokerSpawnTimer; // 0x234
 	CountdownTimer BoomerSpawnTimer;
 	CountdownTimer HunterSpawnTimer;
 	CountdownTimer SpitterSpawnTimer;
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
-	char unknown5[76]; // 0x27c
+	char unknown636[76]; // 0x27c
 	float m_fMobSpawnSize; // 0x2c8
-	char unknown6[405];	// 0x2cc
+	char unknown716[44]; // 0x2cc
+	char m_sCurrentMap[0x20]; // 0x2f8
+	char unknown792[329]; // 0x318
 	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
 	bool m_bIsSecondRoundFinished; // This one too
 	bool m_bUnknownJunk; // probably related
-	char unknown7[296]; // 0x464
+	CountdownTimer TransitionTimeoutTimer; // 0x464
+	char unknown1136[284]; // 0x470
 #ifdef PLATFORM_LINUX
-	char unknown_linonly[20]; // 0x58c
+	char unknown_linonly1420[20]; // 0x58c
 #endif
-	char unknown8[4]; // win 0x58c lin 0x5a0
+	char unknown1440[4]; // win 0x58c lin 0x5a0
 	CDirectorTacticalServices * TacticalServicesPtr;
 	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
 	CDirectorMusicBanks * MusicBanksPtr; 
@@ -128,7 +131,7 @@ struct CDirector {
 	CDirectorVersusMode * VersusModePtr; 
 	CDirectorSurvivalMode * SurvivalModePtr; 
 	CDirectorScavengeMode * ScavengeModePtr; 
-	char unknown9[8]; // win 0x5a8 lin 0x5bc
+	char unknown1468[8]; // win 0x5a8 lin 0x5bc
 	CDirectorChallengeMode * ChallengeModePtr; // win 0x5b0 lin 0x5c4
 };
 
