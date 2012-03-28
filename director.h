@@ -91,7 +91,9 @@ struct CDirector {
 	char unknown4[156]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // 160
 	char padding[3]; // 161
-	char unknown164[92]; // 164
+	char unknown164[8]; // 164
+	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
+	char unknown184[72]; // 184
 	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
 	char unknown264[8]; // 264
@@ -125,7 +127,11 @@ struct CDirector {
 	CountdownTimer ChargerSpawnTimer;
 	char unknown636[76]; // 0x27c
 	float m_fMobSpawnSize; // 0x2c8
-	char unknown716[20]; // 0x2cc
+	char unknown716[4]; // 0x2cc
+	float m_fMobSpawnInterval; // 720 I think that's what this is
+	float m_fTankProhibitionInterval; // 724
+	_DWORD m_iUnknown728; // 728 some kind of userid
+	_DWORD m_iUnknown732; // 732
 	int m_iNumReservedWanderers; // 736
 	char unknown740[8]; // 740
 	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
