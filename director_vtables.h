@@ -1,6 +1,8 @@
 #ifndef _INCLUDE_DIRECTOR_VTABLES_H_
 #define _INCLUDE_DIRECTOR_VTABLES_H_
 
+#include "game_events.h"
+
 struct CDirectorItemManager_vtable
 {
 	void * Reset; // CDirectorItemManager::Reset(void)
@@ -39,8 +41,7 @@ struct CDirector_vtable
 {
 	void * CDirector_dtor1; // CDirector::~CDirector() (D1)
 	void * CDirector_dtor0; // CDirector::~CDirector() (D0)
-	void * FireGameEvent; // CDirector::FireGameEvent(IGameEvent *)
-	void * GetEventDebugID; // CGameEventListener::GetEventDebugID(void)
+	IGameEventListener2_iface IGameEventListener2;
 	void * OnBeginChangeLevel; // CDirector::OnBeginChangeLevel(void)
 	void * Reset; // CDirector::Reset(void)
 	void * UpdateTempo; // CDirector::UpdateTempo(void)

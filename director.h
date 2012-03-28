@@ -93,7 +93,8 @@ struct CDirector {
 	char padding[3]; // 161
 	char unknown164[8]; // 164
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
-	char unknown184[72]; // 184
+	char unknown184[68]; // 184
+	int m_iWitchCount; // 252
 	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
 	char unknown264[8]; // 264
@@ -125,8 +126,10 @@ struct CDirector {
 	CountdownTimer SpitterSpawnTimer;
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
-	char unknown636[76]; // 0x27c
-	float m_fMobSpawnSize; // 0x2c8
+	char unknown636[72]; // 636
+	bool m_bWitchInPlay; // 708
+	// padding
+	float m_fMobSpawnSize; // 712
 	char unknown716[4]; // 0x2cc
 	float m_fMobSpawnInterval; // 720 I think that's what this is
 	float m_fTankProhibitionInterval; // 724
