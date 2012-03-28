@@ -94,14 +94,18 @@ struct CDirector {
 	char unknown164[92]; // 164
 	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
-	char unknown264[124]; // 264
+	char unknown264[8]; // 264
+	CountdownTimer ZombieGhostSpawnTimer; // 272 Started with z_ghost_spawn_interval whenever SI dies during normal gameplay
+	char unknown284[104]; // 284
 	float m_fAvgSurvivorSpan; // 388
 	float m_fAvgSurvivorSpeed; // 392
 	float m_fFurthestSurvivorFlow; // 396
 	char unknown400[24]; // 400
 	CountdownTimer unknownCTimer424; // 424
 	CountdownTimer unknownCTimer436; // 436
-	char unknown448[20]; // 448
+	char unknown448[16]; // 448
+	bool m_bInIntro; // 464
+	// should be padded
 	CountdownTimer MobSpawnTimer; // 468
 	CountdownTimer unknownCTimer480; // 480
 	IntervalTimer unknownITimer492; // 492
