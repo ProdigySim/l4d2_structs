@@ -88,21 +88,31 @@ struct CDirectorTacticalServices {
 
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
-	char unknown4[252]; // 0x04
-	int m_iTankCount; // 0x100
+	char unknown4[156]; // 0x04
+	bool m_bHasSurvivorLeftSafeArea; // 160
+	char padding[3]; // 161
+	char unknown164[92]; // 164
+	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
-	char unknown264[160]; // 0x108
-	CountdownTimer unk_Timer1; // 0x1a8
-	char unknown436[32]; // 0x1b4
-	CountdownTimer MobSpawnTimer; // 0x1d4
-	char unknown480[20]; // 0x1e0
-	IntervalTimer SmokerDeathTimer; // 0x1f4
+	char unknown264[124]; // 264
+	float m_fAvgSurvivorSpan; // 388
+	float m_fAvgSurvivorSpeed; // 392
+	float m_fFurthestSurvivorFlow; // 396
+	char unknown400[24]; // 400
+	CountdownTimer unknownCTimer424; // 424
+	CountdownTimer unknownCTimer436; // 436
+	char unknown448[20]; // 448
+	CountdownTimer MobSpawnTimer; // 468
+	CountdownTimer unknownCTimer480; // 480
+	IntervalTimer unknownITimer492; // 492
+	IntervalTimer SmokerDeathTimer; // 500
 	IntervalTimer BoomerDeathTimer;
 	IntervalTimer HunterDeathTimer;
 	IntervalTimer SpitterDeathTimer;
 	IntervalTimer JockeyDeathTimer;
 	IntervalTimer ChargerDeathTimer;
-	char unknown548[16]; // 0x224
+	IntervalTimer unknownITimer548; // 548
+	IntervalTimer unknownITimer556; // 556
 	CountdownTimer SmokerSpawnTimer; // 0x234
 	CountdownTimer BoomerSpawnTimer;
 	CountdownTimer HunterSpawnTimer;
@@ -111,9 +121,26 @@ struct CDirector {
 	CountdownTimer ChargerSpawnTimer;
 	char unknown636[76]; // 0x27c
 	float m_fMobSpawnSize; // 0x2c8
-	char unknown716[44]; // 0x2cc
-	char m_sCurrentMap[0x20]; // 0x2f8
-	char unknown792[329]; // 0x318
+	char unknown716[20]; // 0x2cc
+	int m_iNumReservedWanderers; // 736
+	char unknown740[8]; // 740
+	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
+	float m_fCumulativeMissionTime; // 756 Add this to timer duration from above to get TotalElapsedMissionTime
+	char m_sCurrentMap[0x20]; // 760
+	char unknown792[64]; // 792
+	void * m_kvPopulationData; // 856 KeyValues *
+	char unknown860[8]; // 860
+	int m_iMapNumber; // 868, should be 0 indexed into current campaign?
+	char unknown872[28]; // 872
+	int m_iMissionWipes; // 900 number of wipes on this mission (coop)
+	char unknown904[36]; // 904
+	CountdownTimer unknownCTimer940; // 940
+	char unknown952[116]; // 952  "forbidden targets" starts here
+	int m_iDirectorScriptIdx; // 1068 gets passed to g_pScriptVM calls
+	char unknown1072[20]; // 1072
+	int m_iScriptingInts[4]; // 1092 Don't ask me. More scripting contexts?
+	CountdownTimer unknownCTimer1108; // 1108
+	bool m_bUnknown1120; // 1120 0x460
 	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
 	bool m_bIsSecondRoundFinished; // This one too
 	bool m_bUnknownJunk; // probably related
@@ -131,8 +158,8 @@ struct CDirector {
 	CDirectorVersusMode * VersusModePtr; 
 	CDirectorSurvivalMode * SurvivalModePtr; 
 	CDirectorScavengeMode * ScavengeModePtr; 
-	char unknown1468[8]; // win 0x5a8 lin 0x5bc
-	CDirectorChallengeMode * ChallengeModePtr; // win 0x5b0 lin 0x5c4
+	CDirectorChallengeMode * ChallengeModePtr; // win 0x5a8 lin 0x5bc
+	char unknown1472[8]; // win 0x5ac lin 0x5c0
 };
 
 #endif //_INCLUDE_DIRECTOR_H_
