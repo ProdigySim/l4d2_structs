@@ -16,10 +16,16 @@ struct CBaseAnimating_data
 	// 1160 m_nSequence
 };
 
+// 5096 in CTerrorPlayer
+// size 996
 struct CBaseFlex_data
 {
-	char unknown[996]; // 5096
-};
+	char unknown0[516]; // 0
+	float m_flexWeight[96]; // 516
+	float m_viewtarget[3]; // 900
+	int m_blinktoggle; // 912
+	char unknown916[80]; // 916
+}; // 996
 
 
 struct CAI_MoveMonitor
