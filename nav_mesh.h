@@ -242,15 +242,17 @@ struct CUtlVectorAreaBindInfo
 struct TerrorNavArea_data
 {
 	AreaBindInfo m_inheritVisibilityFrom; // 292
-	unsigned int m_nVisTestCounter; // 300
+	unsigned int m_spawnAttributes; // 300
 	_DWORD unknown304; // 304
 	CUtlVectorAreaBindInfo m_potentiallyVisibleAreas; // 308
 	bool m_isInheritedFrom; // 324
-	IntervalTimer m_unknownITimer328; // 328
+	bool m_isCleared; // 325 might just be byte/uchar
+	IntervalTimer m_clearedTimer; // 328 starts when nav area is cleared by player
 	char unknown332[20]; // 332
 	short m_siUnknown352[2]; // 352
-	IntervalTimer m_unknownITimer356; // 356
-	char unknown364[8];
+	IntervalTimer m_unclearedTimer; // 356 starts when nav area is uncleared
+	char unknown364[4];
+	int m_hDoorEntity;
 };
 
 struct CNavArea
