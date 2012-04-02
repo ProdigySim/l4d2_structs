@@ -234,7 +234,7 @@ struct CNavArea_data
 
 struct CUtlVectorAreaBindInfo
 {
-	CUtlMemory m_memory;
+	CUtlMemoryConservative m_memory;
 	int m_Size;
 	AreaBindInfo *m_pElements;
 };
@@ -243,8 +243,8 @@ struct TerrorNavArea_data
 {
 	AreaBindInfo m_inheritVisibilityFrom; // 292
 	unsigned int m_nVisTestCounter; // 300
-	//_DWORD unknown304; // 304
-	CUtlVectorAreaBindInfo m_potentiallyVisibleAreas; // 304
+	_DWORD unknown304; // 304
+	CUtlVectorAreaBindInfo m_potentiallyVisibleAreas; // 308
 	bool m_isInheritedFrom; // 324
 	IntervalTimer m_unknownITimer328; // 328
 	char unknown332[20]; // 332
