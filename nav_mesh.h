@@ -276,19 +276,43 @@ struct Extent
 	float hi[3]; // 12
 };
 
-// 95
+
+// Professional template naming
+struct CUtlVectorTerrorNavAreaUtlMemory
+{
+	struct {
+		TerrorNavArea ** m_pMemory;
+		int m_nAllocationCount;
+		int m_nGrowSize;
+	} m_memory;
+	int m_Size;
+	TerrorNavArea *m_pElements;
+};
+
+struct CUtlVectorEHandleUtlMemory
+{
+	struct {
+		int ** m_pMemory;
+		int m_nAllocationCount;
+		int m_nGrowSize;
+	} m_memory;
+	int m_Size;
+	int *m_pElements;
+};
+
+// 96
 struct Checkpoint 
 {
-	CNavArea ** m_containedAreas; // 0
-	char unknown4[8]; // 4
-	int m_iNumContainedAreas; // 12
-	char unknown16[8]; // 16
+	CUtlVectorTerrorNavAreaUtlMemory m_containedAreas; // 0
+	float m_flTotalArea; // 20
 	Extent m_extent; // 24 (default +/-99999.0)
-	char unknown48[24];
-	int *m_hDoorEntities; // 72
-	char unknown76[8]; // 76
-	int m_iNumDoors; // 84
-	char unknown88[7];
+	CUtlVectorTerrorNavAreaUtlMemory m_containedSpawnAreas; // 48
+	float m_flTotalSpawnArea; // 68
+	CUtlVectorEHandleUtlMemory m_containedDoors; // 72
+	bool m_bInUse; // 92
+	bool m_bNoZombies; // 93
+	bool m_bAllAliveHumanSurvivorsInside; // 94
+	bool m_bOutward; // 95
 };
 
 // 1512?
