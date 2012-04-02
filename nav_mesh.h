@@ -284,7 +284,11 @@ struct Checkpoint
 	int m_iNumContainedAreas; // 12
 	char unknown16[8]; // 16
 	Extent m_extent; // 24 (default +/-99999.0)
-	char unknown48[47];
+	char unknown48[24];
+	int *m_hDoorEntities; // 72
+	char unknown76[8]; // 76
+	int m_iNumDoors; // 84
+	char unknown88[7];
 };
 
 // 1512?
