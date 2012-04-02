@@ -178,7 +178,7 @@ struct AreaBindInfo
 		CNavArea *area;
 		unsigned int id;
 	};
-	unsigned char attributes;
+	//unsigned char attributes;
 };
 
 struct CNavArea_data
@@ -241,9 +241,10 @@ struct CUtlVectorAreaBindInfo
 
 struct TerrorNavArea_data
 {
-	AreaBindInfo m_inheritVisibilityFrom; // 292
+	int m_TerrorMarker;  // 292
+	_DWORD unknown296;  // 296
 	unsigned int m_spawnAttributes; // 300
-	_DWORD unknown304; // 304
+	AreaBindInfo m_inheritVisibilityFrom; // 304
 	CUtlVectorAreaBindInfo m_potentiallyVisibleAreas; // 308
 	bool m_isInheritedFrom; // 324
 	bool m_isCleared; // 325 might just be byte/uchar
