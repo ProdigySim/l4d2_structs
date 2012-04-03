@@ -4,11 +4,89 @@
 #include "terror_player_vtables.h"
 #include "timers.h"
 #include "steam_api.h"
+#include "network_var.h"
 
+
+struct thinkfunc_t
+{
+	void * m_pfnThink;
+	char * m_iszContext;
+	int m_nNextThinkTick;
+	int m_nLastThinkTick;
+};
+
+struct ResponseContext_t
+{
+	char * m_iszName;
+	char * m_iszValue;
+	float m_fExpirationTime;
+};
+
+struct color32
+{
+	unsigned char r, g, b, a;
+};
+
+struct CBaseEntity;
+// base offset 4
+// size 1068
 struct CBaseEntity_data
 {
-	char unknown[1068];
-};
+	char unknown0[24]; // 0
+	CServerNetworkProperty m_Network; // 24
+	char unknown104[8]; // 104
+	char * m_iClassname; // 112
+	char * m_iGlobalname; // 116
+	char * m_iParent; // 120
+	int m_iHammerID; // 124
+	float m_flPrevAnimTime; // 128
+	float m_flAnimTime; // 132
+	float m_flSimulationTime; // 136
+	float m_flCreateTime; // 140
+	int m_nLastThinkTick; // 144
+	int m_touchStamp; // 148
+	CUTLVECTOR(thinkfunc_t) m_aThinkFunctions; // 152
+	CUTLVECTOR(ResponseContext_t) m_ResponseContexts; // 172
+	char *m_iszResponseContext; // 192
+	int m_nNextThinkTick; // 196
+	int m_fEffects; // 200
+	
+	void * m_pfnTouch; // 204 
+	void * m_pfnUse; // 208
+	void * m_pfnBlocked; // 212
+	char unknown216[16]; // 216
+	CBaseEntity * m_pLink; // 232
+	char *m_target; // 236
+	int m_iMaxHealth; // 240
+	int m_iHealth; // 244
+	char m_lifeState; // 248
+	char m_takedamage; // 249
+	char *m_iszDamageFilterName; // 252
+	int m_hDamageFilter; // 256 EHANDLE
+	int m_debugOverlays; // 260
+	void * m_pTimedOverlay; // 264 TimedOverlay_t *
+	float m_flSpeed; // 268
+	unsigned char m_nRenderFX; // 272
+	unsigned char m_nRenderMode; // 273
+	short m_nModelIndex; // 274
+	color32 m_clrRender; // 276
+	char unknown280[4]; // 280
+	int m_nSimulationTick; // 284
+	float m_vecEyeOffset[3]; // 288
+	float m_EyeAngleOffset[3]; // 300
+	int m_spawnFlags; // 312
+	int m_iEFlags; // 316
+	int m_fFlags; // 320
+	char *m_iName; // 324
+	char unknown328[564]; // 328
+	int m_cellbits; // 892
+	int m_cellX; // 896
+	int m_cellY; // 900
+	int m_cellZ; // 904
+	float m_vecOrigin[3]; // 908
+	float m_angRotation[3]; // 920
+	char unknown932[136]; // 932
+}; // 1068
 
 struct CBaseAnimatingOverlay;
 // 76
