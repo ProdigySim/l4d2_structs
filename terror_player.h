@@ -58,22 +58,15 @@ struct CBaseCombatCharacter_data
 	
 	char padding78[2]; // 78, padding will probably be automatic
 	
-	char unknown80[32]; // 80 I'll do these later
-	
+	char unknown80[16]; // 80 I'll do these later
+	int m_LastHitGroup; // 96
+	float m_flDamageAccumulator; // 100
+	int m_iDamageCount; // 104
+	int m_CurrentWeaponProficiency; // 108 WeaponProficiency_t
 	CUTLVECTOR(Relationship_t) m_Relationship; // 112
-	char unknown132[24]; // 132
-	
-	// later
-	/*
-	int m_LastHitGroup;
-	float m_flDamageAccumulator;
-	int m_iDamageCount;
-	unsigned int m_CurrentWeaponProficiency; // WeaponProficiency_t
-	CUtlVector m_iRelationship;	// CUtlVector<Relationship_t> m_Relationship;
-	int	m_nFaction;
-	CUtlVector m_hTriggerFogList; // CUtlVector<EHANDLE>
-	unsigned int m_hLastFogTrigger; // EHANDLE */
-	
+	CUTLVECTOR(int) m_hTriggerFogList; // 132 CUtlVector<EHANDLE>
+	int m_hLastFogTrigger; // 152 EHANDLE
+		
 	int m_iAmmo[32]; // 156 CNetworkArrayForDerived( int, m_iAmmo, MAX_AMMO_SLOTS );
 	unsigned int m_hMyWeapons[64]; // 284 CNetworkArray( CBaseCombatWeaponHandle, m_hMyWeapons, MAX_WEAPONS );
 	int m_hActiveWeapon; // 540 CNetworkHandle( CBaseCombatWeapon, m_hActiveWeapon );
