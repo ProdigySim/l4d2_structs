@@ -88,17 +88,7 @@ struct CBaseFlex_data
 	int m_blinktoggle; // 892
 	CUTLVECTOR( CSceneEventInfo ) m_SceneEvents; // 896
 	
-	// size 32
-	struct 
-	{
-		void * m_LessFunc; // 0
-		CUTLMEMORY(void *) m_Elements; // 4
-		unsigned short m_Root; // 16
-		unsigned short m_NumElements; // 18
-		unsigned short m_FirstFree; // 20
-		short m_LastAlloc; // 22
-		void * m_pElements; // 24
-	} m_LocalToGlobal; // 916 CUtlRBTree< FS_LocalToGlobal_t, ushort >
+	CUTLRBTREE(void *, unsigned short) m_LocalToGlobal; // 916 CUtlRBTree< FS_LocalToGlobal_t, ushort >
 	float m_flAllowResponsesEndTime; // 944
 	CUTLVECTOR(void*) m_ActiveChoreoScenes; // 948 CChoreoScene*
 	bool m_bUpdateLayerPriorities; // 968

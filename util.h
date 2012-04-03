@@ -54,5 +54,32 @@ struct CUtlMemoryConservative
 	}
 
 #define CUTLVECTOR(type) CUTLVECTOR_FULL( type , CUTLMEMORY( type ) )
-	
+
+#define CUTLRBTREELINKS(I) struct \
+	{\
+		I m_Left;\
+		I m_Right;\
+		I m_Parent;\
+		I m_Tag;\
+	}
+
+#define CUTLRBTREENODE(T,I) struct \
+	{\
+		CUTLRBTREELINKS( I ) m_Links;\
+		T m_Data;\
+	}
+
+#define CUTLRBTREE_FULL(T,I,L,M) struct \
+	{\
+		L m_LessFunc;\
+		M m_Elements;\
+		I m_Root;\
+		I m_NumElements;\
+		I m_FirstFree;\
+		I m_LastAlloc;\
+		CUTLRBTREENODE( T , I ) *m_pElements;\
+	}
+
+#define CUTLRBTREE(T,I) CUTLRBTREE_FULL( T , I , void * , CUTLMEMORY( T ) )
+
 #endif // _UTIL_H_
