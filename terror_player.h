@@ -10,22 +10,100 @@ struct CBaseEntity_data
 	char unknown[1068];
 };
 
+struct CBaseAnimatingOverlay;
+// 76
+struct CAnimationLayer
+{
+	int m_fFlags; // 0
+	bool m_bSequenceFinished; // 4
+	bool m_bLooping; // 5
+	int m_nSequence; // 8 NetworkVar
+	float m_flCycle; // 12 NetworkVar
+	float m_flPrevCycle; // 16 NetworkVar
+	float m_flWeight; // 20 NetworkVar
+	float m_flPlaybackRate; // 24
+	float m_flBlendIn; // 28
+	float m_flBlendOut; // 32
+	float m_flKillRate; // 36
+	float m_flKillDelay; // 40
+	float m_flLayerAnimtime; // 44
+	float m_flLayerFadeOuttime; // 48
+	int m_nActivity; // 52 Activity (ai_activity.h)
+	int m_nPriority; // 56
+	int m_nOrder; // 60 NetworkVar
+	float m_flLastEventCheck; // 64
+	float m_flLastAccess; // 68
+	CBaseAnimatingOverlay *m_pOwnerEntity; // 72
+};
+
+// 20
+struct CBaseAnimatingOverlay_data
+{
+	CUTLVECTOR(CAnimationLayer) m_AnimOverlay; // 0
+};
+
 struct CBaseAnimating_data
 {
 	char unknown[4024]; // 1072
 	// 1160 m_nSequence
 };
 
-// 5096 in CTerrorPlayer
-// size 996
+struct CHandle
+{
+	CBaseHandle_vtable * vptr;
+	unsigned long m_Index;
+};
+
+struct CSceneEventInfo 
+{
+	void *m_pEvent; // 0 CChoreoEvent
+	void *m_pScene;
+	void * m_pActor;
+	CHandle m_hSceneEntity; // CHandle<CSceneEntity>
+	bool m_bStarted;
+	int m_iLayer;
+	int m_iPriority;
+	int m_nSequence;
+	bool m_bIsGesture;
+	float m_flWeight;
+	int m_hTarget; // EHANDLE
+	bool m_bIsMoving;
+	bool m_bHasArrived;
+	float m_flInitialYaw;
+	float m_flTargetYaw;
+	float m_flFacingYaw;
+	int m_nType;
+	float m_flNext;
+	bool m_bClientSide; 
+	void *m_pExpHdr; // const flexsettinghdr_t * public/studio.h
+};
+
+// 5116 in CTerrorPlayer
+// size 976
 struct CBaseFlex_data
 {
-	char unknown0[516]; // 0
-	float m_flexWeight[96]; // 516
-	float m_viewtarget[3]; // 900
-	int m_blinktoggle; // 912
-	char unknown916[80]; // 916
-}; // 996
+	char unknown0[496]; // 0
+	float m_flexWeight[96]; // 496
+	float m_viewtarget[3]; // 880
+	int m_blinktoggle; // 892
+	CUTLVECTOR( CSceneEventInfo ) m_SceneEvents; // 896
+	
+	// size 32
+	struct 
+	{
+		void * m_LessFunc; // 0
+		CUTLMEMORY(void *) m_Elements; // 4
+		unsigned short m_Root; // 16
+		unsigned short m_NumElements; // 18
+		unsigned short m_FirstFree; // 20
+		short m_LastAlloc; // 22
+		void * m_pElements; // 24
+	} m_LocalToGlobal; // 916 CUtlRBTree< FS_LocalToGlobal_t, ushort >
+	float m_flAllowResponsesEndTime; // 944
+	CUTLVECTOR(void*) m_ActiveChoreoScenes; // 948 CChoreoScene*
+	bool m_bUpdateLayerPriorities; // 968
+	float m_flLastFlexAnimationTime; // 972
+}; // 976
 
 
 struct CAI_MoveMonitor
@@ -429,13 +507,22 @@ struct CBaseEntity
 	CBaseEntity_data CBaseEntity; // 4
 };
 
-// size 16392
+struct CBaseFlex
+{
+	CBaseFlex_vtable * vptr; // 0
+	CBaseEntity_data CBaseEntity; // 4
+	CBaseAnimating_data CBaseAnimating; // 1072
+	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
+	CBaseFlex_data CBaseFlex; // 5116
+};
+
 struct CBaseCombatCharacter
 {
 	CBaseCombatCharacter_vtable * vptr; // 0
 	CBaseEntity_data CBaseEntity; // 4
 	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseFlex_data CBaseFlex; // 5096
+	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
+	CBaseFlex_data CBaseFlex; // 5116
 	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
 };
 // size 16392
@@ -444,7 +531,8 @@ struct CTerrorPlayer
 	CTerrorPlayer_vtable * vptr; // 0
 	CBaseEntity_data CBaseEntity; // 4
 	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseFlex_data CBaseFlex; // 5096
+	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
+	CBaseFlex_data CBaseFlex; // 5116
 	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
 	CBasePlayer_data CBasePlayer; // 6736
 	CAI_ExpresserHost_data CAI_ExpresserHost; // 9080

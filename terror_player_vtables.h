@@ -23,6 +23,13 @@ struct IServerEntity_iface
 	void * SetModelIndex;
 };
 
+struct CBaseHandle_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+};
+
 struct CBaseEntity_iface
 {
 	void * GetServerClass;
@@ -632,6 +639,18 @@ struct CBaseEntity_vtable
 	CBaseEntity_iface CBaseEntity;
 };
 
+
+struct CBaseFlex_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+	CBaseAnimating_iface CBaseAnimating;
+	CBaseFlex_iface CBaseFlex;
+};
 
 struct CBaseCombatCharacter_vtable
 {
