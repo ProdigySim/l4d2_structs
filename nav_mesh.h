@@ -232,12 +232,7 @@ struct CNavArea_data
 };
 
 
-struct CUtlVectorAreaBindInfo
-{
-	CUtlMemoryConservative m_memory;
-	int m_Size;
-	AreaBindInfo *m_pElements;
-};
+DECLARE_CUTLVECTOR_FULL(CAreaBindInfoArray, AreaBindInfo, CUTLMEMORYCONSERVATIVE(AreaBindInfo));
 
 struct TerrorNavArea_data
 {
@@ -245,7 +240,7 @@ struct TerrorNavArea_data
 	_DWORD unknown296;  // 296
 	unsigned int m_spawnAttributes; // 300
 	AreaBindInfo m_inheritVisibilityFrom; // 304
-	CUtlVectorAreaBindInfo m_potentiallyVisibleAreas; // 308
+	CAreaBindInfoArray m_potentiallyVisibleAreas; // 308
 	bool m_isInheritedFrom; // 324
 	bool m_isCleared; // 325 might just be byte/uchar
 	IntervalTimer m_clearedTimer; // 328 starts when nav area is cleared by player
@@ -276,49 +271,118 @@ struct Extent
 	float hi[3]; // 12
 };
 
-
-// Professional template naming
-struct CUtlVectorTerrorNavAreaUtlMemory
-{
-	struct {
-		TerrorNavArea ** m_pMemory;
-		int m_nAllocationCount;
-		int m_nGrowSize;
-	} m_memory;
-	int m_Size;
-	TerrorNavArea *m_pElements;
-};
-
-struct CUtlVectorEHandleUtlMemory
-{
-	struct {
-		int ** m_pMemory;
-		int m_nAllocationCount;
-		int m_nGrowSize;
-	} m_memory;
-	int m_Size;
-	int *m_pElements;
-};
-
 // 96
 struct Checkpoint 
 {
-	CUtlVectorTerrorNavAreaUtlMemory m_containedAreas; // 0
+	CUTLVECTOR(TerrorNavArea*) m_containedAreas; // 0
 	float m_flTotalArea; // 20
 	Extent m_extent; // 24 (default +/-99999.0)
-	CUtlVectorTerrorNavAreaUtlMemory m_containedSpawnAreas; // 48
+	CUTLVECTOR(TerrorNavArea*) m_containedSpawnAreas; // 48
 	float m_flTotalSpawnArea; // 68
-	CUtlVectorEHandleUtlMemory m_containedDoors; // 72
+	CUTLVECTOR(int) m_containedDoors; // 72 EHANDLE vector
 	bool m_bInUse; // 92
 	bool m_bNoZombies; // 93
 	bool m_bAllAliveHumanSurvivorsInside; // 94
 	bool m_bOutward; // 95
 };
 
+DECLARE_CUTLVECTOR(NavAreaVector, CNavArea *);
+DECLARE_CUTLVECTOR(NavLadderVector, CNavLadder *);
+
+struct WalkableSeedSpot
+{
+	float pos[3];
+	float normal[3];
+};
+
+struct INavAvoidanceObstacle_iface
+{
+	void * IsPotentiallyAbleToObstructNavAreas;
+	void * GetNavObstructionHeight;
+	void * CanObstructNavAreas;
+	void * GetObstructingEntity;
+	void * OnNavMeshLoaded;
+};
+
+struct INavAvoidanceObstacle
+{
+	INavAvoidanceObstacle_iface *vptr;
+};
+
 // 1512?
 struct CNavMesh_data
 {
-	char unknown0[1512];
+	int unk0; // 0
+	bool unk4; // 4
+	bool unk5;
+	bool unk6;
+	CUTLVECTOR(CUTLVECTOR(CNavArea*)) m_grid; // 8
+	float m_gridCellSize; // 28
+	
+	float m_gridSizeX; // 32
+	float m_gridSizeY; // 36
+	float m_minX; // 40
+	float m_minY; // 44
+	unsigned int m_areaCount; // 48
+
+	bool m_isLoaded; // 52
+	bool m_isOutOfDate; // 53
+	bool m_isAnalyzed; // 54
+	char padding55; // 55
+	char unknown56[20]; // 56
+	CNavArea *m_hashTable[256]; // 76
+	char **m_placeName; // 1100
+	unsigned int m_placeCount; // 1104
+	int m_editMode; // 1108
+	bool m_isEditing; // 1112
+	unsigned int m_navPlace; // 1116
+	float m_editCursorPos[3]; // 1120
+	CNavArea * m_markedArea; // 1132
+	CNavArea *m_selectedArea; // 1136
+	CNavArea *m_lastSelectedArea; // 1140
+	int m_markedCorner; // 1144 NavCornerType
+	float m_anchor[3]; // 1148
+	bool m_isPlacePainting; // 1160
+	bool m_splitAlongX; // 1161
+	float m_splitEdge; // 1164
+	bool m_climbableSurface; // 1168
+	float m_surfaceNormal[3]; // 1172
+	float m_ladderAnchor[3]; // 1184
+	float m_ladderNormal[3]; // 1196
+	CNavLadder *m_selectedLadder; // 1208
+	CNavLadder *m_lastSelectedLadder; // 1212
+	CNavLadder *m_markedLadder; // 1216
+	CountdownTimer m_showAreaInfoTimer; // 1220
+	
+	NavAreaVector m_selectedSet; // 1232
+	NavAreaVector m_dragSelectionSet; // 1252
+	bool m_isContinuouslySelecting; // 12
+	bool m_isContinuouslyDeselecting; // 1245
+
+	bool m_bIsDragDeselecting; // 1246
+	int m_nDragSelectionVolumeZMax; // 1248
+	int m_nDragSelectionVolumeZMin; // 1252
+	CNavNode *m_currentNode; // 1256
+	int m_generationDir; // 1260 NavDirType
+	NavLadderVector m_ladders; // 1264
+	int m_generationState; // 1284 GenerationStateType
+	int m_generationMode; // 1288 GenerationModeType
+	int m_generationIndex; // 1292
+	int m_sampleTick; // 1296
+	bool m_bQuitWhenFinished; // 1300 
+	float m_generationStartTime; // 1304
+	Extent m_simplifyGenerationExtent; // 1308
+	char *m_spawnName; // 1332
+	CUTLVECTOR(WalkableSeedSpot) m_walkableSeeds; // 1336
+	int m_seedIdx; // 1356
+	int m_hostThreadModeRestoreValue; // 1360
+	NavAreaVector m_transientAreas; // 1364
+	NavAreaVector m_avoidanceObstacleAreas; // 1384
+	CUTLVECTOR(INavAvoidanceObstacle) m_avoidanceObstacles; // 1404
+	NavAreaVector m_blockedAreas; // 1424
+	
+	CUTLVECTOR(int) m_storedSelectedSet; // 1444
+	char unknown1464[48]; // 1464
 };
 
 // 228?
@@ -328,6 +392,12 @@ struct TerrorNavMesh_data
 	Checkpoint **m_checkpoints; // 1636 nav areas?
 	char unknown128[8]; // 1640
 	int m_iNumCheckpoints; // 1648 Checkpoint == saferoom
+};
+
+struct CNavMesh
+{
+	CNavMesh_vtable *vptr;
+	CNavMesh_data CNavMesh;
 };
 
 struct TerrorNavMesh
