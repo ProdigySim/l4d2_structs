@@ -632,6 +632,20 @@ struct CBaseEntity_vtable
 	CBaseEntity_iface CBaseEntity;
 };
 
+
+struct CBaseCombatCharacter_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+	CBaseAnimating_iface CBaseAnimating;
+	CBaseFlex_iface CBaseFlex;
+	CBaseCombatCharacter_iface CBaseCombatCharacter;
+};
+
 struct CTerrorPlayer_vtable
 {
 	void * dtor1;

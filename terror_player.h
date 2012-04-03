@@ -34,6 +34,14 @@ struct CAI_MoveMonitor
 	float m_flMarkTolerance;
 };
 
+struct Relationship_t
+{
+	int entity; // 0 EHANDLE
+	int classType; // 4 Class_T (shareddefs.h)
+	int disposition; // 8 Disposition_t (basecombatcharacter.h)
+	int priority; // 12
+};
+
 // size 644, offset 6092 in CTerrorPlayer
 struct CBaseCombatCharacter_data
 {
@@ -50,7 +58,10 @@ struct CBaseCombatCharacter_data
 	
 	char padding78[2]; // 78, padding will probably be automatic
 	
-	char unknown80[76]; // 80 I'll do these later
+	char unknown80[32]; // 80 I'll do these later
+	
+	CUTLVECTOR(Relationship_t) m_Relationship; // 112
+	char unknown132[24]; // 132
 	
 	// later
 	/*
@@ -425,6 +436,15 @@ struct CBaseEntity
 	CBaseEntity_data CBaseEntity; // 4
 };
 
+// size 16392
+struct CBaseCombatCharacter
+{
+	CBaseCombatCharacter_vtable * vptr; // 0
+	CBaseEntity_data CBaseEntity; // 4
+	CBaseAnimating_data CBaseAnimating; // 1072
+	CBaseFlex_data CBaseFlex; // 5096
+	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
+};
 // size 16392
 struct CTerrorPlayer
 {
