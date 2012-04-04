@@ -3,6 +3,7 @@
 
 #include "director_vtables.h"
 #include "timers.h"
+#include "util.h"
 
 // 1128 bytes
 struct CDirectorItemManager {
@@ -126,7 +127,9 @@ struct CDirector {
 	CountdownTimer SpitterSpawnTimer;
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
-	char unknown636[72]; // 636
+	CUTLVECTORFIXEDGROWABLE(CountdownTimer,3) m_pzSpawnTimers; // 636
+	// 3*12 + 4 + 20 = 60
+	char unknown696[12]; // 696
 	bool m_bWitchInPlay; // 708
 	// padding
 	float m_fMobSpawnSize; // 712
