@@ -3,8 +3,11 @@
 
 #define PLATFORM_LINUX
 #include "typestuff.h"
+#include "mem.h"
 #include "director.h"
+#include "nav_mesh.h"
 #include "terror_player.h"
+#include "eiface.h"
 
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef _INCLUDE_TERROR_PLAYER_VTABLES_H_
 #define _INCLUDE_TERROR_PLAYER_VTABLES_H_
 
+#include "network_var.h"
+
 struct IHandleEntity_iface
 {
 	void * SetRefEHandle;
@@ -19,6 +21,13 @@ struct IServerEntity_iface
 	void * GetModelIndex;
 	void * GetModelName;
 	void * SetModelIndex;
+};
+
+struct CBaseHandle_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
 };
 
 struct CBaseEntity_iface
@@ -70,8 +79,7 @@ struct CBaseEntity_iface
 	void * RequiredEdictIndex;
 	void * MoveDone;
 	void * Think;
-	void * NetworkStateChanged_m_nNextThinkTick;
-	void * NetworkStateChanged_m_nNextThinkTick2;
+	NetworkVar_iface m_nNextThinkTick;
 	void * GetBaseAnimating;
 	void * GetBaseAnimatingOverlay;
 	void * GetResponseSystem;
@@ -142,14 +150,10 @@ struct CBaseEntity_iface
 	void * GetMaxHealth;
 	void * ModifyOrAppendCriteria;
 	void * ModifyOrAppendDerivedCriteria;
-	void * NetworkStateChanged_m_iMaxHealth;
-	void * NetworkStateChanged_m_iMaxHealth2;
-	void * NetworkStateChanged_m_iHealth;
-	void * NetworkStateChanged_m_iHealth2;
-	void * NetworkStateChanged_m_lifeState;
-	void * NetworkStateChanged_m_lifeState2;
-	void * NetworkStateChanged_m_takedamage;
-	void * NetworkStateChanged_m_takedamage2;
+	NetworkVar_iface m_iMaxHealth;
+	NetworkVar_iface m_iHealth;
+	NetworkVar_iface m_lifeState;
+	NetworkVar_iface m_takedamage;
 	void * GetDamageType;
 	void * GetDamage;
 	void * SetDamage;
@@ -196,22 +200,14 @@ struct CBaseEntity_iface
 	void * GetStepOrigin;
 	void * GetStepAngles;
 	void * ShouldDrawWaterImpacts;
-	void * NetworkStateChanged_m_fFlags;
-	void * NetworkStateChanged_m_fFlags2;
-	void * NetworkStateChanged_m_nWaterLevel;
-	void * NetworkStateChanged_m_nWaterLevel2;
-	void * NetworkStateChanged_m_hGroundEntity;
-	void * NetworkStateChanged_m_hGroundEntity2;
-	void * NetworkStateChanged_m_vecBaseVelocity;
-	void * NetworkStateChanged_m_vecBaseVelocity2;
-	void * NetworkStateChanged_m_flFriction;
-	void * NetworkStateChanged_m_flFriction2;
-	void * NetworkStateChanged_m_vecVelocity;
-	void * NetworkStateChanged_m_vecVelocity2;
-	void * NetworkStateChanged_m_bClientSideRagdoll;
-	void * NetworkStateChanged_m_bClientSideRagdoll2;
-	void * NetworkStateChanged_m_vecViewOffset;
-	void * NetworkStateChanged_m_vecViewOffset2;
+	NetworkVar_iface m_fFlags;
+	NetworkVar_iface m_nWaterLevel;
+	NetworkVar_iface m_hGroundEntity;
+	NetworkVar_iface m_vecBaseVelocity;
+	NetworkVar_iface m_flFriction;
+	NetworkVar_iface m_vecVelocity;
+	NetworkVar_iface m_bClientSideRagdoll;
+	NetworkVar_iface m_vecViewOffset;
 	void * RunVScripts;
 };
 
@@ -366,8 +362,7 @@ struct CBaseCombatCharacter_iface
 	void * IsIT;
 	void * OnPursuedBy;
 	void * IsGhost;
-	void * NetworkStateChanged_m_iAmmo;
-	void * NetworkStateChanged_m_iAmmo2;
+	NetworkVar_iface m_iAmmo;
 };
 
 struct CBasePlayer_iface
@@ -509,8 +504,7 @@ struct CBasePlayer_iface
 	void * GetExpresser;
 	void * SpawnArmorValue;
 	void * UpdateTonemapController;
-	void * NetworkStateChanged_m_ArmorValue;
-	void * NetworkStateChanged_m_ArmorValue2;
+	NetworkVar_iface m_ArmorValue;
 	void * IsAutoCrouched;
 	void * GetAvailableSteadyStateSlots;
 	void * OnSpeak;
@@ -633,6 +627,42 @@ struct CTerrorPlayer_iface
 	void * OnAwardEarned;
 	void * OnAwardLost;
 	void * ScoreKilledZombie;
+};
+
+struct CBaseEntity_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+};
+
+
+struct CBaseFlex_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+	CBaseAnimating_iface CBaseAnimating;
+	CBaseFlex_iface CBaseFlex;
+};
+
+struct CBaseCombatCharacter_vtable
+{
+	void * dtor1;
+	void * dtor0;
+	IHandleEntity_iface IHandleEntity;
+	IServerUnknown_iface IServerUnknown;
+	IServerEntity_iface IServerEntity;
+	CBaseEntity_iface CBaseEntity;
+	CBaseAnimating_iface CBaseAnimating;
+	CBaseFlex_iface CBaseFlex;
+	CBaseCombatCharacter_iface CBaseCombatCharacter;
 };
 
 struct CTerrorPlayer_vtable
