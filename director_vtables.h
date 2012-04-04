@@ -37,38 +37,39 @@ struct CDirectorVersusMode_vtable
 	void * SurvivorsCanLevelChange; // CDirectorVersusMode::SurvivorsCanLevelChange(void)
 };
 
+struct CDirector;
 struct CDirector_vtable
 {
 	void * CDirector_dtor1; // CDirector::~CDirector() (D1)
 	void * CDirector_dtor0; // CDirector::~CDirector() (D0)
 	IGameEventListener2_iface IGameEventListener2;
-	void * OnBeginChangeLevel; // CDirector::OnBeginChangeLevel(void)
-	void * Reset; // CDirector::Reset(void)
-	void * UpdateTempo; // CDirector::UpdateTempo(void)
-	void * OnMapLoaded; // CDirector::OnMapLoaded(void)
-	void * OnRoundStart; // CDirector::OnRoundStart(void)
-	void * OnServerShutdown; // CDirector::OnServerShutdown(void)
-	void * OnBeginTransition; // CDirector::OnBeginTransition(bool)
-	void * OnGameplayStart; // CDirector::OnGameplayStart(void)
-	void * GetMaxPlayerZombies; // CDirector::GetMaxPlayerZombies(void)const
-	void * IsClassAllowed; // CDirector::IsClassAllowed(ZombieClassType)const
-	void * OnPlayerDisconnected; // CDirector::OnPlayerDisconnected(CTerrorPlayer *)
-	void * SurvivorsCanLevelChange; // CDirector::SurvivorsCanLevelChange(void)
-	void * OnRestartMap; // CDirector::OnRestartMap(void)
-	void * ShouldLockTempo; // CDirector::ShouldLockTempo(void)
-	void * InitScripts; // CDirector::InitScripts(void)
-	void * OnForcedRestart; // CDirector::OnForcedRestart(void)
-	void * CheckForSurvivorsLeavingSafeArea; // CDirector::CheckForSurvivorsLeavingSafeArea(void)
-	void * OnTeamsReady; // CDirector::OnTeamsReady(void)
-	void * UpdateSpecialSpawns; // CDirector::UpdateSpecialSpawns(void)
-	void * ShouldAllowSpecialSpawns; // CDirector::ShouldAllowSpecialSpawns(void)
-	void * ShuffleThreatRoster; // CDirector::ShuffleThreatRoster(ZombieClassType)
-	void * ShouldReselectCustomFinale; // CDirector::ShouldReselectCustomFinale(void)
-	void * ShouldShowCredits; // CDirector::ShouldShowCredits(void)
-	void * DiscardOrphanInfected; // CDirector::DiscardOrphanInfected(void)
-	void * GetBaseSpecialLimit; // CDirector::GetBaseSpecialLimit(ZombieClassType)const
-	void * GetDominatorLimit; // CDirector::GetDominatorLimit(void)const
-	void * DrawDebug; // CDirector::DrawDebug(int)
+	void (* OnBeginChangeLevel)(CDirector*);
+	void (* Reset)(CDirector*);
+	void (* UpdateTempo)(CDirector*);
+	void (* OnMapLoaded)(CDirector*);
+	void (* OnRoundStart)(CDirector*);
+	void (* OnServerShutdown)(CDirector*);
+	void (* OnBeginTransition)(CDirector*, bool);
+	void (* OnGameplayStart)(CDirector*);
+	int	 (* GetMaxPlayerZombies)(CDirector*);
+	bool (* IsClassAllowed)(CDirector*, ZombieClassType);
+	void (* OnPlayerDisconnected)(CDirector*, CTerrorPlayer *);
+	void (* SurvivorsCanLevelChange)(CDirector*);
+	void (* OnRestartMap)(CDirector*);
+	void (* ShouldLockTempo)(CDirector*);
+	void (* InitScripts)(CDirector*);
+	void (* OnForcedRestart)(CDirector*);
+	void (* CheckForSurvivorsLeavingSafeArea)(CDirector*);
+	void (* OnTeamsReady)(CDirector*);
+	void (* UpdateSpecialSpawns)(CDirector*);
+	void (* ShouldAllowSpecialSpawns)(CDirector*);
+	void (* ShuffleThreatRoster)(CDirector*, ZombieClassType);
+	void (* ShouldReselectCustomFinale)(CDirector*);
+	void (* ShouldShowCredits)(CDirector*);
+	void (* DiscardOrphanInfected)(CDirector*);
+	void (* GetBaseSpecialLimit)(CDirector*, ZombieClassType);
+	void (* GetDominatorLimit)(CDirector*);
+	void (* DrawDebug)(CDirector*, int);
 };
 
 #endif // _INCLUDE_DIRECTOR_VTABLES_H_

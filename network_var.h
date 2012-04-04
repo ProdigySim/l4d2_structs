@@ -3,10 +3,17 @@
 
 #include "game_events.h"
 
+struct NetworkVar;
+
 struct NetworkVar_iface
 {
-	void * NetworkStateChanged; // NetworkStateChanged(void);
-	void * NetworkStateChanged2; // NetworkStateChanged(void *pVar);
+	void (* NetworkStateChanged)(NetworkVar*); // NetworkStateChanged(void);
+	void (* NetworkStateChanged2)(NetworkVar*, void *); // NetworkStateChanged(void *pVar);
+};
+
+struct NetworkVar
+{
+	NetworkVar_iface * vptr;
 };
 
 struct IServerNetworkable_iface
