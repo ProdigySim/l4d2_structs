@@ -1,6 +1,7 @@
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
 
+#include "typestuff.h"
 #include "director_vtables.h"
 #include "timers.h"
 #include "util.h"
@@ -91,7 +92,8 @@ struct CDirector {
 	CDirector_vtable * vptr; // 0x0
 	char unknown4[156]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // 160
-	char padding[3]; // 161
+	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
+	char padding162[2]; // 161 
 	char unknown164[8]; // 164
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
 	char unknown184[68]; // 184
@@ -109,16 +111,11 @@ struct CDirector {
 	CountdownTimer unknownCTimer436; // 436
 	char unknown448[16]; // 448
 	bool m_bInIntro; // 464
+	bool m_bUnknown465; // 465 set to 0 in CDirector::Reset()
 	// should be padded
 	CountdownTimer MobSpawnTimer; // 468
 	CountdownTimer unknownCTimer480; // 480
-	IntervalTimer unknownITimer492; // 492
-	IntervalTimer SmokerDeathTimer; // 500
-	IntervalTimer BoomerDeathTimer;
-	IntervalTimer HunterDeathTimer;
-	IntervalTimer SpitterDeathTimer;
-	IntervalTimer JockeyDeathTimer;
-	IntervalTimer ChargerDeathTimer;
+	IntervalTimer m_ClassDeathTimers[7]; // 492 ZC_NONE=0 through ZC_CHARGER=6
 	IntervalTimer unknownITimer548; // 548
 	IntervalTimer unknownITimer556; // 556
 	CountdownTimer SmokerSpawnTimer; // 0x234
@@ -143,13 +140,16 @@ struct CDirector {
 	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
 	float m_fCumulativeMissionTime; // 756 Add this to timer duration from above to get TotalElapsedMissionTime
 	char m_sCurrentMap[0x20]; // 760
-	char unknown792[64]; // 792
+	CountdownTimer m_rescueCheckTimer; // 792 see rescue_interval cvar
+	char unknown804[52]; // 804
 	void * m_kvPopulationData; // 856 KeyValues *
 	char unknown860[8]; // 860
 	int m_iMapNumber; // 868, should be 0 indexed into current campaign?
 	char unknown872[28]; // 872
 	int m_iMissionWipes; // 900 number of wipes on this mission (coop)
-	char unknown904[36]; // 904
+	ZombieClassType m_zThreatRoster[3]; // 904 Threat roster for coop
+	int m_iNextThreatIdx; // 916 Which threat will be used next?
+	char unknown920[20]; // 920
 	CountdownTimer unknownCTimer940; // 940
 	char unknown952[116]; // 952  "forbidden targets" starts here
 	int m_iDirectorScriptIdx; // 1068 gets passed to g_pScriptVM calls
