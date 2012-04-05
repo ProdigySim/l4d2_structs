@@ -30,7 +30,7 @@ struct CDirectorScriptedEventManager {
 
 // 92 bytes
 struct CDirectorVersusMode {
-	void *vtableptr; // 0x00
+	CDirectorVersusMode_vtable *vptr; // 0x00
 	bool m_bVersusRoundInProgress; // 0x04
 	bool m_bFirstMap; // 0x05 idk
 	bool m_bTransitioning; // 0x06 still making shit up

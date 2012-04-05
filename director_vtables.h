@@ -2,46 +2,49 @@
 #define _INCLUDE_DIRECTOR_VTABLES_H_
 
 #include "game_events.h"
+#include "terror_player.h"
 
 struct CDirectorItemManager_vtable
 {
-	void * Reset; // CDirectorItemManager::Reset(void)
-	void * OnBeginChangeLevel; // CDirectorItemManager::OnBeginChangeLevel(void)
-	void * OnMapLoaded; // CDirectorItemManager::OnMapLoaded(void)
+	void (* Reset)(CDirectorItemManager*); 
+	void (* OnBeginChangeLevel)(CDirectorItemManager*); 
+	void (* OnMapLoaded)(CDirectorItemManager*); 
 };
 
 struct CDirectorMusicBanks_vtable
 {
-	void * OnBeginTransition; // CDirectorMusicBanks::OnBeginTransition(bool)
-	void * OnRoundStart; // CDirectorMusicBanks::OnRoundStart(void)
-	void * OnServerShutdown; // CDirectorMusicBanks::OnServerShutdown(void)
+	void (* OnBeginTransition)(CDirectorMusicBanks*,bool); 
+	void (* OnRoundStart)(CDirectorMusicBanks*); 
+	void (* OnServerShutdown)(CDirectorMusicBanks*); 
 };
 
+struct CDirectorSessionManager;
 struct CDirectorSessionManager_vtable
 {
-	void * OnServerShutdown; // CDirectorSessionManager::OnServerShutdown(void)
-	void * OnMapLoaded; // CDirectorSessionManager::OnMapLoaded(void)
-	void * UpdateSession; // CDirectorSessionManager::UpdateSession(void)
-	void * UpdateTeamReadiness; // CDirectorSessionManager::UpdateTeamReadiness(void)
-	void * OnBeginChangeLevel; // CDirectorSessionManager::OnBeginChangeLevel(void)
-	void * OnGameplayStart; // CDirectorSessionManager::OnGameplayStart(void)
-	void * OnFirstSurvivorLeftSafeArea; // CDirectorSessionManager::OnFirstSurvivorLeftSafeArea(CTerrorPlayer *)
-	void * OnPlayerFullyConnected; // CDirectorSessionManager::OnPlayerFullyConnected(CTerrorPlayer *)
-	void * OnPlayerDisconnected; // CDirectorSessionManager::OnPlayerDisconnected(CTerrorPlayer *)
-	void * DrawDebug; // CDirectorSessionManager::DrawDebug(int)
+	void (* OnServerShutdown)(CDirectorSessionManager*);
+	void (* OnMapLoaded)(CDirectorSessionManager*);
+	void (* UpdateSession)(CDirectorSessionManager*);
+	void (* UpdateTeamReadiness)(CDirectorSessionManager*);
+	void (* OnBeginChangeLevel)(CDirectorSessionManager*);
+	void (* OnGameplayStart)(CDirectorSessionManager*);
+	void (* OnFirstSurvivorLeftSafeArea)(CDirectorSessionManager*, CTerrorPlayer*);
+	void (* OnPlayerFullyConnected)(CDirectorSessionManager*, CTerrorPlayer*);
+	void (* OnPlayerDisconnected)(CDirectorSessionManager*, CTerrorPlayer*);
+	int  (* DrawDebug)(CDirectorSessionManager*, int);
 };
 
+struct CDirectorVersusMode;
 struct CDirectorVersusMode_vtable
 {
-	void * ShouldReselectCustomFinale; // CDirectorVersusMode::ShouldReselectCustomFinale(void)
-	void * SurvivorsCanLevelChange; // CDirectorVersusMode::SurvivorsCanLevelChange(void)
+	bool (* ShouldReselectCustomFinale)(CDirectorVersusMode*); 
+	bool (* SurvivorsCanLevelChange)(CDirectorVersusMode*); 
 };
 
 struct CDirector;
 struct CDirector_vtable
 {
-	void * CDirector_dtor1; // CDirector::~CDirector() (D1)
-	void * CDirector_dtor0; // CDirector::~CDirector() (D0)
+	void (* CDirector_dtor1)(CDirector*); 
+	void (* CDirector_dtor0)(CDirector*); 
 	IGameEventListener2_iface IGameEventListener2;
 	void (* OnBeginChangeLevel)(CDirector*);
 	void (* Reset)(CDirector*);
@@ -54,22 +57,22 @@ struct CDirector_vtable
 	int	 (* GetMaxPlayerZombies)(CDirector*);
 	bool (* IsClassAllowed)(CDirector*, ZombieClassType);
 	void (* OnPlayerDisconnected)(CDirector*, CTerrorPlayer *);
-	void (* SurvivorsCanLevelChange)(CDirector*);
+	bool (* SurvivorsCanLevelChange)(CDirector*);
 	void (* OnRestartMap)(CDirector*);
-	void (* ShouldLockTempo)(CDirector*);
+	bool (* ShouldLockTempo)(CDirector*);
 	void (* InitScripts)(CDirector*);
 	void (* OnForcedRestart)(CDirector*);
 	void (* CheckForSurvivorsLeavingSafeArea)(CDirector*);
 	void (* OnTeamsReady)(CDirector*);
 	void (* UpdateSpecialSpawns)(CDirector*);
-	void (* ShouldAllowSpecialSpawns)(CDirector*);
+	bool (* ShouldAllowSpecialSpawns)(CDirector*);
 	void (* ShuffleThreatRoster)(CDirector*, ZombieClassType);
-	void (* ShouldReselectCustomFinale)(CDirector*);
-	void (* ShouldShowCredits)(CDirector*);
+	bool (* ShouldReselectCustomFinale)(CDirector*);
+	bool (* ShouldShowCredits)(CDirector*);
 	void (* DiscardOrphanInfected)(CDirector*);
-	void (* GetBaseSpecialLimit)(CDirector*, ZombieClassType);
-	void (* GetDominatorLimit)(CDirector*);
-	void (* DrawDebug)(CDirector*, int);
+	int  (* GetBaseSpecialLimit)(CDirector*, ZombieClassType);
+	int  (* GetDominatorLimit)(CDirector*);
+	int  (* DrawDebug)(CDirector*, int);
 };
 
 #endif // _INCLUDE_DIRECTOR_VTABLES_H_

@@ -5,6 +5,7 @@
 #include "timers.h"
 #include "steam_api.h"
 #include "network_var.h"
+#include "util.h"
 
 
 struct thinkfunc_t
