@@ -23,7 +23,7 @@ struct CDirectorSessionManager_vtable
 {
 	void (* OnServerShutdown)(CDirectorSessionManager*);
 	void (* OnMapLoaded)(CDirectorSessionManager*);
-	void (* UpdateSession)(CDirectorSessionManager*);
+	bool (* UpdateSession)(CDirectorSessionManager*);
 	void (* UpdateTeamReadiness)(CDirectorSessionManager*);
 	void (* OnBeginChangeLevel)(CDirectorSessionManager*);
 	void (* OnGameplayStart)(CDirectorSessionManager*);
