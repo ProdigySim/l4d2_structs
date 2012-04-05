@@ -85,9 +85,16 @@ struct CDirectorTacticalServices {
 };
 
 
+enum DirectorTempoState
+{
+	TEMPO_BUILDUP=0,
+	TEMPO_SUSTAIN_PEAK=1,
+	TEMPO_PEAK_FADE=2,
+	TEMPO_RELAX=3
+};
+
 // Win32: 1460 bytes
 // Lin: 1480 bytes
-
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
 	char unknown4[156]; // 0x04
@@ -96,7 +103,11 @@ struct CDirector {
 	char padding162[2]; // 161 
 	char unknown164[8]; // 164
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
-	char unknown184[68]; // 184
+	char unknown184[28]; // 184
+	DirectorTempoState m_iTempoState; // 212
+	CountdownTimer m_ChangeTempoTimer; // 216 Set to various values depending on current state, see CDirector::UpdateTempo()
+	float m_flEndFadeFlowDistance; // 228 Highest survivor flow stored here on transition to PEAK_FADE, goes to to RELAX after director_relax_max_flow_travel distance made
+	char unknown232[20]; // 232
 	int m_iWitchCount; // 252
 	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
