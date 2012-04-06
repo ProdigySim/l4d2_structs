@@ -5,6 +5,7 @@
 #include "director_vtables.h"
 #include "timers.h"
 #include "util.h"
+#include "handle.h"
 
 // 1128 bytes
 struct CDirectorItemManager {
@@ -71,7 +72,15 @@ struct CDirectorScavengeMode {
 	CountdownTimer RoundSetupTimer; // 16 (see: scavenge_round_setup_time)
 	CountdownTimer OvertimeGraceTimer; // 28 (see: scavenge_overtime_grace_time)
 	int m_iMusicIntensityCheckpoint; // 40
-	char unknown44[60]; // 44
+	/* Everything beyond this point seems to be for Linear Scavenge (Follow The Liter)
+	 And it's very hard for me to care about it.
+     Names are mostly bullshit but they almost seem to make sense. Best test would be to read
+	 them during gameplay. */
+	CUTLVECTOR(CUTLVECTOR(CHandle)) m_scavengeClusterHandles; // 44
+	CUTLVECTOR(int) m_custerCounts; // 64 yaoright.jpg
+	float m_vecPourTargetOrigin[3]; // 84 point_prop_use_target's abs origin
+	int m_iCurrentCluster; // 96
+	int m_iNumClearedClusters; // 100
 };
 
 // 8 bytes

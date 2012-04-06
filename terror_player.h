@@ -2,6 +2,7 @@
 #define _INCLUDE_TERROR_PLAYER_H_
 
 #include "terror_player_vtables.h"
+#include "handle.h"
 #include "timers.h"
 #include "steam_api.h"
 #include "network_var.h"
@@ -160,12 +161,6 @@ struct CBaseAnimating_data
 {
 	char unknown[4024]; // 1072
 	// 1160 m_nSequence
-};
-
-struct CHandle
-{
-	CBaseHandle_vtable * vptr;
-	unsigned long m_Index;
 };
 
 struct CSceneEventInfo 
