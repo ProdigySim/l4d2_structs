@@ -8,6 +8,7 @@
 #include "nav_mesh.h"
 #include "terror_player.h"
 #include "eiface.h"
+#include "globalvars.h"
 
 
 #endif
