@@ -93,6 +93,19 @@ enum DirectorTempoState
 	TEMPO_RELAX=3
 };
 
+enum ScenarioRestartReason
+{
+	RESTART_VERSUS_SOMETHING1=5,
+	RESTART_VERSUS_FROMVOTE=7,
+	RESTART_VERSUS_SOMETHING2=8,
+	RESTART_SCAVENGE_SOMETHING1=9,
+	RESTART_SCAVENGE_SOMETHING2=10,
+	RESTART_SCAVENGE_MATCHFINISHED=12,
+	RESTART_SCAVENGE_SOMETHING3=13,
+	RESTART_SURVIVAL_ROUND1=14,
+	RESTART_SURVIVAL_ROUND2=16	
+};
+
 // Win32: 1460 bytes
 // Lin: 1480 bytes
 struct CDirector {
@@ -118,9 +131,13 @@ struct CDirector {
 	float m_fAvgSurvivorSpeed; // 392
 	float m_fFurthestSurvivorFlow; // 396
 	char unknown400[24]; // 400
-	CountdownTimer unknownCTimer424; // 424
-	CountdownTimer unknownCTimer436; // 436
-	char unknown448[16]; // 448
+	CountdownTimer RestartScenarioTimer; // 424 Counts down to a scenario restart (UpdateScenarioState)
+	CountdownTimer EndScenarioTimer; // 436 Counts down to a scenario end (UpdateScenarioState)
+	bool m_bUnknown448;
+	bool m_bUnknown449;
+	bool m_bUnknown450;
+	ScenarioRestartReason m_iScenarioExitReason; // 452 Set in EndScenario(), read in various
+	char unknown456[8]; // 456
 	bool m_bInIntro; // 464
 	bool m_bUnknown465; // 465 set to 0 in CDirector::Reset()
 	// should be padded
@@ -155,8 +172,9 @@ struct CDirector {
 	char unknown804[52]; // 804
 	void * m_kvPopulationData; // 856 KeyValues *
 	char unknown860[8]; // 860
-	int m_iMapNumber; // 868, should be 0 indexed into current campaign?
-	char unknown872[28]; // 872
+	int m_iMapNumber; // 868, should be 0 indexed into current campaign
+	int m_iSessionStartMapNumber; // 872
+	char unknown876[24]; // 876
 	int m_iMissionWipes; // 900 number of wipes on this mission (coop)
 	ZombieClassType m_zThreatRoster[3]; // 904 Threat roster for coop
 	int m_iNextThreatIdx; // 916 Which threat will be used next?
