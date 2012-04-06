@@ -85,7 +85,8 @@ struct CDirectorScavengeMode {
 
 // 8 bytes
 struct CDirectorChallengeMode {
-	char unknown[8];
+	bool m_ChallengeModeActive; // 0
+	int m_hRescueTrigger; // 4 EHANDLE
 };
 
 // 1 byte
