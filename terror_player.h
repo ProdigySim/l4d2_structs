@@ -79,7 +79,42 @@ struct CBaseEntity_data
 	int m_iEFlags; // 316
 	int m_fFlags; // 320
 	char *m_iName; // 324
-	char unknown328[564]; // 328
+	char unknown328[260]; // 328
+	float m_flGroundChangeTime; // 588
+	char * m_ModelName; // 592
+	char * m_AIAddOn; // 596
+	float m_vecBaseVelocity[3]; // 600
+	float m_vecAbsVelocity[3]; // 612
+	float m_vecAngVelocity[3]; // 624
+	float m_rgflCoordinateFrame[3][4]; // 636 matrix3x4_t
+	int m_pBlocker; // 684 EHANDLE
+	float m_flGravity; // 688
+	float m_flFriction; // 692
+	float m_flElasticity; // 696
+	float m_flOverriddenFriction; // 700
+	float m_flLocalTime; // 704
+	float m_flVPhysicsUpdateLocalTime; // 708
+	float m_flMoveDoneTime; // 712
+	int m_nPushEnumCount; // 716
+	float m_vecAbsOrigin[3]; // 720
+	//char unknown732[144]; // 732
+	float m_vecVelocity[3]; // 732
+	unsigned char m_iTextureFrameIndex; // 744
+	bool m_bSimulatedEveryTick; // 745
+	bool m_bAnimatedEveryTick; // 746
+	bool m_bAlternateSorting; // 747
+	unsigned char m_nMinCPULevel; // 748
+	unsigned char m_nMaxCPULevel; // 749
+	unsigned char m_nMinGPULevel; // 750
+	unsigned char m_nMaxGPULevel; // 751
+	bool m_bClientSideRagdoll; // 752
+	int m_OnUser1[6]; // 756 COutputEvent (needs writing)
+	int m_OnUser2[6]; // 780
+	int m_OnUser3[6]; // 804
+	int m_OnUser4[6]; // 828
+	int m_OnKilled[6]; // 852
+	float m_angAbsRotation[3]; // 876
+	int m_cellwidth; // 888
 	int m_cellbits; // 892
 	int m_cellX; // 896
 	int m_cellY; // 900
