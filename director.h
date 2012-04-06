@@ -60,18 +60,18 @@ struct CDirectorSurvivalMode {
 
 // 104 bytes
 struct CDirectorScavengeMode {
-	bool m_bUnknown; 
-	char padding[3]; 
-	float m_fUnknown; // 0x04
-	bool m_bScavengeRoundInProgress; // 0x08
-	bool m_bUnk2; // 0x09
-	bool m_bAreTeamsSwapped; // 0x0a
-	bool m_bInOvertime; // 0x0b
-	bool m_bInOvertime2; // 0x0c
-	char padding2[3];
-	CountdownTimer RoundSetupTimer; // 0x10 (see: scavenge_round_setup_time)
-	CountdownTimer OvertimeGraceTimer; // 0x1c (see: scavenge_overtime_grace_time)
-	char unknown[64];
+	bool m_bUnknown; // 0
+	float m_flLastCanPouredTime; // 4
+	bool m_bScavengeRoundInProgress; // 8
+	bool m_bUnk2; // 9
+	bool m_bAreTeamsSwapped; // 10
+	bool m_bInOvertime; // 11
+	bool m_bInOvertime2; // 12
+	char padding13[3]; // 13
+	CountdownTimer RoundSetupTimer; // 16 (see: scavenge_round_setup_time)
+	CountdownTimer OvertimeGraceTimer; // 28 (see: scavenge_overtime_grace_time)
+	int m_iMusicIntensityCheckpoint; // 40
+	char unknown44[60]; // 44
 };
 
 // 8 bytes
@@ -164,7 +164,8 @@ struct CDirector {
 	_DWORD m_iUnknown728; // 728 some kind of userid
 	_DWORD m_iUnknown732; // 732
 	int m_iNumReservedWanderers; // 736
-	char unknown740[8]; // 740
+	int m_iScavengeItemsRemaining; // 740 For scavenge mode/finales I assume
+	char unknown744[4]; // 744
 	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
 	float m_fCumulativeMissionTime; // 756 Add this to timer duration from above to get TotalElapsedMissionTime
 	char m_sCurrentMap[0x20]; // 760
