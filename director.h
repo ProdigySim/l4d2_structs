@@ -1,8 +1,11 @@
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
 
+#include "typestuff.h"
 #include "director_vtables.h"
 #include "timers.h"
+#include "util.h"
+#include "handle.h"
 
 // 1128 bytes
 struct CDirectorItemManager {
@@ -29,7 +32,7 @@ struct CDirectorScriptedEventManager {
 
 // 92 bytes
 struct CDirectorVersusMode {
-	void *vtableptr; // 0x00
+	CDirectorVersusMode_vtable *vptr; // 0x00
 	bool m_bVersusRoundInProgress; // 0x04
 	bool m_bFirstMap; // 0x05 idk
 	bool m_bTransitioning; // 0x06 still making shit up
@@ -58,23 +61,32 @@ struct CDirectorSurvivalMode {
 
 // 104 bytes
 struct CDirectorScavengeMode {
-	bool m_bUnknown; 
-	char padding[3]; 
-	float m_fUnknown; // 0x04
-	bool m_bScavengeRoundInProgress; // 0x08
-	bool m_bUnk2; // 0x09
-	bool m_bAreTeamsSwapped; // 0x0a
-	bool m_bInOvertime; // 0x0b
-	bool m_bInOvertime2; // 0x0c
-	char padding2[3];
-	CountdownTimer RoundSetupTimer; // 0x10 (see: scavenge_round_setup_time)
-	CountdownTimer OvertimeGraceTimer; // 0x1c (see: scavenge_overtime_grace_time)
-	char unknown[64];
+	bool m_bUnknown; // 0
+	float m_flLastCanPouredTime; // 4
+	bool m_bScavengeRoundInProgress; // 8
+	bool m_bUnk2; // 9
+	bool m_bAreTeamsSwapped; // 10
+	bool m_bInOvertime; // 11
+	bool m_bInOvertime2; // 12
+	char padding13[3]; // 13
+	CountdownTimer RoundSetupTimer; // 16 (see: scavenge_round_setup_time)
+	CountdownTimer OvertimeGraceTimer; // 28 (see: scavenge_overtime_grace_time)
+	int m_iMusicIntensityCheckpoint; // 40
+	/* Everything beyond this point seems to be for Linear Scavenge (Follow The Liter)
+	 And it's very hard for me to care about it.
+     Names are mostly bullshit but they almost seem to make sense. Best test would be to read
+	 them during gameplay. */
+	CUTLVECTOR(CUTLVECTOR(CHandle)) m_scavengeClusterHandles; // 44
+	CUTLVECTOR(int) m_custerCounts; // 64 yaoright.jpg
+	float m_vecPourTargetOrigin[3]; // 84 point_prop_use_target's abs origin
+	int m_iCurrentCluster; // 96
+	int m_iNumClearedClusters; // 100
 };
 
 // 8 bytes
 struct CDirectorChallengeMode {
-	char unknown[8];
+	bool m_ChallengeModeActive; // 0
+	int m_hRescueTrigger; // 4 EHANDLE
 };
 
 // 1 byte
@@ -83,17 +95,42 @@ struct CDirectorTacticalServices {
 };
 
 
+enum DirectorTempoState
+{
+	TEMPO_BUILDUP=0,
+	TEMPO_SUSTAIN_PEAK=1,
+	TEMPO_PEAK_FADE=2,
+	TEMPO_RELAX=3
+};
+
+enum ScenarioRestartReason
+{
+	RESTART_VERSUS_SOMETHING1=5,
+	RESTART_VERSUS_FROMVOTE=7,
+	RESTART_VERSUS_SOMETHING2=8,
+	RESTART_SCAVENGE_SOMETHING1=9,
+	RESTART_SCAVENGE_SOMETHING2=10,
+	RESTART_SCAVENGE_MATCHFINISHED=12,
+	RESTART_SCAVENGE_SOMETHING3=13,
+	RESTART_SURVIVAL_ROUND1=14,
+	RESTART_SURVIVAL_ROUND2=16	
+};
+
 // Win32: 1460 bytes
 // Lin: 1480 bytes
-
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
 	char unknown4[156]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // 160
-	char padding[3]; // 161
+	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
+	char padding162[2]; // 161 
 	char unknown164[8]; // 164
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
-	char unknown184[68]; // 184
+	char unknown184[28]; // 184
+	DirectorTempoState m_iTempoState; // 212
+	CountdownTimer m_ChangeTempoTimer; // 216 Set to various values depending on current state, see CDirector::UpdateTempo()
+	float m_flEndFadeFlowDistance; // 228 Highest survivor flow stored here on transition to PEAK_FADE, goes to to RELAX after director_relax_max_flow_travel distance made
+	char unknown232[20]; // 232
 	int m_iWitchCount; // 252
 	int m_iTankCount; // 256
 	float m_fTankFlowDistance; // 0x104
@@ -104,20 +141,19 @@ struct CDirector {
 	float m_fAvgSurvivorSpeed; // 392
 	float m_fFurthestSurvivorFlow; // 396
 	char unknown400[24]; // 400
-	CountdownTimer unknownCTimer424; // 424
-	CountdownTimer unknownCTimer436; // 436
-	char unknown448[16]; // 448
+	CountdownTimer RestartScenarioTimer; // 424 Counts down to a scenario restart (UpdateScenarioState)
+	CountdownTimer EndScenarioTimer; // 436 Counts down to a scenario end (UpdateScenarioState)
+	bool m_bUnknown448;
+	bool m_bUnknown449;
+	bool m_bUnknown450;
+	ScenarioRestartReason m_iScenarioExitReason; // 452 Set in EndScenario(), read in various
+	char unknown456[8]; // 456
 	bool m_bInIntro; // 464
+	bool m_bUnknown465; // 465 set to 0 in CDirector::Reset()
 	// should be padded
 	CountdownTimer MobSpawnTimer; // 468
 	CountdownTimer unknownCTimer480; // 480
-	IntervalTimer unknownITimer492; // 492
-	IntervalTimer SmokerDeathTimer; // 500
-	IntervalTimer BoomerDeathTimer;
-	IntervalTimer HunterDeathTimer;
-	IntervalTimer SpitterDeathTimer;
-	IntervalTimer JockeyDeathTimer;
-	IntervalTimer ChargerDeathTimer;
+	IntervalTimer m_ClassDeathTimers[7]; // 492 ZC_NONE=0 through ZC_CHARGER=6
 	IntervalTimer unknownITimer548; // 548
 	IntervalTimer unknownITimer556; // 556
 	CountdownTimer SmokerSpawnTimer; // 0x234
@@ -126,7 +162,9 @@ struct CDirector {
 	CountdownTimer SpitterSpawnTimer;
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
-	char unknown636[72]; // 636
+	CUTLVECTORFIXEDGROWABLE(CountdownTimer,3) m_pzSpawnTimers; // 636
+	// 3*12 + 4 + 20 = 60
+	char unknown696[12]; // 696
 	bool m_bWitchInPlay; // 708
 	// padding
 	float m_fMobSpawnSize; // 712
@@ -136,17 +174,22 @@ struct CDirector {
 	_DWORD m_iUnknown728; // 728 some kind of userid
 	_DWORD m_iUnknown732; // 732
 	int m_iNumReservedWanderers; // 736
-	char unknown740[8]; // 740
+	int m_iScavengeItemsRemaining; // 740 For scavenge mode/finales I assume
+	char unknown744[4]; // 744
 	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
 	float m_fCumulativeMissionTime; // 756 Add this to timer duration from above to get TotalElapsedMissionTime
 	char m_sCurrentMap[0x20]; // 760
-	char unknown792[64]; // 792
+	CountdownTimer m_rescueCheckTimer; // 792 see rescue_interval cvar
+	char unknown804[52]; // 804
 	void * m_kvPopulationData; // 856 KeyValues *
 	char unknown860[8]; // 860
-	int m_iMapNumber; // 868, should be 0 indexed into current campaign?
-	char unknown872[28]; // 872
+	int m_iMapNumber; // 868, should be 0 indexed into current campaign
+	int m_iSessionStartMapNumber; // 872
+	char unknown876[24]; // 876
 	int m_iMissionWipes; // 900 number of wipes on this mission (coop)
-	char unknown904[36]; // 904
+	ZombieClassType m_zThreatRoster[3]; // 904 Threat roster for coop
+	int m_iNextThreatIdx; // 916 Which threat will be used next?
+	char unknown920[20]; // 920
 	CountdownTimer unknownCTimer940; // 940
 	char unknown952[116]; // 952  "forbidden targets" starts here
 	int m_iDirectorScriptIdx; // 1068 gets passed to g_pScriptVM calls

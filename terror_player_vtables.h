@@ -2,12 +2,7 @@
 #define _INCLUDE_TERROR_PLAYER_VTABLES_H_
 
 #include "network_var.h"
-
-struct IHandleEntity_iface
-{
-	void * SetRefEHandle;
-	void * GetRefEHandle;
-};
+#include "handle.h"
 
 struct IServerUnknown_iface
 {
@@ -21,13 +16,6 @@ struct IServerEntity_iface
 	void * GetModelIndex;
 	void * GetModelName;
 	void * SetModelIndex;
-};
-
-struct CBaseHandle_vtable
-{
-	void * dtor1;
-	void * dtor0;
-	IHandleEntity_iface IHandleEntity;
 };
 
 struct CBaseEntity_iface

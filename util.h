@@ -17,13 +17,24 @@ struct CUtlMemoryConservative
 	#endif
 };
 
-#define CUTLMEMORY(type) struct \
+#define CUTLMEMORY_FULL(T,I) struct \
 	{\
-		type * m_pMemory;\
-		int m_nAllocationCount;\
-		int m_nGrowSize;\
+		T * m_pMemory;\
+		I m_nAllocationCount;\
+		I m_nGrowSize;\
 	}
-	
+
+#define CUTLMEMORY(T) CUTLMEMORY_FULL( T , int )
+
+#define CUTLMEMORYFIXEDGROWABLE_FULL(T,SIZE,I) struct \
+	{\
+		CUTLMEMORY_FULL( T , I ) CUtlMemory;\
+		int m_nMallocGrowSize;\
+		T m_pFixedMemory[ SIZE ];\
+	}
+
+#define CUTLMEMORYFIXEDGROWABLE(T,SIZE) CUTLMEMORYFIXEDGROWABLE_FULL( T , SIZE , int )
+
 #ifdef PLATFORM_LINUX
 #define CUTLMEMORYCONSERVATIVE(type) struct \
 	{\
@@ -54,6 +65,8 @@ struct CUtlMemoryConservative
 	}
 
 #define CUTLVECTOR(type) CUTLVECTOR_FULL( type , CUTLMEMORY( type ) )
+
+#define CUTLVECTORFIXEDGROWABLE(type,size) CUTLVECTOR_FULL( type , CUTLMEMORYFIXEDGROWABLE( type , size ))
 
 #define CUTLRBTREELINKS(I) struct \
 	{\
