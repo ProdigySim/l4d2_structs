@@ -126,7 +126,9 @@ struct CDirector {
 	char padding162[2]; // 161 
 	char unknown164[8]; // 164
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
-	char unknown184[28]; // 184
+	CountdownTimer TankLotteryEntryTimer; // 184
+	CountdownTimer TankLotterySelectionTimer; // 196
+	char unknown184[4]; // 208
 	DirectorTempoState m_iTempoState; // 212
 	CountdownTimer m_ChangeTempoTimer; // 216 Set to various values depending on current state, see CDirector::UpdateTempo()
 	float m_flEndFadeFlowDistance; // 228 Highest survivor flow stored here on transition to PEAK_FADE, goes to to RELAX after director_relax_max_flow_travel distance made
@@ -172,7 +174,7 @@ struct CDirector {
 	float m_fMobSpawnInterval; // 720 I think that's what this is
 	float m_fTankProhibitionInterval; // 724
 	_DWORD m_iUnknown728; // 728 some kind of userid
-	_DWORD m_iUnknown732; // 732
+	int m_iSelectedTankPlayerId; // 732
 	int m_iNumReservedWanderers; // 736
 	int m_iScavengeItemsRemaining; // 740 For scavenge mode/finales I assume
 	char unknown744[4]; // 744

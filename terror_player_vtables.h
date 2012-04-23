@@ -4,248 +4,254 @@
 #include "network_var.h"
 #include "handle.h"
 
+// sizeof(IServerUnknown_iface) == 12
 struct IServerUnknown_iface
 {
-	void * GetCollideable;
-	void * GetNetworkable;
-	void * GetBaseEntity;
+	void * GetCollideable; // 0
+	void * GetNetworkable; // 4
+	void * GetBaseEntity; // 8
 };
 
+// sizeof(IServerEntity_iface) == 12
 struct IServerEntity_iface
 {
-	void * GetModelIndex;
-	void * GetModelName;
-	void * SetModelIndex;
+	void * GetModelIndex; // 0
+	void * GetModelName; // 4
+	void * SetModelIndex; // 8
 };
 
+// sizeof(CBaseEntity_iface) == 760
 struct CBaseEntity_iface
 {
-	void * GetServerClass;
-	void * YouForgotToImplementOrDeclareServerClass;
-	void * GetDataDescMap;
-	void * GetScriptDesc;
-	void * GetAIAddOn;
-	void * TestCollision;
-	void * TestHitboxes;
-	void * ComputeWorldSpaceSurroundingBox;
-	void * ShouldCollide;
-	void * SetOwnerEntity;
-	void * ShouldTransmit;
-	void * UpdateTransmitState;
-	void * SetTransmit;
-	void * GetTracerType;
-	void * Spawn;
-	void * ShouldPrecache;
-	void * Precache;
-	void * SetModel;
-	void * InitSharedVars;
-	void * PostConstructor;
-	void * PostClientActive;
-	void * OnParseMapDataFinished;
-	void * KeyValue;
-	void * KeyValue2;
-	void * KeyValue3;
-	void * GetKeyValue;
-	void * Activate;
-	void * SetParent;
-	void * SetStasis;
-	void * IsInStasis;
-	void * ObjectCaps;
-	void * GetUsePriority;
-	void * GetGlowEntity;
-	void * GetUseType;
-	void * AcceptInput;
-	void * GetPlayerName;
-	void * DrawDebugGeometryOverlays;
-	void * DrawDebugTextOverlays;
-	void * Save;
-	void * Restore;
-	void * ShouldSavePhysics;
-	void * OnSave;
-	void * OnRestore;
-	void * GetDemoRecordingState;
-	void * RequiredEdictIndex;
-	void * MoveDone;
-	void * Think;
-	NetworkVar_iface m_nNextThinkTick;
-	void * GetBaseAnimating;
-	void * GetBaseAnimatingOverlay;
-	void * GetResponseSystem;
-	void * DispatchResponse;
-	void * Classify;
-	void * DeathNotice;
-	void * ShouldAttractAutoAim;
-	void * GetAutoAimRadius;
-	void * GetAutoAimCenter;
-	void * GetBeamTraceFilter;
-	void * PassesDamageFilter;
-	void * TraceAttack;
-	void * CanBeHitByMeleeAttack;
-	void * OnTakeDamage;
-	void * TakeHealth;
-	void * IsAlive;
-	void * Event_Killed;
-	void * Event_KilledOther;
-	void * BloodColor;
-	void * IsTriggered;
-	void * IsNPC;
-	void * MyCombatCharacterPointer;
-	void * MyNextBotPointer;
-	void * MyInfectedPointer;
-	void * GetDelay;
-	void * IsMoving;
-	void * DamageDecal;
-	void * DecalTrace;
-	void * ImpactTrace;
-	void * OnControls;
-	void * HasTarget;
-	void * IsPlayer;
-	void * IsNetClient;
-	void * IsTemplate;
-	void * IsBaseObject;
-	void * IsBaseTrain;
-	void * IsElevator;
-	void * IsBaseCombatWeapon;
-	void * MyCombatWeaponPointer;
-	void * GetServerVehicle;
-	void * IsViewable;
-	void * ChangeTeam;
-	void * OnEntityEvent;
-	void * CanStandOn;
-	void * CanStandOn2;
-	void * GetEnemy;
-	void * GetEnemy2;
-	void * Use;
-	void * StartTouch;
-	void * Touch;
-	void * EndTouch;
-	void * StartBlocked;
-	void * Blocked;
-	void * EndBlocked;
-	void * PhysicsSimulate;
-	void * PhysicsLandedOnGround;
-	void * UpdateOnRemove;
-	void * StopLoopingSounds;
-	void * SUB_AllowedToFade;
-	void * Teleport;
-	void * NotifySystemEvent;
-	void * MakeTracer;
-	void * GetTracerAttachment;
-	void * FireBullets;
-	void * DoImpactEffect;
-	void * Respawn;
-	void * IsLockedByMaster;
-	void * GetMaxHealth;
-	void * ModifyOrAppendCriteria;
-	void * ModifyOrAppendDerivedCriteria;
-	NetworkVar_iface m_iMaxHealth;
-	NetworkVar_iface m_iHealth;
-	NetworkVar_iface m_lifeState;
-	NetworkVar_iface m_takedamage;
-	void * GetDamageType;
-	void * GetDamage;
-	void * SetDamage;
-	void * EyePosition;
-	void * EyeAngles;
-	void * LocalEyeAngles;
-	void * EarPosition;
-	void * BodyTarget;
-	void * HeadTarget;
-	void * GetVectors;
-	void * GetViewOffset;
-	void * SetViewOffset;
-	void * GetSmoothedVelocity;
-	void * GetVelocity;
-	void * GetFriction;
-	void * FVisible;
-	void * FVisible2;
-	void * CanBeSeenBy;
-	void * GetAttackDamageScale;
-	void * GetReceivedDamageScale;
-	void * OnGroundChanged;
-	void * GetGroundVelocityToApply;
-	void * PhysicsSplash;
-	void * Splash;
-	void * WorldSpaceCenter;
-	void * GetSoundEmissionOrigin;
-	void * CreateVPhysics;
-	void * ForceVPhysicsCollide;
-	void * VPhysicsDestroyObject;
-	void * VPhysicsUpdate;
-	void * VPhysicsTakeDamage;
-	void * VPhysicsShadowCollision;
-	void * VPhysicsShadowUpdate;
-	void * VPhysicsCollision;
-	void * VPhysicsFriction;
-	void * UpdatePhysicsShadowToCurrentPosition;
-	void * VPhysicsGetObjectList;
-	void * VPhysicsIsFlesh;
-	void * CanPushEntity;
-	void * HasPhysicsAttacker;
-	void * PhysicsSolidMaskForEntity;
-	void * ResolveFlyCollisionCustom;
-	void * PerformCustomPhysics;
-	void * GetStepOrigin;
-	void * GetStepAngles;
-	void * ShouldDrawWaterImpacts;
-	NetworkVar_iface m_fFlags;
-	NetworkVar_iface m_nWaterLevel;
-	NetworkVar_iface m_hGroundEntity;
-	NetworkVar_iface m_vecBaseVelocity;
-	NetworkVar_iface m_flFriction;
-	NetworkVar_iface m_vecVelocity;
-	NetworkVar_iface m_bClientSideRagdoll;
-	NetworkVar_iface m_vecViewOffset;
-	void * RunVScripts;
+	void * GetServerClass; // 0
+	void * YouForgotToImplementOrDeclareServerClass; // 4
+	void * GetDataDescMap; // 8
+	void * GetScriptDesc; // 12
+	void * GetAIAddOn; // 16
+	void * TestCollision; // 20
+	void * TestHitboxes; // 24
+	void * ComputeWorldSpaceSurroundingBox; // 28
+	void * ShouldCollide; // 32
+	void * SetOwnerEntity; // 36
+	void * ShouldTransmit; // 40
+	void * UpdateTransmitState; // 44
+	void * SetTransmit; // 48
+	void * GetTracerType; // 52
+	void * Spawn; // 56
+	void * ShouldPrecache; // 60
+	void * Precache; // 64
+	void * SetModel; // 68
+	void * InitSharedVars; // 72
+	void * PostConstructor; // 76
+	void * PostClientActive; // 80
+	void * OnParseMapDataFinished; // 84
+	void * KeyValue; // 88
+	void * KeyValue2; // 92
+	void * KeyValue3; // 96
+	void * GetKeyValue; // 100
+	void * Activate; // 104
+	void * SetParent; // 108
+	void * SetStasis; // 112
+	void * IsInStasis; // 116
+	void * ObjectCaps; // 120
+	void * GetUsePriority; // 124
+	void * GetGlowEntity; // 128
+	void * GetUseType; // 132
+	void * AcceptInput; // 136
+	void * GetPlayerName; // 140
+	void * DrawDebugGeometryOverlays; // 144
+	void * DrawDebugTextOverlays; // 148
+	void * Save; // 152
+	void * Restore; // 156
+	void * ShouldSavePhysics; // 160
+	void * OnSave; // 164
+	void * OnRestore; // 168
+	void * GetDemoRecordingState; // 172
+	void * RequiredEdictIndex; // 176
+	void * MoveDone; // 180
+	void * Think; // 184
+	NetworkVar_iface m_nNextThinkTick; // 188
+	void * GetBaseAnimating; // 196
+	void * GetBaseAnimatingOverlay; // 200
+	void * GetResponseSystem; // 204
+	void * DispatchResponse; // 208
+	void * Classify; // 212
+	void * DeathNotice; // 216
+	void * ShouldAttractAutoAim; // 220
+	void * GetAutoAimRadius; // 224
+	void * GetAutoAimCenter; // 228
+	void * GetBeamTraceFilter; // 232
+	void * PassesDamageFilter; // 236
+	void * TraceAttack; // 240
+	void * CanBeHitByMeleeAttack; // 244
+	void * OnTakeDamage; // 248
+	void * TakeHealth; // 252
+	void * IsAlive; // 256
+	void * Event_Killed; // 260
+	void * Event_KilledOther; // 264
+	void * BloodColor; // 268
+	void * IsTriggered; // 272
+	void * IsNPC; // 276
+	void * MyCombatCharacterPointer; // 280
+	void * MyNextBotPointer; // 284
+	void * MyInfectedPointer; // 288
+	void * GetDelay; // 292
+	void * IsMoving; // 296
+	void * DamageDecal; // 300
+	void * DecalTrace; // 304
+	void * ImpactTrace; // 308
+	void * OnControls; // 312
+	void * HasTarget; // 316
+	void * IsPlayer; // 320
+	void * IsNetClient; // 324
+	void * IsTemplate; // 328
+	void * IsBaseObject; // 332
+	void * IsBaseTrain; // 336
+	void * IsElevator; // 340
+	void * IsBaseCombatWeapon; // 344
+	void * MyCombatWeaponPointer; // 348
+	void * GetServerVehicle; // 352
+	void * IsViewable; // 356
+	void * ChangeTeam; // 360
+	void * OnEntityEvent; // 364
+	void * CanStandOn; // 368
+	void * CanStandOn2; // 372
+	void * GetEnemy; // 376
+	void * GetEnemy2; // 380
+	void * Use; // 384
+	void * StartTouch; // 388
+	void * Touch; // 392
+	void * EndTouch; // 396
+	void * StartBlocked; // 400
+	void * Blocked; // 404
+	void * EndBlocked; // 408
+	void * PhysicsSimulate; // 412
+	void * PhysicsLandedOnGround; // 416
+	void * UpdateOnRemove; // 420
+	void * StopLoopingSounds; // 424
+	void * SUB_AllowedToFade; // 428
+	void * Teleport; // 432
+	void * NotifySystemEvent; // 436
+	void * MakeTracer; // 440
+	void * GetTracerAttachment; // 444
+	void * FireBullets; // 448
+	void * DoImpactEffect; // 452
+	void * Respawn; // 456
+	void * IsLockedByMaster; // 460
+	void * GetMaxHealth; // 464
+	void * ModifyOrAppendCriteria; // 468
+	void * ModifyOrAppendDerivedCriteria; // 472
+	NetworkVar_iface m_iMaxHealth; // 476
+	NetworkVar_iface m_iHealth; // 484
+	NetworkVar_iface m_lifeState; // 492
+	NetworkVar_iface m_takedamage; // 500
+	void * GetDamageType; // 508
+	void * GetDamage; // 512
+	void * SetDamage; // 516
+	void * EyePosition; // 520
+	void * EyeAngles; // 524
+	void * LocalEyeAngles; // 528
+	void * EarPosition; // 532
+	void * BodyTarget; // 536
+	void * HeadTarget; // 540
+	void * GetVectors; // 544
+	void * GetViewOffset; // 548
+	void * SetViewOffset; // 552
+	void * GetSmoothedVelocity; // 556
+	void * GetVelocity; // 560
+	void * GetFriction; // 564
+	void * FVisible; // 568
+	void * FVisible2; // 572
+	void * CanBeSeenBy; // 576
+	void * GetAttackDamageScale; // 580
+	void * GetReceivedDamageScale; // 584
+	void * OnGroundChanged; // 588
+	void * GetGroundVelocityToApply; // 592
+	void * PhysicsSplash; // 596
+	void * Splash; // 600
+	void * WorldSpaceCenter; // 604
+	void * GetSoundEmissionOrigin; // 608
+	void * CreateVPhysics; // 612
+	void * ForceVPhysicsCollide; // 616
+	void * VPhysicsDestroyObject; // 620
+	void * VPhysicsUpdate; // 624
+	void * VPhysicsTakeDamage; // 628
+	void * VPhysicsShadowCollision; // 632
+	void * VPhysicsShadowUpdate; // 636
+	void * VPhysicsCollision; // 640
+	void * VPhysicsFriction; // 644
+	void * UpdatePhysicsShadowToCurrentPosition; // 648
+	void * VPhysicsGetObjectList; // 652
+	void * VPhysicsIsFlesh; // 656
+	void * CanPushEntity; // 660
+	void * HasPhysicsAttacker; // 664
+	void * PhysicsSolidMaskForEntity; // 668
+	void * ResolveFlyCollisionCustom; // 672
+	void * PerformCustomPhysics; // 676
+	void * GetStepOrigin; // 680
+	void * GetStepAngles; // 684
+	void * ShouldDrawWaterImpacts; // 688
+	NetworkVar_iface m_fFlags; // 692
+	NetworkVar_iface m_nWaterLevel; // 700
+	NetworkVar_iface m_hGroundEntity; // 708
+	NetworkVar_iface m_vecBaseVelocity; // 716
+	NetworkVar_iface m_flFriction; // 724
+	NetworkVar_iface m_vecVelocity; // 732
+	NetworkVar_iface m_bClientSideRagdoll; // 740
+	NetworkVar_iface m_vecViewOffset; // 748
+	void * RunVScripts; // 756
 };
 
+// sizeof(CBaseAnimating_iface) == 124
 struct CBaseAnimating_iface
 {
-	void * GetIdealSpeed;
-	void * GetIdealAccel;
-	void * StudioFrameAdvance;
-	void * ReachedEndOfSequence;
-	void * OnSequenceSet;
-	void * IsActivityFinished;
-	void * GetSequenceGroundSpeed;
-	void * ClampRagdollForce;
-	void * BecomeRagdollOnClient;
-	void * IsRagdoll;
-	void * CanBecomeRagdoll;
-	void * GetSkeleton;
-	void * GetBoneTransform;
-	void * SetupBones;
-	void * CalculateIKLocks;
-	void * DispatchAnimEvents;
-	void * HandleAnimEvent;
-	void * PopulatePoseParameters;
-	void * GetAttachment;
-	void * InitBoneControllers;
-	void * GetGroundSpeedVelocity;
-	void * IsViewModel;
-	void * Ignite;
-	void * IgniteLifetime;
-	void * IgniteUseCheapEffect;
-	void * Extinguish;
-	void * IsFrozen;
-	void * Freeze;
-	void * Unfreeze;
-	void * Dissolve;
-	void * SetLightingOrigin;
+	void * GetIdealSpeed; // 0
+	void * GetIdealAccel; // 4
+	void * StudioFrameAdvance; // 8
+	void * ReachedEndOfSequence; // 12
+	void * OnSequenceSet; // 16
+	void * IsActivityFinished; // 20
+	void * GetSequenceGroundSpeed; // 24
+	void * ClampRagdollForce; // 28
+	void * BecomeRagdollOnClient; // 32
+	void * IsRagdoll; // 36
+	void * CanBecomeRagdoll; // 40
+	void * GetSkeleton; // 44
+	void * GetBoneTransform; // 48
+	void * SetupBones; // 52
+	void * CalculateIKLocks; // 56
+	void * DispatchAnimEvents; // 60
+	void * HandleAnimEvent; // 64
+	void * PopulatePoseParameters; // 68
+	void * GetAttachment; // 72
+	void * InitBoneControllers; // 76
+	void * GetGroundSpeedVelocity; // 80
+	void * IsViewModel; // 84
+	void * Ignite; // 88
+	void * IgniteLifetime; // 92
+	void * IgniteUseCheapEffect; // 96
+	void * Extinguish; // 100
+	void * IsFrozen; // 104
+	void * Freeze; // 108
+	void * Unfreeze; // 112
+	void * Dissolve; // 116
+	void * SetLightingOrigin; // 120
 };
 
+// sizeof(CBaseFlex_iface) == 32
 struct CBaseFlex_iface
 {
-	void * SetViewtarget;
-	void * StartSceneEvent;
-	void * ProcessSceneEvents;
-	void * ProcessSceneEvent;
-	void * ClearSceneEvent;
-	void * CheckSceneEventCompletion;
-	void * PlayScene;
-	void * PlayAutoGeneratedSoundScene;
+	void * SetViewtarget; // 0
+	void * StartSceneEvent; // 4
+	void * ProcessSceneEvents; // 8
+	void * ProcessSceneEvent; // 12
+	void * ClearSceneEvent; // 16
+	void * CheckSceneEventCompletion; // 20
+	void * PlayScene; // 24
+	void * PlayAutoGeneratedSoundScene; // 28
 };
 
+// sizeof(CBaseCombatCharacter_iface) == 416
 struct CBaseCombatCharacter_iface
 {
 	void * GetPhysicsImpactDamageTable;
@@ -353,6 +359,7 @@ struct CBaseCombatCharacter_iface
 	NetworkVar_iface m_iAmmo;
 };
 
+// sizeof(CBasePlayer_iface) == 576
 struct CBasePlayer_iface
 {
 	void * CreateViewModel;
@@ -501,181 +508,185 @@ struct CBasePlayer_iface
 };
 
 // CAI_ExpressorHost<CBasePlayer>
+// sizeof(CAI_ExpresserHost_CBasePlayer__iface) == 16
 struct CAI_ExpresserHost_CBasePlayer__iface
 {
-	void * NoteSpreaking;
-	void * Speak;
-	void * Speak2;
-	void * PostSpeakDispatchResponse;
+	void * NoteSpreaking; // 0
+	void * Speak; // 4
+	void * Speak2; // 8
+	void * PostSpeakDispatchResponse; // 12
 };
 
+// sizeof(CBaseMultiplayerPlayer_iface) == 36
 struct CBaseMultiplayerPlayer_iface
 {
-	void * SpeakIfAllowed;
-	void * SpeakConceptIfAllowed;
-	void * CanSpeakVoiceCommand;
-	void * ShouldShowVoiceSubtitleToEnemy;
-	void * NoteSpokeVoiceCommand;
-	void * OnAchievementEarned;
-	void * GetMultiplayerExpresser;
-	void * CalculateTeamBalanceScore;
-	void * CreateExpresser;
+	void * SpeakIfAllowed; // 0
+	void * SpeakConceptIfAllowed; // 4
+	void * CanSpeakVoiceCommand; // 8
+	void * ShouldShowVoiceSubtitleToEnemy; // 12
+	void * NoteSpokeVoiceCommand; // 16
+	void * OnAchievementEarned; // 20
+	void * GetMultiplayerExpresser; // 24
+	void * CalculateTeamBalanceScore; // 28
+	void * CreateExpresser; // 32
 };
 
+// sizeof(CCSPlayer_iface) == 224
 struct CCSPlayer_iface
 {
-	void * FirePlayerHurtEvent;
-	void * OnTakeDamageInternal;
-	void * AllowDamage;
-	void * GetHealthBuffer;
-	void * IsIncapacitated;
-	void * GetAdjustedDamage;
-	void * DoBloodEffect;
-	void * GiveNamedItem;
-	void * IsBeingGivenItem;
-	void * DoAnimationEvent;
-	void * KickBack;
-	void * IsImmobilized;
-	void * GiveDefaultItems;
-	void * RoundRespawn;
-	void * ObserverRoundRespawn;
-	void * Blind;
-	void * Deafen;
-	void * ResetMaxSpeed;
-	void * HandleCommand_JoinClass;
-	void * HandleCommand_JoinTeam;
-	void * GetIntoGame;
-	void * WantsMOTD;
-	void * AutoSelectTeam;
-	void * OnLeaveActiveState;
-	void * Pain;
-	void * OnTeamChanged;
-	void * CanAttack;
-	void * OnWeaponFired;
-	void * QueueScreenBloodSplatter;
-	void * OnReloadStart;
-	void * CreateNoise;
-	void * OnPreThinkObserverMode;
-	void * OnEnterRescueState;
-	void * OnPreThinkRescueState;
-	void * OnLeaveRescueState;
-	void * OnEnterGhostState;
-	void * OnPreThinkGhostState;
-	void * OnLeaveGhostState;
-	void * OnEnterIntroCameraState;
-	void * OnPreThinkIntroCameraState;
-	void * OnLeaveIntroCameraState;
-	void * OnLeaveDeathAnimState;
-	void * OnLeaveDeathWaitForKeyState;
-	void * CanUseFlashlight;
-	void * UpdateAddonBits;
-	void * UpdateRadar;
-	void * SelectDeathPose;
-	void * CanChangeName;
-	void * ChangeName;
-	void * IsProgressBarActive;
-	void * CreateRagdollEntity;
-	void * GetRagdollType;
-	void * SetModelFromClass;
-	void * SetModelFromClassAtSpawn;
-	void * DropWeapons;
-	void * RecordDamageTaken;
+	void * FirePlayerHurtEvent; // 0
+	void * OnTakeDamageInternal; // 4
+	void * AllowDamage; // 8
+	void * GetHealthBuffer; // 12
+	void * IsIncapacitated; // 16
+	void * GetAdjustedDamage; // 20
+	void * DoBloodEffect; // 24
+	void * GiveNamedItem; // 28
+	void * IsBeingGivenItem; // 32
+	void * DoAnimationEvent; // 36
+	void * KickBack; // 40
+	void * IsImmobilized; // 44
+	void * GiveDefaultItems; // 48
+	void * RoundRespawn; // 52
+	void * ObserverRoundRespawn; // 56
+	void * Blind; // 60
+	void * Deafen; // 64
+	void * ResetMaxSpeed; // 68
+	void * HandleCommand_JoinClass; // 72
+	void * HandleCommand_JoinTeam; // 76
+	void * GetIntoGame; // 80
+	void * WantsMOTD; // 84
+	void * AutoSelectTeam; // 88
+	void * OnLeaveActiveState; // 92
+	void * Pain; // 96
+	void * OnTeamChanged; // 100
+	void * CanAttack; // 104
+	void * OnWeaponFired; // 108
+	void * QueueScreenBloodSplatter; // 112
+	void * OnReloadStart; // 116
+	void * CreateNoise; // 120
+	void * OnPreThinkObserverMode; // 124
+	void * OnEnterRescueState; // 128
+	void * OnPreThinkRescueState; // 132
+	void * OnLeaveRescueState; // 136
+	void * OnEnterGhostState; // 140
+	void * OnPreThinkGhostState; // 144
+	void * OnLeaveGhostState; // 148
+	void * OnEnterIntroCameraState; // 152
+	void * OnPreThinkIntroCameraState; // 156
+	void * OnLeaveIntroCameraState; // 160
+	void * OnLeaveDeathAnimState; // 164
+	void * OnLeaveDeathWaitForKeyState; // 168
+	void * CanUseFlashlight; // 172
+	void * UpdateAddonBits; // 176
+	void * UpdateRadar; // 180
+	void * SelectDeathPose; // 184
+	void * CanChangeName; // 188
+	void * ChangeName; // 192
+	void * IsProgressBarActive; // 196
+	void * CreateRagdollEntity; // 200
+	void * GetRagdollType; // 204
+	void * SetModelFromClass; // 208
+	void * SetModelFromClassAtSpawn; // 212
+	void * DropWeapons; // 216
+	void * RecordDamageTaken; // 220
 };
 
+// sizeof(CTerrorPlayer_iface) == 124
 struct CTerrorPlayer_iface
 {
-	void * OnPlayerDisconnected;
-	void * OnSpawn;
-	void * RestoreSpawn;
-	void * OnBeginChangeLevel;
-	void * OnEndChangeLevel;
-	void * HandleCommand_JoinTeam;
-	void * SetDoingRestore;
-	void * GetTeamSwitchRule;
-	void * IsReadyToShove;
-	void * SetNextShoveTime;
-	void * CommitSuicide;
-	void * OnSpokeConcept;
-	void * RestoreWeapons;
-	void * DropWeaponInSlot;
-	void * QueueScreenBloodSplatter;
-	void * OnReloadEnd;
-	void * OnReloadAbort;
-	void * OnAttackSuccess;
-	void * CanBeShoved;
-	void * IsWielding;
-	void * IsWieldingWeaponOfType;
-	void * IsZoomed;
-	void * CanPlayerJump;
-	void * PlayerZombieAbortControl;
-	void * CanBeShoved;
-	void * SetClass;
-	void * SetCharacter;
-	void * OnRevived;
-	void * OnAwardEarned;
-	void * OnAwardLost;
-	void * ScoreKilledZombie;
+	void * OnPlayerDisconnected; // 0
+	void * OnSpawn; // 4
+	void * RestoreSpawn; // 8
+	void * OnBeginChangeLevel; // 12
+	void * OnEndChangeLevel; // 16
+	void * HandleCommand_JoinTeam; // 20
+	void * SetDoingRestore; // 24
+	void * GetTeamSwitchRule; // 28
+	void * IsReadyToShove; // 32
+	void * SetNextShoveTime; // 36
+	void * CommitSuicide; // 40
+	void * OnSpokeConcept; // 44
+	void * RestoreWeapons; // 48
+	void * DropWeaponInSlot; // 52
+	void * QueueScreenBloodSplatter; // 56
+	void * OnReloadEnd; // 60
+	void * OnReloadAbort; // 64
+	void * OnAttackSuccess; // 68
+	void * CanBeShoved; // 72
+	void * IsWielding; // 76
+	void * IsWieldingWeaponOfType; // 80
+	void * IsZoomed; // 84
+	void * CanPlayerJump; // 88
+	void * PlayerZombieAbortControl; // 92
+	void * CanBeShoved; // 96
+	void * SetClass; // 100
+	void * SetCharacter; // 104
+	void * OnRevived; // 108
+	void * OnAwardEarned; // 112
+	void * OnAwardLost; // 116
+	void * ScoreKilledZombie; // 120
 };
 
 struct CBaseEntity_vtable
 {
-	void * dtor1;
-	void * dtor0;
-	IHandleEntity_iface IHandleEntity;
-	IServerUnknown_iface IServerUnknown;
-	IServerEntity_iface IServerEntity;
-	CBaseEntity_iface CBaseEntity;
+	void * dtor1; // 0
+	void * dtor0; // 4
+	IHandleEntity_iface IHandleEntity; // 8
+	IServerUnknown_iface IServerUnknown; // 16
+	IServerEntity_iface IServerEntity; // 28
+	CBaseEntity_iface CBaseEntity; // 40
 };
 
 
 struct CBaseFlex_vtable
 {
-	void * dtor1;
-	void * dtor0;
-	IHandleEntity_iface IHandleEntity;
-	IServerUnknown_iface IServerUnknown;
-	IServerEntity_iface IServerEntity;
-	CBaseEntity_iface CBaseEntity;
-	CBaseAnimating_iface CBaseAnimating;
-	CBaseFlex_iface CBaseFlex;
+	void * dtor1; // 0
+	void * dtor0; // 4
+	IHandleEntity_iface IHandleEntity; // 8
+	IServerUnknown_iface IServerUnknown; // 16
+	IServerEntity_iface IServerEntity; // 28
+	CBaseEntity_iface CBaseEntity; // 40
+	CBaseAnimating_iface CBaseAnimating; // 800
+	CBaseFlex_iface CBaseFlex; // 924
 };
 
 struct CBaseCombatCharacter_vtable
 {
-	void * dtor1;
-	void * dtor0;
-	IHandleEntity_iface IHandleEntity;
-	IServerUnknown_iface IServerUnknown;
-	IServerEntity_iface IServerEntity;
-	CBaseEntity_iface CBaseEntity;
-	CBaseAnimating_iface CBaseAnimating;
-	CBaseFlex_iface CBaseFlex;
-	CBaseCombatCharacter_iface CBaseCombatCharacter;
+	void * dtor1; // 0
+	void * dtor0; // 4
+	IHandleEntity_iface IHandleEntity; // 8
+	IServerUnknown_iface IServerUnknown; // 16
+	IServerEntity_iface IServerEntity; // 28
+	CBaseEntity_iface CBaseEntity; // 40
+	CBaseAnimating_iface CBaseAnimating; // 800
+	CBaseFlex_iface CBaseFlex; // 924
+	CBaseCombatCharacter_iface CBaseCombatCharacter; // 956
 };
 
 struct CTerrorPlayer_vtable
 {
-	void * dtor1;
-	void * dtor0;
-	IHandleEntity_iface IHandleEntity;
-	IServerUnknown_iface IServerUnknown;
-	IServerEntity_iface IServerEntity;
-	CBaseEntity_iface CBaseEntity;
-	CBaseAnimating_iface CBaseAnimating;
-	CBaseFlex_iface CBaseFlex;
-	CBaseCombatCharacter_iface CBaseCombatCharacter;
-	CBasePlayer_iface CBasePlayer;
-	CAI_ExpresserHost_CBasePlayer__iface CAI_ExpresserHost;
-	CBaseMultiplayerPlayer_iface CBaseMultiplayerPlayer;
-	CCSPlayer_iface CCSPlayer;
-	CTerrorPlayer_iface CTerrorPlayer;
+	void * dtor1; // 0
+	void * dtor0; // 4
+	IHandleEntity_iface IHandleEntity; // 8
+	IServerUnknown_iface IServerUnknown; // 16
+	IServerEntity_iface IServerEntity; // 28
+	CBaseEntity_iface CBaseEntity; // 40
+	CBaseAnimating_iface CBaseAnimating; // 800
+	CBaseFlex_iface CBaseFlex; // 924
+	CBaseCombatCharacter_iface CBaseCombatCharacter; // 956
+	CBasePlayer_iface CBasePlayer; // 1372
+	CAI_ExpresserHost_CBasePlayer__iface CAI_ExpresserHost; // 1948
+	CBaseMultiplayerPlayer_iface CBaseMultiplayerPlayer; // 1964
+	CCSPlayer_iface CCSPlayer; // 2000
+	CTerrorPlayer_iface CTerrorPlayer; // 2224
 };
 
 struct CAI_ExpresserSink_vtable
 {
-	void * OnSpokeConcept;
-	void * OnStartSpeaking;
-	void * UseSemaphore;
+	void * OnSpokeConcept; // 0
+	void * OnStartSpeaking; // 4
+	void * UseSemaphore; // 8
 };
 
 #endif // _INCLUDE_TERROR_PLAYER_VTABLES_H_
