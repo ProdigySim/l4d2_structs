@@ -105,15 +105,18 @@ enum DirectorTempoState
 
 enum ScenarioRestartReason
 {
+	RESTART_FINALE_WON=3,
 	RESTART_VERSUS_SOMETHING1=5,
 	RESTART_VERSUS_FROMVOTE=7,
 	RESTART_VERSUS_SOMETHING2=8,
-	RESTART_SCAVENGE_SOMETHING1=9,
-	RESTART_SCAVENGE_SOMETHING2=10,
-	RESTART_SCAVENGE_MATCHFINISHED=12,
+	RESTART_SCAVENGE_ROUND=9, // Halftime or round end
+	RESTART_SCAVENGE_ROUND_TIE=10, // exact tie (cans+time
+	RESTART_VERSUS_CHANGELEVEL
+	RESTART_SCAVENGE_MATCH_FINISHED=12,
 	RESTART_SCAVENGE_SOMETHING3=13,
 	RESTART_SURVIVAL_ROUND1=14,
-	RESTART_SURVIVAL_ROUND2=16	
+	RESTART_SURVIVAL_ROUND2=16,
+	RESTART_MISSION_ABORTED=18,
 };
 
 // Win32: 1460 bytes
@@ -212,10 +215,10 @@ struct CDirector {
 	CDirectorSessionManager * SessionManagerPtr; 
 	CDirectorScriptedEventManager * ScriptedEventManagerPtr; 
 	CDirectorVersusMode * VersusModePtr; 
-	CDirectorSurvivalMode * SurvivalModePtr; 
-	CDirectorScavengeMode * ScavengeModePtr; 
-	CDirectorChallengeMode * ChallengeModePtr; // win 0x5a8 lin 0x5bc
-	char unknown1472[8]; // win 0x5ac lin 0x5c0
+	CDirectorSurvivalMode * SurvivalModePtr; // win 1448 lin 1468
+	CDirectorScavengeMode * ScavengeModePtr; // win 1452 lin 1472
+	CDirectorChallengeMode * ChallengeModePtr; // win 1456 lin 1476
+	char unknown1480[8]; // win 1460 lin 1480
 };
 
 #endif //_INCLUDE_DIRECTOR_H_
