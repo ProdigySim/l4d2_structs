@@ -435,7 +435,8 @@ struct CTerrorPlayer_data
 	char unknown1188[368]; // 1188
 	int m_checkpointSurvivorDamage; // 1556
 	int m_missionSurvivorDamage; // 1560
-	char unknown1564[52]; // 1564
+	int m_tankTickets; // 1564
+	char unknown1564[48]; // 1568
 	int m_customAbility; // 1616
 	char unknown1620[136]; // 1620
 	bool m_hasVisisbleThreats; // 1756
