@@ -4,6 +4,7 @@
 #include "game_events.h"
 #include "terror_player.h"
 
+struct CDirectorItemManager;
 struct CDirectorItemManager_vtable
 {
 	void (* Reset)(CDirectorItemManager*); 
@@ -11,6 +12,7 @@ struct CDirectorItemManager_vtable
 	void (* OnMapLoaded)(CDirectorItemManager*); 
 };
 
+struct CDirectorMusicBanks;
 struct CDirectorMusicBanks_vtable
 {
 	void (* OnBeginTransition)(CDirectorMusicBanks*,bool); 
