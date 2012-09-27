@@ -1,6 +1,8 @@
 #ifndef _INCLUDE_TERROR_PLAYER_H_
 #define _INCLUDE_TERROR_PLAYER_H_
 
+struct CBaseEntity;
+
 #include "terror_player_vtables.h"
 #include "handle.h"
 #include "timers.h"
@@ -29,7 +31,6 @@ struct color32
 	unsigned char r, g, b, a;
 };
 
-struct CBaseEntity;
 // base offset 4
 // size 1068
 struct CBaseEntity_data

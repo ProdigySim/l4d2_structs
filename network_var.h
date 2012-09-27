@@ -1,9 +1,12 @@
 #ifndef _INCLUDE_NETWORKVAR_H_
 #define _INCLUDE_NETWORKVAR_H_
 
-#include "game_events.h"
-
 struct NetworkVar;
+
+#include "game_events.h"
+#include "terror_player.h"
+
+
 
 struct NetworkVar_iface
 {
@@ -52,6 +55,7 @@ struct PVSInfo_t
 	unsigned short m_pClustersInline[4];
 };
 
+struct CBaseEntity;
 // 77
 struct CServerNetworkProperty
 {
