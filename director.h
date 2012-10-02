@@ -25,9 +25,31 @@ struct CDirectorSessionManager {
 	char unknown[72];
 };
 
+enum CustomFinaleStageType {
+	PANIC = 0,
+	TANK = 1,
+	DELAY = 2
+};
+
 // 156 bytes
 struct CDirectorScriptedEventManager {
-	char unknown[156];
+	int m_iScriptedEventState; // 0x00 should have some sort of enum, 5==no script
+	int m_iScriptedEventState2; // 0x04 there are 16 valid values
+	bool m_bUnknown8; // 0x08
+	char unknown9[2]; // 0x09
+	bool m_bSpawningFinaleTank; // 0x0B
+	char unknown12[4]; // 0x0C
+	CountdownTimer m_FinaleStageDelayTimer; // 0x10
+	char unknown28[32]; // 0x1C
+	IntervalTimer m_CurrentStageStartTime; // 0x3C
+	CustomFinaleStageType m_InitialFinaleStageType; // 0x44
+	int m_iCurrentCustomFinaleStage; // 0x48
+	CustomFinaleStageType m_CurrentFinaleStageType; // 0x4C
+	char m_cCustomFinaleType; // 0x50 e.g. "[A|B|C|D]_CustomFinale1"
+	CountdownTimer m_TankStageSpawnTimer; // 0x54 when elapsed, spawn tank.
+	int m_iUnknown96;
+	CountdownTimer m_MinimumStageTimeCoundtown; // 0x64
+	char unknown112[56]; // 0x70
 };
 
 // 92 bytes
@@ -126,8 +148,9 @@ struct CDirector {
 	char unknown4[156]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // 160
 	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
-	char padding162[2]; // 161 
-	char unknown164[8]; // 164
+	char padding162[2]; // 161
+	int m_iFinaleEscapeState; // 164
+	char unknown168[4]; // 168
 	CountdownTimer TankProhibitionTimer; // 172 see director_tank_checkpoint_interval, director_tank_min/max_interval
 	CountdownTimer TankLotteryEntryTimer; // 184
 	CountdownTimer TankLotterySelectionTimer; // 196

@@ -424,7 +424,7 @@ struct CTerrorPlayer_data
 	bool m_bIsFirstManOut; // 1009
 	char padding1010[2]; // 1010
 	char unknown1012[4]; // 1012
-	CountdownTimer m_unknownCTimer1016; // 1016
+	CountdownTimer m_InvulnerabilityTimer; // 1016
 	CountdownTimer m_noAvoidanceTimer; // 1028
 	bool m_isCalm; // 1040
 	CountdownTimer m_unknownCTimer1044; // 1044
