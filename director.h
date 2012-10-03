@@ -26,30 +26,79 @@ struct CDirectorSessionManager {
 };
 
 enum CustomFinaleStageType {
-	PANIC = 0,
-	TANK = 1,
-	DELAY = 2
+	CFST_PANIC = 0,
+	CFST_TANK = 1,
+	CFST_DELAY = 2,
+	CFST_ONSLAUGHT = 3,
+};
+
+// Actual name used by l4d2
+enum FinaleStageType {
+	FINALE_HORDE_ATTACK_1 = 0,
+	FINALE_DELAY_PRE_HALFTIME = 1,
+	FINALE_HALFTIME_BOSS = 2,
+	FINALE_HORDE_ATTACK_2 = 3,
+	FINALE_DELAY_PRE_FINAL_TANK = 4,
+	FINALE_FINAL_TANK = 5,
+	FINALE_HORDE_ESCAPE = 6,
+	FINALE_CUSTOM_PANIC = 7,
+	FINALE_CUSTOM_TANK = 8,
+	FINALE_CUSTOM_SCRIPTED = 9,
+	FINALE_CUSTOM_DELAY = 10,
+	FINALE_GAUNTLET_START = 11,
+	FINALE_GAUNTLET_HORDE = 12,
+	FINALE_GAUNTLET_HORDE_BONUSTIME = 13,
+	FINALE_GAUNTLET_BOSS_INCOMING = 14,
+	FINALE_GAUNTLET_BOSS = 15,
+	FINALE_GAUNTLET_ESCAPE = 16	
+};
+
+enum FinaleType_t {
+	FINALETYPE_STANDARD = 0,
+	FINALETYPE_GAUNTLET = 1, // parish finale
+	FINALETYPE_CUSTOM = 2, // uses script
+	FINALETYPE_PANICEVENT = 3, // map-invoked panic event.
+	FINALETYPE_SCAVENGE = 4,
+	FINALETYPE_NONE = 5
+};
+
+enum PanicEventStage {
+	STAGE_INITIAL_DELAY = 0,
+	STAGE_MEGA_MOB = 1,
+	STAGE_WAIT_FOR_COMBAT_TO_END = 2,
+	STAGE_PAUSE = 3,
+	STAGE_DONE = 4	
 };
 
 // 156 bytes
 struct CDirectorScriptedEventManager {
-	int m_iScriptedEventState; // 0x00 should have some sort of enum, 5==no script
-	int m_iScriptedEventState2; // 0x04 there are 16 valid values
+	FinaleType_t m_FinaleType; // 0x00 should have some sort of enum, 5==no script
+	FinaleStageType m_CurrentFinaleStage; // 0x04 there are 16 valid values
 	bool m_bUnknown8; // 0x08
-	char unknown9[2]; // 0x09
+	bool m_bNotifiedPlayersOfEscape; // 0x09
+	char unknown10; // 0x0a
 	bool m_bSpawningFinaleTank; // 0x0B
 	char unknown12[4]; // 0x0C
 	CountdownTimer m_FinaleStageDelayTimer; // 0x10
-	char unknown28[32]; // 0x1C
+	float m_fNextGauntletMovementCheckpoint; // 0x1C if survivors reach this absolute flow distance before timer expires, they gain bonus time
+	float m_fCurrentGauntletMovementBonus; // 0x20 extra time to be added between horde waves (script/cvar)
+	CountdownTimer m_GauntletMovementTimer; // 0x24
+	CountdownTimer m_UnknownCTimer48; // 0x30
 	IntervalTimer m_CurrentStageStartTime; // 0x3C
 	CustomFinaleStageType m_InitialFinaleStageType; // 0x44
 	int m_iCurrentCustomFinaleStage; // 0x48
-	CustomFinaleStageType m_CurrentFinaleStageType; // 0x4C
+	int m_iCurrentCustomFinaleStageValue; // 0x4C
 	char m_cCustomFinaleType; // 0x50 e.g. "[A|B|C|D]_CustomFinale1"
 	CountdownTimer m_TankStageSpawnTimer; // 0x54 when elapsed, spawn tank.
 	int m_iUnknown96;
 	CountdownTimer m_MinimumStageTimeCoundtown; // 0x64
-	char unknown112[56]; // 0x70
+	bool m_bUnknown112; // 0x70
+	bool m_bPanicEventInProgress; // 0x71
+	PanicEventStage m_PanicEventStage; // 0x74
+	CountdownTimer m_PostMobDelayTimer; // 0x78
+	int m_iPendingPanicWaves; // 0x84
+	int m_iWavesForPanicEvent; // 0x88
+	char unknown140[16]; // 0x8C
 };
 
 // 92 bytes
