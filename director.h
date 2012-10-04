@@ -83,7 +83,7 @@ struct CDirectorScriptedEventManager {
 	float m_fNextGauntletMovementCheckpoint; // 0x1C if survivors reach this absolute flow distance before timer expires, they gain bonus time
 	float m_fCurrentGauntletMovementBonus; // 0x20 extra time to be added between horde waves (script/cvar)
 	CountdownTimer m_GauntletMovementTimer; // 0x24
-	CountdownTimer m_UnknownCTimer48; // 0x30
+	CountdownTimer m_GauntletBonusMovementTimer; // 0x30 counts down the extra time added between horde waves
 	IntervalTimer m_CurrentStageStartTime; // 0x3C
 	CustomFinaleStageType m_InitialFinaleStageType; // 0x44
 	int m_iCurrentCustomFinaleStage; // 0x48
@@ -98,7 +98,10 @@ struct CDirectorScriptedEventManager {
 	CountdownTimer m_PostMobDelayTimer; // 0x78
 	int m_iPendingPanicWaves; // 0x84
 	int m_iWavesForPanicEvent; // 0x88
-	char unknown140[16]; // 0x8C
+	bool m_bInSacrificeFinale; // 0x8C
+	bool m_bUnknownSacrificeStuff; // 0x8D
+	bool m_bSurvivorsWiped; // 0x8E
+	CountdownTimer m_SacrificeEndScenarioTimer; // 0x90 initiates the end of the scenario after failure
 };
 
 // 92 bytes
