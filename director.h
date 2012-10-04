@@ -76,9 +76,9 @@ struct CDirectorScriptedEventManager {
 	FinaleStageType m_CurrentFinaleStage; // 0x04 there are 16 valid values
 	bool m_bUnknown8; // 0x08
 	bool m_bNotifiedPlayersOfEscape; // 0x09
-	char unknown10; // 0x0a
+	char m_bFinaleTankInPlay; // 0x0A
 	bool m_bSpawningFinaleTank; // 0x0B
-	char unknown12[4]; // 0x0C
+	float m_fGauntletBossStartFlow; // 0x0C furthest survivor flow at the time of (starting) spawning the tank
 	CountdownTimer m_FinaleStageDelayTimer; // 0x10
 	float m_fNextGauntletMovementCheckpoint; // 0x1C if survivors reach this absolute flow distance before timer expires, they gain bonus time
 	float m_fCurrentGauntletMovementBonus; // 0x20 extra time to be added between horde waves (script/cvar)
@@ -99,7 +99,7 @@ struct CDirectorScriptedEventManager {
 	int m_iPendingPanicWaves; // 0x84
 	int m_iWavesForPanicEvent; // 0x88
 	bool m_bInSacrificeFinale; // 0x8C
-	bool m_bUnknownSacrificeStuff; // 0x8D
+	bool m_bSacrificeFinaleSucceeded; // 0x8D
 	bool m_bSurvivorsWiped; // 0x8E
 	CountdownTimer m_SacrificeEndScenarioTimer; // 0x90 initiates the end of the scenario after failure
 };
