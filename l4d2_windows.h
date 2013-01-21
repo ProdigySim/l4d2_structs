@@ -10,6 +10,7 @@
 #include "eiface.h"
 #include "globalvars.h"
 #include "lunge.h"
+#include "gamerules.h"
 
 
 #endif
