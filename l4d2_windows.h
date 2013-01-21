@@ -9,6 +9,7 @@
 #include "terror_player.h"
 #include "eiface.h"
 #include "globalvars.h"
+#include "lunge.h"
 
 
 #endif
