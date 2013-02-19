@@ -27,7 +27,8 @@ struct CTerrorGameRules
 	float m_flTeamRoundTime[2]; // 968
 	int m_iVersusDistancePerSurvivor[8]; // 976
 	int m_iVersusSurvivorDeathDistance[8]; // 1008
-	int m_iUnknown1040[2]; // 1040 guessing that these 8 bytes are another 2 ints
+	bool m_bSurvivorIsAliveForFinale[4]; // 1040
+	int m_iUnknown1044; // 1044 Might be another bool array;
 	int m_iVersusSurvivalMultiplier[2]; // 1048
 	int m_iVersusDefibsUsed[2]; // 1056
 	int m_iUnknown1064; // 1064

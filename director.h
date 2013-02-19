@@ -108,7 +108,7 @@ struct CDirectorScriptedEventManager {
 struct CDirectorVersusMode {
 	CDirectorVersusMode_vtable *vptr; // 0x00
 	bool m_bVersusRoundInProgress; // 0x04
-	bool m_bFirstMap; // 0x05 idk
+	bool m_bAreTeamsFlipped; // 0x05
 	bool m_bTransitioning; // 0x06 still making shit up
 	// alignment padding
 	int m_iCampaignScores[2]; // 0x08
@@ -148,7 +148,7 @@ struct CDirectorScavengeMode {
 	int m_iMusicIntensityCheckpoint; // 40
 	/* Everything beyond this point seems to be for Linear Scavenge (Follow The Liter)
 	 And it's very hard for me to care about it.
-     Names are mostly bullshit but they almost seem to make sense. Best test would be to read
+	 Names are mostly bullshit but they almost seem to make sense. Best test would be to read
 	 them during gameplay. */
 	CUTLVECTOR(CUTLVECTOR(CHandle)) m_scavengeClusterHandles; // 44
 	CUTLVECTOR(int) m_custerCounts; // 64 yaoright.jpg
