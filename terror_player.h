@@ -405,8 +405,8 @@ struct CTerrorPlayer_data
 	CountdownTimer m_pzRespawnTimer; // 636
 	float m_classTimestamp[9]; // 648
 	int m_classSpawnCount[9]; // 684
-	KeyValues *m_clientSettings;
-	float[3] m_deathPos;
+	void *m_clientSettings; // KeyValues *
+	float m_deathPos[3];
 	float m_timeOfDeath;
 	float m_minDeadDuration;
 	float m_maxDeadDuration; // 744
@@ -431,8 +431,8 @@ struct CTerrorPlayer_data
 	int m_reviveOwner; // 956
 	int m_reviveTarget; // 960
 	CountdownTimer m_reviveTimer; // 964
-	float[3] m_reviveInitialForward;
-	float[3] m_reviveOrigin;
+	float m_reviveInitialForward[3];
+	float m_reviveOrigin[3];
 	int m_reviveKey;
 	int m_currentReviveCount; // 1004
 	bool m_bIsOnThirdStrike; // 1008
@@ -594,11 +594,11 @@ struct CTerrorPlayer_data
 	float m_hangStandPos[3]; // 4004
 	float m_hangNormal[3]; // 4016
 	bool m_canLetGoOfLedge;
-	float[3] m_fallPos;
-	float[3] m_landingPos;
-	EHANDLE m_grabbedEntity;
-	float[3] m_grabbedEntityOrigin;
-	float[3] m_grabbedEntityAngles;
+	float m_fallPos[3];
+	float m_landingPos[3];
+	int m_grabbedEntity; // EHANDLE
+	float m_grabbedEntityOrigin[3];
+	float m_grabbedEntityAngles[3];
 	TerrorNavArea *m_grabArea;
 	CountdownTimer m_ledgeHangGroundCheckTimer;
 	bool m_hasIncapBloodPool;
@@ -623,7 +623,7 @@ struct CTerrorPlayer_data
 	int m_pounceAttackCancelFrame; // 5172
 	IntervalTimer m_lungeDurationTimer; // 5176
 	IntervalTimer m_pounceScreamTimer; // 5184
-	float[3] m_jockeyStaggerValues; // 5192
+	float m_jockeyStaggerValues[3]; // 5192
 	CountdownTimer m_rideDamageTimer; // 5204
 	float m_flRideStartTime; // 5212
 	int m_queuedPounceHunter; // 5216 CHandle<CTerrorPlayer>
