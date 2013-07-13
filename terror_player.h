@@ -599,7 +599,7 @@ struct CTerrorPlayer_data
 	int m_grabbedEntity; // EHANDLE
 	float m_grabbedEntityOrigin[3];
 	float m_grabbedEntityAngles[3];
-	TerrorNavArea *m_grabArea;
+	void *m_grabArea; // TerrorNavArea *
 	CountdownTimer m_ledgeHangGroundCheckTimer;
 	bool m_hasIncapBloodPool;
 	int m_frustration; // 4104
