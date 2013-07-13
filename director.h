@@ -71,6 +71,8 @@ enum PanicEventStage {
 };
 
 // 156 bytes
+// new size 340 bytes
+// INDIVIDUAL OFFSETS HAVE NOT BEEN UPDATED/VERIFIED FOR v2125
 struct CDirectorScriptedEventManager {
 	FinaleType_t m_FinaleType; // 0x00 should have some sort of enum, 5==no script
 	FinaleStageType m_CurrentFinaleStage; // 0x04 there are 16 valid values
@@ -158,6 +160,8 @@ struct CDirectorScavengeMode {
 };
 
 // 8 bytes
+// new size 412 bytes
+// INDIVIDUAL OFFSETS HAVE NOT BEEN UPDATED/VERIFIED FOR v2125
 struct CDirectorChallengeMode {
 	bool m_ChallengeModeActive; // 0
 	int m_hRescueTrigger; // 4 EHANDLE
@@ -245,57 +249,49 @@ struct CDirector {
 	CUTLVECTORFIXEDGROWABLE(CountdownTimer,3) m_pzSpawnTimers; // 636
 	// 3*12 + 4 + 20 = 60
 	char unknown696[12]; // 696
-	bool m_bWitchInPlay; // 708
-	// padding
-	float m_fMobSpawnSize; // 712
-	char unknown716[4]; // 0x2cc
-	float m_fMobSpawnInterval; // 720 I think that's what this is
-	float m_fTankProhibitionInterval; // 724
-	_DWORD m_iUnknown728; // 728 some kind of userid
-	int m_iSelectedTankPlayerId; // 732
-	int m_iNumReservedWanderers; // 736
-	int m_iScavengeItemsRemaining; // 740 For scavenge mode/finales I assume
-	char unknown744[4]; // 744
-	IntervalTimer ElapsedMissionTimer; // 748 Should be timing playtime on this map
-	float m_fCumulativeMissionTime; // 756 Add this to timer duration from above to get TotalElapsedMissionTime
-	char m_sCurrentMap[0x20]; // 760
-	CountdownTimer m_rescueCheckTimer; // 792 see rescue_interval cvar
-	char unknown804[52]; // 804
-	void * m_kvPopulationData; // 856 KeyValues *
-	char unknown860[8]; // 860
-	int m_iMapNumber; // 868, should be 0 indexed into current campaign
-	int m_iSessionStartMapNumber; // 872
-	char unknown876[24]; // 876
-	int m_iMissionWipes; // 900 number of wipes on this mission (coop)
-	ZombieClassType m_zThreatRoster[3]; // 904 Threat roster for coop
-	int m_iNextThreatIdx; // 916 Which threat will be used next?
-	char unknown920[20]; // 920
-	CountdownTimer unknownCTimer940; // 940
-	char unknown952[116]; // 952  "forbidden targets" starts here
-	int m_iDirectorScriptIdx; // 1068 gets passed to g_pScriptVM calls
-	char unknown1072[20]; // 1072
-	int m_iScriptingInts[4]; // 1092 Don't ask me. More scripting contexts?
-	CountdownTimer unknownCTimer1108; // 1108
-	bool m_bUnknown1120; // 1120 0x460
-	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
+	float m_fMobSpawnSize; // 708
+	char unknown712[4];
+	float m_fMobSpawnInterval; // 716 I think that's what this is
+	float m_fTankProhibitionInterval; // 720
+	_DWORD m_iUnknown724; // 724 some kind of userid
+	int m_iSelectedTankPlayerId; // 728
+	int m_iNumReservedWanderers; // 732
+	int m_iScavengeItemsRemaining; // 736 For scavenge mode/finales I assume
+	char unknown740[4];
+	IntervalTimer ElapsedMissionTimer; // 744 Should be timing playtime on this map
+	float m_fCumulativeMissionTime; // 752 Add this to timer duration from above to get TotalElapsedMissionTime
+	char m_sCurrentMap[0x20]; // 756
+	CountdownTimer m_rescueCheckTimer; // 788 see rescue_interval cvar
+	char unknown800[52];
+	void * m_kvPopulationData; // 852 KeyValues *
+	char unknown856[8];
+	int m_iMapNumber; // 864, should be 0 indexed into current campaign
+	int m_iSessionStartMapNumber; // 868
+	char unknown872[24];
+	int m_iMissionWipes; // 896 number of wipes on this mission (coop)
+	ZombieClassType m_zThreatRoster[3]; // 900 Threat roster for coop
+	int m_iNextThreatIdx; // 912 Which threat will be used next?
+	char unknown916[20];
+	CountdownTimer unknownCTimer936;
+	char unknown948[96]; // "forbidden targets" starts here 
+	CountdownTimer unknownCTimer1044;
+	float m_flUnknown1056; // 1056
+	bool m_bUnknown1160;
+	bool m_bIsFirstRoundFinished; // 0x425 Fuck naming this var
 	bool m_bIsSecondRoundFinished; // This one too
 	bool m_bUnknownJunk; // probably related
-	CountdownTimer TransitionTimeoutTimer; // 0x464
-	char unknown1136[284]; // 0x470
-#ifdef PLATFORM_LINUX
-	char unknown_linonly1420[20]; // 0x58c
-#endif
-	char unknown1440[4]; // win 0x58c lin 0x5a0
+	CountdownTimer TransitionTimeoutTimer; // 0x428
+	char unknown1076[308]; // 0x434
 	CDirectorTacticalServices * TacticalServicesPtr;
-	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
+	CDirectorItemManager * ItemManagerPtr; // 0x56c
 	CDirectorMusicBanks * MusicBanksPtr; 
 	CDirectorSessionManager * SessionManagerPtr; 
 	CDirectorScriptedEventManager * ScriptedEventManagerPtr; 
 	CDirectorVersusMode * VersusModePtr; 
-	CDirectorSurvivalMode * SurvivalModePtr; // win 1448 lin 1468
-	CDirectorScavengeMode * ScavengeModePtr; // win 1452 lin 1472
-	CDirectorChallengeMode * ChallengeModePtr; // win 1456 lin 1476
-	char unknown1480[8]; // win 1460 lin 1480
+	CDirectorSurvivalMode * SurvivalModePtr;
+	CDirectorScavengeMode * ScavengeModePtr; 
+	CDirectorChallengeMode * ChallengeModePtr;
+	char unknown1420[8];
 };
 
 #endif //_INCLUDE_DIRECTOR_H_
