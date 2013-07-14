@@ -16,13 +16,14 @@ struct CCallbackBase_data
 };
 
 // template< class T, class P, bool bGameServer >
-// should be size 20
+// should be size 24
 struct CCallback
 {
 	CCallbackBase_iface *vptr;
 	CCallbackBase_data base;
 	void * m_pObj; // T*
 	void * m_Func; // Callback function (T::*func_t)( *P )
+	void * m_Unknown;
 };
 
 #endif // _INCLUDE_STEAM_API_H_

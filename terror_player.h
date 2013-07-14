@@ -297,6 +297,13 @@ struct CCSPlayer_data
 	void * m_pHintMessageQueue; // 9120 CHintMessageQueue
 	char unknown[1708]; // 9124
 	CountdownTimer UnknownTimer; // 10832
+	
+	// TODO: MOVE ME TO WHERE I BELONG
+	// Anything in base classes could be wrong as well!
+	char unknownNEWBYTES[12];
+	#ifdef PLATFORM_WINDOWS
+	char unknownWINBYTES[16];
+	#endif
 };
 // size 92
 struct CTakeDamageInfo
@@ -318,8 +325,8 @@ struct CTakeDamageInfo
 	float m_flRadius; // 88
 };
 
-// offset 10844 in CTerrorPlayer
-// size 5548
+// offset 10856 in CTerrorPlayer
+// 10872 windows (+16)
 struct CTerrorPlayer_data
 {
 	int mm_carryVictim; // 0
@@ -331,7 +338,7 @@ struct CTerrorPlayer_data
 	int m_flinchLayerSequence;
 	int m_fidgetLayerSequence;
 	int m_reloadLayerSequence;
-	int m_reloadAltLayerSequence;
+	int m_reloadAltLayerSequence; // 40
 	int m_reloadLayerNumShells;
 	float m_grenadeLayerStartTime;
 	float m_fireLayerStartTime;
@@ -339,260 +346,264 @@ struct CTerrorPlayer_data
 	float m_fidgetLayerStartTime;
 	float m_reloadLayerStartTime;
 	float m_reloadAltLayerStartTime; // 68
-	int m_prevNetGestureActivity[7]; // 72
-	int m_prevNetGestureStartTime[7]; // 100
-	int m_NetGestureActivity[7]; // 128
-	float m_NetGestureStartTime[7]; // 156
-	float m_fServerAnimStartTime; // 184
-	CCallback m_AchievementStatus; // 188
-	_DWORD m_Unknown208; // 208 
-	int m_useActionTarget; // 212
-	int m_useActionOwner; // 216
-	int m_iCurrentUseAction; // 220 
-	CUTLVECTOR(int) m_trackedSounds; // CTerrorPlayer::TrackedSoundType
-	float m_burnPercent; // 244
-	float m_bbqPercent; // 248
-	int m_vocalizationSubject; // 252 set to -1 in ctor
-	CountdownTimer m_vocalizationSubjectTimer; // 256 doubly network'd? vtable overwritten twice in ctor
-	CountdownTimer m_nameChangeTimer; // 268
-	CountdownTimer m_emotionTimer; // 280
-	bool m_isMainActivityLooping; // 292
-	int m_queuedBloodSplatters;
+	int m_hBuildableButtonUseEnt; // 72
+	int m_prevNetGestureActivity[7]; // 76
+	int m_prevNetGestureStartTime[7]; // 104
+	int m_NetGestureSequence[7]; // 132
+	int m_NetGestureActivity[7]; // 160
+	float m_NetGestureStartTime[7]; // 188
+	float m_fServerAnimStartTime; // 216
+	#ifdef PLATFORM_WINDOWS
+	void * m_UnknownWin220;
+	// Add 4 to all offsets after here on windows
+	#endif
+	CCallback m_AchievementStatus; // 220
+	int m_useActionTarget; // 244
+	int m_useActionOwner; // 248
+	int m_iCurrentUseAction; // 252 
+	CUTLVECTOR(int) m_trackedSounds; // 256 CTerrorPlayer::TrackedSoundType
+	float m_burnPercent; // 276
+	float m_bbqPercent; // 280
+	int m_vocalizationSubject; // 284 set to -1 in ctor
+	CountdownTimer m_vocalizationSubjectTimer; // 288 doubly network'd? vtable overwritten twice in ctor
+	CountdownTimer m_nameChangeTimer; // 300
+	CountdownTimer m_emotionTimer; // 312
+	bool m_isMainActivityLooping; // 324
+	int m_queuedBloodSplatters; // 328
 	int m_queuedMeleeSlashBloodSplatters;
 	int m_queuedMeleeClubBloodSplatters;
 	int m_queuedMudSplatters;
-	int m_survivorCharacter; // 312
-	ZombieClassType m_zombieClass; // 316
+	int m_survivorCharacter; // 344
+	ZombieClassType m_zombieClass; // 348
 	int m_spawnID;
 	ZombieClassType m_randomizedClass;
 	int m_hLastUsedEntity; // EHANDLE
 	CountdownTimer m_tankEffectTimer;
 	float m_lineOfScrimmageFlow;
 	float m_initialLineOfScrimmageFlow;
-	float m_lineOfScrimmagePos[3]; // 352 Vector
-	float m_lineOfScrimmageAngle[3]; // 364 Vector
+	float m_lineOfScrimmagePos[3];
+	float m_lineOfScrimmageAngle[3];
 	float m_rearLineOfScrimmageFlow;
 	float m_initialRearLineOfScrimmageFlow;
-	float m_rearLineOfScrimmagePos[3]; // 384
-	float m_rearLineOfScrimmageAngle[3]; // 396
+	float m_rearLineOfScrimmagePos[3];
+	float m_rearLineOfScrimmageAngle[3];
 	float m_flBecomeGhostAt;
-	float m_scrimmageSphereCenter[3]; // 412
-	float m_scrimmageSphereInitialRadius; // 424
-	int m_scrimmageType; // 428
-	float m_scrimmageStartTime; // 432
-	float m_survivorsLineOfScrimmageDistance; // 436
-	CountdownTimer m_lineOfScrimmageTimer; // 440
-	float m_yardLinePos[3]; // 452
-	char unknown464[48]; // 464
-	float m_yardLineAngles[3]; // 512
-	char unknown524[48]; // 524
-	bool m_survivorsCrossedLineOfScrimmage; // 572
-	bool m_bIsGhost; // 573
-	char padding[2]; // 574
-	int m_ghostSpawnState; // 576
-	int m_ghostSpawnClockMaxDelay; // 580
-	int m_ghostSpawnClockCurrentDelay; // 584
-	CountdownTimer m_ghostStateThrottleTimer; // 588
-	CountdownTimer m_ghostAISpawnDelayTimer; // 600
+	float m_scrimmageSphereCenter[3];
+	float m_scrimmageSphereInitialRadius;
+	int m_scrimmageType;
+	float m_scrimmageStartTime;
+	float m_survivorsLineOfScrimmageDistance;
+	CountdownTimer m_lineOfScrimmageTimer;
+	float m_yardLinePos[3]; // 484
+	char unknown496[48]; // 496
+	float m_yardLineAngles[3]; // 544
+	char unknown556[48];
+	bool m_survivorsCrossedLineOfScrimmage;
+	bool m_bIsGhost;
+	char padding[2];
+	int m_ghostSpawnState;
+	int m_ghostSpawnClockMaxDelay;
+	int m_ghostSpawnClockCurrentDelay;
+	CountdownTimer m_ghostStateThrottleTimer;
+	CountdownTimer m_ghostAISpawnDelayTimer;
 	bool m_ghostOkForFinaleWave;
 	bool m_ghostCanSpawnBeforeSurvivorsLeaveSafety;
 	bool m_ghostSawSurvivorsOutsideFinaleArea;
 	float m_currentGhostMaterializationTime;
 	float m_nextGhostMaterializationTime;
-	float m_flNextShoveTime; // 624
-	int m_iShovePenalty; // 628
-	bool m_isInMissionStartArea; // 632
-	CountdownTimer m_pzRespawnTimer; // 636
-	float m_classTimestamp[9]; // 648
-	int m_classSpawnCount[9]; // 684
-	void *m_clientSettings; // KeyValues *
-	float m_deathPos[3];
+	float m_flNextShoveTime;
+	int m_iShovePenalty;
+	bool m_isInMissionStartArea;
+	CountdownTimer m_pzRespawnTimer; // 668
+	float m_classTimestamp[9]; // 680
+	int m_classSpawnCount[9]; 
+	void *m_clientSettings; // 752 KeyValues *
+	float m_deathPos[3]; // 756
 	float m_timeOfDeath;
 	float m_minDeadDuration;
-	float m_maxDeadDuration; // 744
-	float m_totalDeadDuration; // 748
+	float m_maxDeadDuration;
+	float m_totalDeadDuration;
 	int m_deadCount;
 	float m_farthestSurvivorFlowAtDeath;
 	int m_tugTarget; // CHandle<CTerrorPlayer>
-	int m_dragTarget; // 764
-	char unknown768[16]; // 768
-	short m_siUnknownArray[6]; // 784 set to -1s/0s in ctor
-	_DWORD m_Unknown796; // 796
-	char unknown800[12]; // 800
-	bool m_isIncapacitated; // 812
-	char padding813[3]; // 813
-	char unknown816[4]; // 816
-	CountdownTimer m_incapacitatedDecayTimer; // 820
-	int m_incapacitatedCause; // 832 CHandle<CBaseEntity>
+	int m_dragTarget;
+	char unknown800[16];
+	short m_siUnknownArray[6]; // set to -1s/0s in ctor
+	_DWORD m_Unknown828;
+	char unknown832[12];
+	bool m_isIncapacitated; // 844
+	char padding845[3]; // 845
+	char unknown848[4]; // 848
+	CountdownTimer m_incapacitatedDecayTimer; // 852
+	int m_incapacitatedCause; // CHandle<CBaseEntity>
 	IntervalTimer m_incapacitatedTimer;
 	CountdownTimer m_selfReviveTimer;
-	CTakeDamageInfo m_deathDamageInfo; // 856
-	char unknown948[8]; // 948
-	int m_reviveOwner; // 956
-	int m_reviveTarget; // 960
-	CountdownTimer m_reviveTimer; // 964
+	CTakeDamageInfo m_deathDamageInfo; 
+	char unknown948[8]; 
+	int m_reviveOwner;
+	int m_reviveTarget;
+	CountdownTimer m_reviveTimer;
 	float m_reviveInitialForward[3];
 	float m_reviveOrigin[3];
 	int m_reviveKey;
-	int m_currentReviveCount; // 1004
-	bool m_bIsOnThirdStrike; // 1008
-	bool m_bIsFirstManOut; // 1009
-	char padding1010[2]; // 1010
+	int m_currentReviveCount; // 1036
+	bool m_bIsOnThirdStrike; 
+	bool m_bIsFirstManOut; 
 	int m_missionReviveCount;
-	CountdownTimer m_invulnerabilityTimer; // 1016
-	CountdownTimer m_noAvoidanceTimer; // 1028
-	bool m_isCalm; // 1040
-	CountdownTimer m_calmInhibit; // 1044
-	int m_zombieState; // 1056 ZombieClassStateType
-	char unknown1060[112]; // 1060
-	int m_clientIntensity; // 1172
-	bool m_isAutoCrouchEnabled; // 1176
-	IntervalTimer m_autoCrouchTimer; // 1180
-	char unknown1188[368]; // 1188
-	int m_checkpointSurvivorDamage; // 1556
-	int m_missionSurvivorDamage; // 1560
-	int m_tankTickets; // 1564
-	CountdownTimer m_breatheTimer;
+	CountdownTimer m_invulnerabilityTimer; // 1048
+	CountdownTimer m_noAvoidanceTimer; // 1060
+	bool m_isCalm; // 1072
+	CountdownTimer m_calmInhibit; // 1076
+	int m_zombieState; // 1088 ZombieClassStateType
+	char unknown1092[116]; // 1092
+	int m_clientIntensity; // 1208
+	bool m_isAutoCrouchEnabled; // 1212
+	IntervalTimer m_autoCrouchTimer; 
+	char unknown1220[368];
+	int m_checkpointSurvivorDamage;
+	int m_missionSurvivorDamage;
+	int m_tankTickets; 
+	CountdownTimer m_breatheTimer; 
 	CountdownTimer m_vocalizeTimer;
 	CountdownTimer m_vocalizePainTimer;
 	float m_fNextIdleVocalizeTime;
 	int m_speechPriority; // SpeechPriorityType
 	int m_attemptedSpeechPriority; // SpeechPriorityType
-	int m_customAbility; // 1616
-	char unknown1620[136]; // 1620
-	bool m_hasVisisbleThreats; // 1756
-	char padding1757[3]; // 1757
-	char unknown1760[164]; // 1760
-	CountdownTimer m_staggerTimer; // 1924
-	float m_staggerStart[3]; // 1936
-	float m_staggerDir[3]; // 1948
-	float m_staggerDist; // 1960
+	int m_customAbility; // 1652
+	char unknown1656[136];
+	bool m_hasVisisbleThreats; 
+	char padding1793[3];
+	char unknown1796[164];
+	CountdownTimer m_staggerTimer;
+	float m_staggerStart[3];
+	float m_staggerDir[3];
+	float m_staggerDist;
 	int m_iQueuedStaggerType;
-	CountdownTimer m_tugTimer; // 1968
-	float m_tugStart[3]; // 1980
-	float m_tugDir[3]; // 1992
-	float m_tugDist; // 2004
+	CountdownTimer m_tugTimer; // 2004
+	float m_tugStart[3]; 
+	float m_tugDir[3];
+	float m_tugDist;
 	CountdownTimer m_vomitTimer;
-	int m_vomitingPlayer; // CHandle<CTerrorPlayer>
-	bool m_bAttackerExploded;
-	CountdownTimer m_itTimer; // 2028
+	int m_vomitingPlayer; //  CHandle<CTerrorPlayer>
+	bool m_bAttackerExploded; // 2060
+	CountdownTimer m_itTimer; // 2064
 	int m_itSource; // CHandle<CTerrorPlayer>
 	bool m_wasIt;
 	bool m_bVIPTarget;
 	CountdownTimer m_adrenalineTimer;
-	bool m_bAdrenalineActive; // 2060
-	char padding2061[3]; // 2061
-	char unknown2064[72]; // 2064
-	bool m_isCulling; // 2136
-	bool m_isRelocating; // 2137
-	CountdownTimer m_cullTimer; // 2140
-	CountdownTimer m_stunTimer; // 2152
-	CountdownTimer m_stunImmunityTimer; // 2164
-	bool m_holdingObject; // 2176
-	float m_healthBuffer; // 2180
-	float m_healthBufferTime; // 2184
+	bool m_bAdrenalineActive;
+	char padding2061[3]; 
+	char unknown2064[72]; 
+	bool m_isCulling; 
+	bool m_isRelocating; 
+	CountdownTimer m_cullTimer;
+	CountdownTimer m_stunTimer;
+	CountdownTimer m_stunImmunityTimer;
+	bool m_holdingObject;
+	float m_healthBuffer; // 2216
+	float m_healthBufferTime;
 	int m_healthBufferEventTick;
-	bool m_isGoingToDie; // 2192
-	float m_noiseLevel; // 2196
-	float m_noiseLevelLatch; // 2200
-	int m_iBloodyHandsLevel; // 2204
-	char unknown2208[132]; // 2208
-	float m_shoveForce[3]; // 2340
-	bool m_airMovementRestricted; // 2352
-	int m_positionEntity; // 2356
-	bool m_bSurvivorPositionHidingWeapons; // 2360
-	int m_pushEntity; // 2364
-	float m_pushDistance; // 2368
-	IntervalTimer m_useEntityTimer; // 2372
-	bool m_usingMountedGun; // 2380
-	bool m_usingMountedWeapon; // 2381
-	int m_tongueVictim; // 2384
-	int m_tongueOwner; // 2388
-	IntervalTimer m_tongueVictimTimer; // 2392
-	float m_initialTonguePullDir[3]; // 2400
-	bool m_isHangingFromTongue; // 2412
-	bool m_reachedTongueOwner; // 2413
-	int m_chokingType; // 2416
-	bool m_isProneTongueDrag; // 2420
-	char padding2421[3]; // 2421
+	bool m_isGoingToDie;
+	int m_fOnFireFlags; // 2232 I'm guessing this has to do with the incendiary-extinguish bugfix
+	float m_noiseLevel; // 2236
+	float m_noiseLevelLatch; // 2240
+	int m_iBloodyHandsLevel; // 2244
+	char unknown2248[132]; 
+	float m_shoveForce[3];
+	bool m_airMovementRestricted;
+	int m_positionEntity;
+	bool m_bSurvivorPositionHidingWeapons;
+	int m_pushEntity;
+	float m_pushDistance;
+	IntervalTimer m_useEntityTimer;
+	bool m_usingMountedGun;
+	bool m_usingMountedWeapon;
+	int m_tongueVictim; // 2424
+	int m_tongueOwner;
+	IntervalTimer m_tongueVictimTimer;
+	float m_initialTonguePullDir[3]; 
+	bool m_isHangingFromTongue;
+	bool m_reachedTongueOwner;
+	int m_chokingType;
+	bool m_isProneTongueDrag;
 	CountdownTimer m_chokeTimer;
 	IntervalTimer m_chokeDurationTimer;
 	bool m_hasDonePullSounds;
 	bool m_hasDoneStrainSounds;
 	CountdownTimer m_tongueDragDamageTimer;
 	float m_lastTimeAlive;
-	int m_checkpointAwardCounts[149]; // 2464 lots of awards
-	int m_missionAwardCounts[149]; // 3060
-	int m_checkpointZombieKills[9]; // 3656
-	int m_missionZombieKills[9]; // 3692
-	int m_checkpointMedkitsUsed; // 3728
-	int m_checkpointPillsUsed; // 3732
-	int m_missionMedkitsUsed; // 3736
-	int m_missionPillsUsed; // 3740
-	int m_checkpointMolotovsUsed; // 3744
-	int m_missionMolotovsUsed; // 3748
-	int m_checkpointPipebombsUsed; // 3752
-	int m_missionPipebombsUsed; // 3756
-	int m_checkpointBoomerBilesUsed; // 3760
-	int m_missionBoomerBilesUsed; // 3764
-	int m_checkpointAdrenalinesUsed; // 3768
-	int m_missionAdrenalinesUsed; // 3772
-	int m_checkpointDefibrillatorsUsed; // 3776
-	int m_missionDefibrillatorsUsed; // 3780
-	int m_checkpointDamageTaken; // 3784
-	int m_missionDamageTaken; // 3788
-	int m_checkpointReviveOtherCount; // 3792
-	int m_missionReviveOtherCount; // 3796
-	int m_checkpointFirstAidShared; // 3800
-	int m_missionFirstAidShared; // 3804
-	int m_checkpointIncaps; // 3808
-	int m_missionIncaps; // 3812
-	int m_checkpointDamageToTank; // 3816
-	int m_checkpointDamageToWitch; // 3820
-	char unknown3824[4]; // 3824
-	int m_checkpointHeadshots; // 3828
-	int m_checkpointHeadshotAccuracy; // 3832
-	int m_missionHeadshotAccuracy; // 3836
-	int m_missionAccuracy; // 3840
-	int m_checkpointDeaths; // 3844
-	int m_missionDeaths; // 3848
-	int m_checkpointMeleeKills; // 3852
-	int m_missionMeleeKills; // 3856
+	int m_checkpointAwardCounts[149]; // lots of awards
+	int m_missionAwardCounts[149];
+	int m_checkpointZombieKills[9]; // 3696
+	int m_missionZombieKills[9];
+	int m_checkpointMedkitsUsed;
+	int m_checkpointPillsUsed;
+	int m_missionMedkitsUsed;
+	int m_missionPillsUsed;
+	int m_checkpointMolotovsUsed;
+	int m_missionMolotovsUsed;
+	int m_checkpointPipebombsUsed;
+	int m_missionPipebombsUsed; 
+	int m_checkpointBoomerBilesUsed; 
+	int m_missionBoomerBilesUsed; 
+	int m_checkpointAdrenalinesUsed; 
+	int m_missionAdrenalinesUsed; 
+	int m_checkpointDefibrillatorsUsed; 
+	int m_missionDefibrillatorsUsed; 
+	int m_checkpointDamageTaken; 
+	int m_missionDamageTaken; 
+	int m_checkpointReviveOtherCount; 
+	int m_missionReviveOtherCount; 
+	int m_checkpointFirstAidShared; 
+	int m_missionFirstAidShared; 
+	int m_checkpointIncaps; 
+	int m_missionIncaps; 
+	int m_checkpointDamageToTank; 
+	int m_checkpointDamageToWitch; 
+	char unknown3864[4]; 
+	int m_checkpointHeadshots;  // 3868
+	int m_checkpointHeadshotAccuracy; 
+	int m_missionHeadshotAccuracy; 
+	int m_missionAccuracy; 
+	int m_checkpointDeaths; 
+	int m_missionDeaths; 
+	int m_checkpointMeleeKills; 
+	int m_missionMeleeKills; 
 	int m_checkpointRoundsFired;
 	int m_checkpointRoundsHit;
-	int m_checkpointPZIncaps; // 3868
-	int m_checkpointPZTankDamage; // 3872
-	int m_checkpointPZHunterDamage; // 3876
-	int m_checkpointPZSmokerDamage; // 3880
-	int m_checkpointPZBoomerDamage; // 3884
-	int m_checkpointPZJockeyDamage; // 3888
-	int m_checkpointPZSpitterDamage; // 3892
-	int m_checkpointPZChargerDamage; // 3896
-	int m_checkpointPZKills; // 3900
-	int m_checkpointPZPounces; // 3904
-	int m_checkpointPZPushes; // 3908
-	int m_checkpointPZTankPunches; // 3912
-	int m_checkpointPZTankThrows; // 3916
-	int m_checkpointPZHung; // 3920
-	int m_checkpointPZPulled; // 3924
-	int m_checkpointPZBombed; // 3928
-	int m_checkpointPZVomited; // 3932
-	int m_checkpointPZHighestDmgPounce; // 3936
-	int m_checkpointPZLongestSmokerGrab; // 3940
-	int m_checkpointPZLongestJockeyRide; // 3944
-	int m_checkpointPZNumChargeVictims; // 3948
-	float m_jumpSupressedUntil; // 3952
+	int m_checkpointPZIncaps; 
+	int m_checkpointPZTankDamage; 
+	int m_checkpointPZHunterDamage; 
+	int m_checkpointPZSmokerDamage; 
+	int m_checkpointPZBoomerDamage; 
+	int m_checkpointPZJockeyDamage; 
+	int m_checkpointPZSpitterDamage; 
+	int m_checkpointPZChargerDamage; 
+	int m_checkpointPZKills; 
+	int m_checkpointPZPounces; 
+	int m_checkpointPZPushes; 
+	int m_checkpointPZTankPunches; 
+	int m_checkpointPZTankThrows; 
+	int m_checkpointPZHung; 
+	int m_checkpointPZPulled; 
+	int m_checkpointPZBombed; 
+	int m_checkpointPZVomited; 
+	int m_checkpointPZHighestDmgPounce; 
+	int m_checkpointPZLongestSmokerGrab; 
+	int m_checkpointPZLongestJockeyRide; 
+	int m_checkpointPZNumChargeVictims; 
+	float m_jumpSupressedUntil; 
 	bool m_hasDoneOnLeavingCheckpoint;
 	int m_preIncapacitatedHealth;
 	int m_preIncapacitatedHealthBuffer;
 	bool m_hasHangPos;
-	bool m_isHangingFromLedge; // 3969
-	bool m_isFallingFromLedge; // 3970
-	IntervalTimer m_hangTimer; // 3972
-	float m_hangAirPos[3]; // 3980
-	float m_hangPos[3]; // 3992
-	float m_hangStandPos[3]; // 4004
-	float m_hangNormal[3]; // 4016
+	bool m_isHangingFromLedge; 
+	bool m_isFallingFromLedge; 
+	IntervalTimer m_hangTimer; 
+	float m_hangAirPos[3]; 
+	float m_hangPos[3]; 
+	float m_hangStandPos[3]; 
+	float m_hangNormal[3]; 
 	bool m_canLetGoOfLedge;
 	float m_fallPos[3];
 	float m_landingPos[3];
@@ -602,81 +613,81 @@ struct CTerrorPlayer_data
 	void *m_grabArea; // TerrorNavArea *
 	CountdownTimer m_ledgeHangGroundCheckTimer;
 	bool m_hasIncapBloodPool;
-	int m_frustration; // 4104
-	char unknown4108[968]; // 4108
-	int m_pummelVictim; // 5076
-	int m_pummelAttacker; // 5080
+	int m_frustration; 
+	char unknown4148[968]; 
+	int m_pummelVictim; 
+	int m_pummelAttacker; 
 	int m_queuedPummelVictim; // CHandle<CTerrorPlayer>
 	float m_flQueuedPummelTime;
 	int m_queuedPummelAttacker; // CHandle<CTerrorPlayer>
 	CountdownTimer m_getUpFromDefibTimer;
-	int m_pounceVictim; // 5108
-	int m_pounceAttacker; // 5112
+	int m_pounceVictim; 
+	int m_pounceAttacker; 
 	CountdownTimer m_pounceDamageTimer;
-	bool m_isAttemptingToPounce; // 5128
-	bool m_isPouncedOnVictim; // 5129
-	int m_pounceHealth; // 5132
-	float m_pounceStartPosition[3]; // 5136
-	bool m_pounceScream; // 5148
-	CountdownTimer m_pounceTargetTimer; // 5152
-	IntervalTimer m_pounceDurationTimer; // 5164
-	int m_pounceAttackCancelFrame; // 5172
-	IntervalTimer m_lungeDurationTimer; // 5176
-	IntervalTimer m_pounceScreamTimer; // 5184
-	float m_jockeyStaggerValues[3]; // 5192
-	CountdownTimer m_rideDamageTimer; // 5204
-	float m_flRideStartTime; // 5212
-	int m_queuedPounceHunter; // 5216 CHandle<CTerrorPlayer>
-	float m_queuedPounceTime; // 5220
-	int m_jockeyVictim; // 5228
-	int m_jockeyAttacker; // 5232
-	int m_hInstancedScene; // 5236 EHANDLE
-	float m_jockeyForwardMove; // 5240
-	float m_jockeySideMove; // 5244
-	float m_jockeyYaw; // 5248
-	CountdownTimer m_specialAttachTimer; // 5252
-	float m_fSpecialAttachTime; // 5264
-	bool m_bSpecialFirmAttach; // 5268
-	// char padding[3]; // 5269
-	float m_jockeyDesiredMove[3]; // 5272
-	bool m_jockeyRotatedDesire; // 5284
-	float m_vomitStart; // 5288
-	float m_vomitFadeStart; // 5292
-	float m_bashedStart; // 5296
-	float m_salivaStart; // 5300
-	int m_knockdownReason; // 5304
-	IntervalTimer m_knockdownTimer; // 5308
-	char unknown5316[128]; // 5316
-	int m_iVersusTeam; // 5444
-	float m_flSpectatingKickTime;
-	float m_flFlashLightResetTimer;
-	bool m_bSkippingOuttro;
-	int m_PZEndGameVote; // EPZEndGamePanelVote
-	unsigned int m_iPlayerReportID;
-	bool m_bIdleAfterLevelTransition;
+	bool m_isAttemptingToPounce; 
+	bool m_isPouncedOnVictim; 
+	int m_pounceHealth; 
+	float m_pounceStartPosition[3]; 
+	bool m_pounceScream; 
+	CountdownTimer m_pounceTargetTimer; 
+	IntervalTimer m_pounceDurationTimer; 
+	int m_pounceAttackCancelFrame; 
+	IntervalTimer m_lungeDurationTimer; 
+	IntervalTimer m_pounceScreamTimer; 
+	float m_jockeyStaggerValues[3]; 
+	CountdownTimer m_rideDamageTimer; 
+	float m_flRideStartTime; 
+	int m_queuedPounceHunter; // CHandle<CTerrorPlayer>
+	float m_queuedPounceTime; 
+	int m_jockeyVictim; 
+	int m_jockeyAttacker; 
+	int m_hInstancedScene; // EHANDLE
+	float m_jockeyForwardMove; 
+	float m_jockeySideMove; 
+	float m_jockeyYaw; 
+	CountdownTimer m_specialAttachTimer; 
+	float m_fSpecialAttachTime; 
+	bool m_bSpecialFirmAttach; 
+	// char padding[3]; 
+	float m_jockeyDesiredMove[3]; 
+	bool m_jockeyRotatedDesire; 
+	float m_vomitStart; 
+	float m_vomitFadeStart; 
+	float m_bashedStart; 
+	float m_salivaStart; 
+	int m_knockdownReason; 
+	IntervalTimer m_knockdownTimer; 
+	char unknown5356[128]; 
+	int m_iVersusTeam; // 5484
+	float m_flSpectatingKickTime; // 5488
+	float m_flFlashLightResetTimer; // 5492
+	bool m_bSkippingOuttro; // 5496
+	int m_PZEndGameVote; // 5500 EPZEndGamePanelVote
+	unsigned int m_iPlayerReportID; // 5504
+	bool m_bIdleAfterLevelTransition; // 5508
 	bool m_bIdleWhenTakingOverBot;
-	CountdownTimer m_GoAFKTimer;
-	int m_lookatPlayer; // 5484
-	bool m_bSurvivorGlowEnabled; //5488
+	CountdownTimer m_GoAFKTimer; // 5512
+	int m_lookatPlayer;  // 5524
+	bool m_bSurvivorGlowEnabled; // 5528
 	bool m_bBeingRelocated;
 	int m_iRelocatedHealth;
 	float m_flRelocatedAbilityTime;
 	float m_flRelocatedAbilityDuration;
-	bool m_bWasPresentAtSurvivalStart; // 5504
+	bool m_bWasPresentAtSurvivalStart; 
 	// padding[3]
-	float m_flSurvivalRecordTime; // 5508
-	int m_nSurvivalTopMedal; // 5512
-	int m_iSpecialSlot; // 5516
-	bool m_bBeingRevivedByDefibrillator; // 5520
-	float m_flTimeIgnoreFallDamage; // 5524
-	bool m_bIgnoreFallDamageResetAfterImpact; // 5528
+	float m_flSurvivalRecordTime; 
+	int m_nSurvivalTopMedal; 
+	int m_iSpecialSlot; 
+	bool m_bBeingRevivedByDefibrillator; 
+	float m_flTimeIgnoreFallDamage; 
+	bool m_bIgnoreFallDamageResetAfterImpact; 
 	bool m_bEnableLedgeHang;
 	bool m_bCommentaryStatueMode;
 	// padding[1];
-	int m_nVariantType; //5532
-	float m_TimeForceExternalView; // 5536
-	char unknown5540[8]; // 5540
-}; // 5548
+	int m_nVariantType;
+	float m_TimeForceExternalView; 
+	char unknown5580[8]; 
+}; 
 
 struct CBaseEntity
 {
