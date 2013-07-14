@@ -197,8 +197,8 @@ enum ScenarioRestartReason
 	RESTART_MISSION_ABORTED=18,
 };
 
-// Win32: 1460 bytes
-// Lin: 1480 bytes
+// Win32: 1420 bytes
+// Lin: 1420 bytes
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
 	char unknown4[156]; // 0x04

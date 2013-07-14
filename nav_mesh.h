@@ -309,7 +309,7 @@ struct INavAvoidanceObstacle
 	INavAvoidanceObstacle_iface *vptr;
 };
 
-// 1512?
+// 1520?
 struct CNavMesh_data
 {
 	int unk0; // 0
@@ -353,45 +353,47 @@ struct CNavMesh_data
 	CNavLadder *m_lastSelectedLadder; // 1212
 	CNavLadder *m_markedLadder; // 1216
 	CountdownTimer m_showAreaInfoTimer; // 1220
-	
 	NavAreaVector m_selectedSet; // 1232
 	NavAreaVector m_dragSelectionSet; // 1252
-	bool m_isContinuouslySelecting; // 12
-	bool m_isContinuouslyDeselecting; // 1245
-
-	bool m_bIsDragDeselecting; // 1246
-	int m_nDragSelectionVolumeZMax; // 1248
-	int m_nDragSelectionVolumeZMin; // 1252
-	CNavNode *m_currentNode; // 1256
-	int m_generationDir; // 1260 NavDirType
-	NavLadderVector m_ladders; // 1264
-	int m_generationState; // 1284 GenerationStateType
-	int m_generationMode; // 1288 GenerationModeType
-	int m_generationIndex; // 1292
-	int m_sampleTick; // 1296
-	bool m_bQuitWhenFinished; // 1300 
-	float m_generationStartTime; // 1304
-	Extent m_simplifyGenerationExtent; // 1308
-	char *m_spawnName; // 1332
-	CUTLVECTOR(WalkableSeedSpot) m_walkableSeeds; // 1336
-	int m_seedIdx; // 1356
-	int m_hostThreadModeRestoreValue; // 1360
-	NavAreaVector m_transientAreas; // 1364
-	NavAreaVector m_avoidanceObstacleAreas; // 1384
-	CUTLVECTOR(INavAvoidanceObstacle) m_avoidanceObstacles; // 1404
-	NavAreaVector m_blockedAreas; // 1424
-	
-	CUTLVECTOR(int) m_storedSelectedSet; // 1444
-	char unknown1464[48]; // 1464
+	bool m_isContinuouslySelecting; // 1272
+	bool m_isContinuouslyDeselecting; // 1273
+	bool m_bIsDragDeselecting; // 1274
+	int m_nDragSelectionVolumeZMax; // 1276
+	int m_nDragSelectionVolumeZMin; // 1280
+	CNavNode *m_currentNode; // 1284
+	int m_generationDir; // 1288 NavDirType
+	NavLadderVector m_ladders; // 1292
+	int m_generationState; // 1312 GenerationStateType
+	int m_generationMode; // 1316 GenerationModeType
+	int m_generationIndex; // 1320
+	int m_sampleTick; // 1324
+	bool m_bQuitWhenFinished; // 1328
+	float m_generationStartTime; // 1332
+	Extent m_simplifyGenerationExtent; // 1336
+	char *m_spawnName; // 1360
+	CUTLVECTOR(WalkableSeedSpot) m_walkableSeeds; // 1364
+	int m_seedIdx; // 1384
+	int m_hostThreadModeRestoreValue; // 1388
+	NavAreaVector m_transientAreas; // 1392
+	NavAreaVector m_avoidanceObstacleAreas; // 1412
+	CUTLVECTOR(INavAvoidanceObstacle) m_avoidanceObstacles; // 1432
+	NavAreaVector m_blockedAreas; // 1452
+	CUTLVECTOR(int) m_storedSelectedSet; // 1472
+	char unknown1492[28]; // 1492
 };
 
-// 228?
+// starts at base + 1524
+// total size 1744.
+// size 220.
 struct TerrorNavMesh_data
 {
-	char unknown0[120];
-	Checkpoint **m_checkpoints; // 1636 nav areas?
-	char unknown128[8]; // 1640
-	int m_iNumCheckpoints; // 1648 Checkpoint == saferoom
+	// base 1524
+	float m_fMapMaxFlowDistance; // 0
+	char unknown4[108];
+	Checkpoint **m_checkpoints; // 112 nav areas?
+	char unknown116[8]; // 116
+	int m_iNumCheckpoints; // 124 Checkpoint == saferoom
+	char unknown128[92];
 };
 
 struct CNavMesh
