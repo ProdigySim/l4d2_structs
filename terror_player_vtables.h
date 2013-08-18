@@ -205,37 +205,38 @@ struct CBaseEntity_iface
 // sizeof(CBaseAnimating_iface) == 124
 struct CBaseAnimating_iface
 {
-	void * GetIdealSpeed; // 0
-	void * GetIdealAccel; // 4
-	void * StudioFrameAdvance; // 8
-	void * ReachedEndOfSequence; // 12
-	void * OnSequenceSet; // 16
-	void * IsActivityFinished; // 20
-	void * GetSequenceGroundSpeed; // 24
-	void * ClampRagdollForce; // 28
-	void * BecomeRagdollOnClient; // 32
-	void * IsRagdoll; // 36
-	void * CanBecomeRagdoll; // 40
-	void * GetSkeleton; // 44
-	void * GetBoneTransform; // 48
-	void * SetupBones; // 52
-	void * CalculateIKLocks; // 56
-	void * DispatchAnimEvents; // 60
-	void * HandleAnimEvent; // 64
-	void * PopulatePoseParameters; // 68
-	void * GetAttachment; // 72
-	void * InitBoneControllers; // 76
-	void * GetGroundSpeedVelocity; // 80
-	void * IsViewModel; // 84
-	void * Ignite; // 88
-	void * IgniteLifetime; // 92
-	void * IgniteUseCheapEffect; // 96
-	void * Extinguish; // 100
-	void * IsFrozen; // 104
-	void * Freeze; // 108
-	void * Unfreeze; // 112
-	void * Dissolve; // 116
-	void * SetLightingOrigin; // 120
+	void * GetIdealSpeed; // 200 
+	void * GetIdealAccel;
+	void * StudioFrameAdvance;
+	void * ReachedEndOfSequence;
+	void * OnSequenceSet;
+	void * IsActivityFinished;
+	void * GetSequenceGroundSpeed;
+	void * SelectWeightedSequence;  // 207
+	void * ClampRagdollForce;
+	void * BecomeRagdollOnClient;
+	void * IsRagdoll;
+	void * CanBecomeRagdoll;
+	void * GetSkeleton;
+	void * GetBoneTransform;
+	void * SetupBones;
+	void * CalculateIKLocks;
+	void * DispatchAnimEvents;
+	void * HandleAnimEvent;
+	void * PopulatePoseParameters;
+	void * GetAttachment;
+	void * InitBoneControllers;
+	void * GetGroundSpeedVelocity;
+	void * IsViewModel;
+	void * Ignite;
+	void * IgniteLifetime;
+	void * IgniteUseCheapEffect;
+	void * Extinguish;
+	void * IsFrozen;
+	void * Freeze;
+	void * Unfreeze;
+	void * Dissolve;
+	void * SetLightingOrigin;
 };
 
 // sizeof(CBaseFlex_iface) == 32
