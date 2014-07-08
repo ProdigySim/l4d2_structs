@@ -470,7 +470,9 @@ struct CTerrorPlayer_data
 	int m_speechPriority; // SpeechPriorityType
 	int m_attemptedSpeechPriority; // SpeechPriorityType
 	int m_customAbility; // 1652
-	char unknown1656[136];
+	char unknown1656[100];
+	IntervalTimer m_TimeSinceLastLOS;
+	char unknown1764[28];
 	bool m_hasVisisbleThreats; 
 	char padding1793[3];
 	char unknown1796[164];
@@ -614,7 +616,8 @@ struct CTerrorPlayer_data
 	CountdownTimer m_ledgeHangGroundCheckTimer;
 	bool m_hasIncapBloodPool;
 	int m_frustration; 
-	char unknown4148[968]; 
+	CountdownTimer m_FrustrationUpdateTimer; // Gates CTerrorPlayer::UpdateZombieFrustration to only run once per second.
+	char unknown4160[956];
 	int m_pummelVictim; 
 	int m_pummelAttacker; 
 	int m_queuedPummelVictim; // CHandle<CTerrorPlayer>

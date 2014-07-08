@@ -220,7 +220,9 @@ struct CDirector {
 	float m_fTankFlowDistance; // 0x104
 	char unknown264[8]; // 264
 	CountdownTimer ZombieGhostSpawnTimer; // 272 Started with z_ghost_spawn_interval whenever SI dies during normal gameplay
-	char unknown284[104]; // 284
+	bool m_bTankFrustrationEnabled; // 284
+	char padding285[3]; // 285
+	char unknown288[100]; // 284
 	float m_fAvgSurvivorSpan; // 388
 	float m_fAvgSurvivorSpeed; // 392
 	float m_fFurthestSurvivorFlow; // 396
