@@ -201,7 +201,9 @@ enum ScenarioRestartReason
 // Lin: 1420 bytes
 struct CDirector {
 	CDirector_vtable * vptr; // 0x0
-	char unknown4[156]; // 0x04
+	char unknown4[84]; // 0x04
+	int m_iTankSwapCount; // 0x58 see: CDirector::UpdateTankSpawns() and CTerrorPlayer::UpdateZombieFrustration()
+	char unknown92[68];
 	bool m_bHasSurvivorLeftSafeArea; // 160
 	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
 	char padding162[2]; // 161
