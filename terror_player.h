@@ -401,15 +401,24 @@ struct CTerrorPlayer_data
 	bool m_survivorsCrossedLineOfScrimmage;
 	bool m_bIsGhost;
 	char padding[2];
+	
 	// Spawn State - These look like flags, but get used like static values quite often.
-	// SPAWN_OK 0
-	// SPAWNING_DISABLED 1  "Spawning has been disabled..." (e.g. director_no_specials 1)
-	// PZ_WAITING_FOR_SURVIVORS 2 "Waiting for Survivors..."
-	// PZ_FINALE_SETUP 4 "Waiting for the finale to begin..."
-	// PZ_TANK_BATTLE 8 "Waiting for Tank battle conclusion..."
-	// PZ_SURVIVORS_ESCAPED 16 "The Survivors have escaped..."
-	// PZ_FINALE_WAVE 64 "Waiting for the next swarm of Infected..."
+	// These names were pulled from reversing client.dll--specifically CHudGhostPanel::OnTick()'s uses of the "#L4D_Zombie_UI_*" strings
+	//
+	// SPAWN_OK             0
+	// SPAWN_DISABLED       1  "Spawning has been disabled..." (e.g. director_no_specials 1)
+	// WAIT_FOR_SAFE_AREA   2  "Waiting for the Survivors to leave the safe area..."
+	// WAIT_FOR_FINALE      4  "Waiting for the finale to begin..."
+	// WAIT_FOR_TANK        8  "Waiting for Tank battle conclusion..."
+	// SURVIVOR_ESCAPED    16  "The Survivors have escaped..."
+	// DIRECTOR_TIMEOUT    32  "The Director has called a time-out..." (lol wat)
+	// WAIT_FOR_STAMPEDE   64  "Waiting for the next stampede of Infected..."
+	// CAN_BE_SEEN        128  "Can't spawn here" "You can be seen by the Survivors"
+	// TOO_CLOSE          256  "Can't spawn here" "You are too close to the Survivors"
+	// RESTRICTED_AREA    512  "Can't spawn here" "This is a restricted area"
+	// INSIDE_ENTITY     1024  "Can't spawn here" "Something is blocking this spot"
 	int m_ghostSpawnState;
+	
 	int m_ghostSpawnClockMaxDelay;
 	int m_ghostSpawnClockCurrentDelay;
 	CountdownTimer m_ghostStateThrottleTimer;
