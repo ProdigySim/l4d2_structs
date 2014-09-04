@@ -401,6 +401,14 @@ struct CTerrorPlayer_data
 	bool m_survivorsCrossedLineOfScrimmage;
 	bool m_bIsGhost;
 	char padding[2];
+	// Spawn State - These look like flags, but get used like static values quite often.
+	// SPAWN_OK 0
+	// SPAWNING_DISABLED 1  "Spawning has been disabled..." (e.g. director_no_specials 1)
+	// PZ_WAITING_FOR_SURVIVORS 2 "Waiting for Survivors..."
+	// PZ_FINALE_SETUP 4 "Waiting for the finale to begin..."
+	// PZ_TANK_BATTLE 8 "Waiting for Tank battle conclusion..."
+	// PZ_SURVIVORS_ESCAPED 16 "The Survivors have escaped..."
+	// PZ_FINALE_WAVE 64 "Waiting for the next swarm of Infected..."
 	int m_ghostSpawnState;
 	int m_ghostSpawnClockMaxDelay;
 	int m_ghostSpawnClockCurrentDelay;
