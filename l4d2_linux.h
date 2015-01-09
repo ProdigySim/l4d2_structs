@@ -12,6 +12,6 @@
 #include "lunge.h"
 #include "gamerules.h"
 #include "weapon_info.h"
-
+#include "abilities.h"
 
 #endif

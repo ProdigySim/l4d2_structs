@@ -11,6 +11,6 @@
 #include "globalvars.h"
 #include "lunge.h"
 #include "gamerules.h"
-
+#include "abilities.h"
 
 #endif
