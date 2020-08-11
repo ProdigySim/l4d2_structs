@@ -8,10 +8,6 @@ struct IMemAlloc_iface
 	void * Realloc;
 	void * Free;
 	void * Expand_NoLongerSupported;
-	void * Alloc;
-	void * Realloc;
-	void * Free;
-	void * Expand_NoLongerSupported;
 	void * GetSize;
 	void * PushAllocDbgInfo;
 	void * PopAllocDbgInfo;
@@ -41,7 +37,7 @@ struct IMemAlloc_iface
 	void * CompactIncremental;
 	void * OutOfMemory;
 	void * RegionAlloc;
-	void * RegionAlloc;
+	void * RegionAlloc2;
 	void * GlobalMemoryStatus;
 };
 

@@ -17,3 +17,11 @@ Usage
 In IDA, go to File -> Load File -> Parse C Header File or hit Ctrl+F9.
 
 Then, select l4d2_linux.h or l4d2_windows.h depending on which platform's server binary you are reading.
+
+
+LuxLuma fork:
+
+Windows offsets have not been maintained at all they are all likely wrong
+
+Credits:
+silvershot fixing errors that would happen from main repo.

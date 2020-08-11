@@ -9,7 +9,217 @@ struct CBaseEntity;
 #include "steam_api.h"
 #include "network_var.h"
 #include "util.h"
+#include "collision_property.h"
+#include "glow_property.h"
 
+enum Entity_Flags
+{
+	EFL_KILLME = (1 << 0),	// This entity is marked for death -- This allows the game to actually delete ents at a safe time
+	EFL_DORMANT = (1 << 1),	// Entity is dormant, no updates to client
+	EFL_NOCLIP_ACTIVE = (1 << 2),	// Lets us know when the noclip command is active.
+	EFL_SETTING_UP_BONES = (1 << 3),	// Set while a model is setting up its bones.
+	EFL_KEEP_ON_RECREATE_ENTITIES = (1 << 4), // This is a special entity that should not be deleted when we restart entities only
+
+	EFL_HAS_PLAYER_CHILD = (1 << 4),	// One of the child entities is a player.
+
+	EFL_DIRTY_SHADOWUPDATE = (1 << 5),	// Client only- need shadow manager to update the shadow...
+	EFL_NOTIFY = (1 << 6),	// Another entity is watching events on this entity (used by teleport)
+
+	// The default behavior in ShouldTransmit is to not send an entity if it doesn't
+	// have a model. Certain entities want to be sent anyway because all the drawing logic
+	// is in the client DLL. They can set this flag and the engine will transmit them even
+	// if they don't have a model.
+	EFL_FORCE_CHECK_TRANSMIT = (1 << 7),
+
+	EFL_BOT_FROZEN = (1 << 8),	 // This is set on bots that are frozen.
+	EFL_SERVER_ONLY = (1 << 9),	 // Non-networked entity.
+	EFL_NO_AUTO_EDICT_ATTACH = (1 << 10), // Don't attach the edict; we're doing it explicitly
+
+	// Some dirty bits with respect to abs computations
+	EFL_DIRTY_ABSTRANSFORM = (1 << 11),
+	EFL_DIRTY_ABSVELOCITY = (1 << 12),
+	EFL_DIRTY_ABSANGVELOCITY = (1 << 13),
+	EFL_DIRTY_SURR_COLLISION_BOUNDS = (1 << 14),
+	EFL_DIRTY_SPATIAL_PARTITION = (1 << 15),
+	//	UNUSED					=			(1<<16),
+
+	EFL_IN_SKYBOX = (1 << 17), // This is set if the entity detects that it's in the skybox.
+	 // This forces it to pass the "in PVS" for transmission.
+	 EFL_USE_PARTITION_WHEN_NOT_SOL = (1 << 18), // Entities with this flag set show up in the partition even when not solid
+	 EFL_TOUCHING_FLUID = (1 << 19), // Used to determine if an entity is floating
+
+	 // FIXME: Not really sure where I should add this...
+	 EFL_IS_BEING_LIFTED_BY_BARNACLE = (1 << 20),
+	 EFL_NO_ROTORWASH_PUSH = (1 << 21), // I shouldn't be pushed by the rotorwash
+	 EFL_NO_THINK_FUNCTION = (1 << 22),
+	 EFL_NO_GAME_PHYSICS_SIMULATION = (1 << 23),
+
+	 EFL_CHECK_UNTOUCH = (1 << 24),
+	 EFL_DONTBLOCKLOS = (1 << 25), // I shouldn't block NPC line-of-sight
+	 EFL_DONTWALKON = (1 << 26), // NPC;s should not walk on this entity
+	 EFL_NO_DISSOLVE = (1 << 27), // These guys shouldn't dissolve
+	 EFL_NO_MEGAPHYSCANNON_RAGDOLL = (1 << 28), // Mega physcannon can't ragdoll these guys.
+	 EFL_NO_WATER_VELOCITY_CHANGE = (1 << 29), // Don't adjust this entity's velocity when transitioning into water
+	 EFL_NO_PHYSCANNON_INTERACTION = (1 << 30), // Physcannon can't pick these up or punt them
+	 EFL_NO_DAMAGE_FORCES = (1 << 31), // Doesn't accept forces from physics damage
+};
+
+enum SolidFlags_t
+{
+	FSOLID_CUSTOMRAYTEST		= 0x0001,	// Ignore solid type + always call into the entity for ray tests
+	FSOLID_CUSTOMBOXTEST		= 0x0002,	// Ignore solid type + always call into the entity for swept box tests
+	FSOLID_NOT_SOLID			= 0x0004,	// Are we currently not solid?
+	FSOLID_TRIGGER				= 0x0008,	// This is something may be collideable but fires touch functions
+											// even when it's not collideable (when the FSOLID_NOT_SOLID flag is set)
+	FSOLID_NOT_STANDABLE		= 0x0010,	// You can't stand on this
+	FSOLID_VOLUME_CONTENTS		= 0x0020,	// Contains volumetric contents (like water)
+	FSOLID_FORCE_WORLD_ALIGNED	= 0x0040,	// Forces the collision rep to be world-aligned even if it's SOLID_BSP or SOLID_VPHYSICS
+	FSOLID_USE_TRIGGER_BOUNDS	= 0x0080,	// Uses a special trigger bounds separate from the normal OBB
+	FSOLID_ROOT_PARENT_ALIGNED	= 0x0100,	// Collisions are defined in root parent's local coordinate space
+	FSOLID_TRIGGER_TOUCH_DEBRIS	= 0x0200,	// This trigger will touch debris objects
+
+	FSOLID_MAX_BITS	= 10
+};
+
+enum SolidType_t
+{
+	SOLID_NONE = 0,	// no solid model
+	SOLID_BSP = 1,	// a BSP tree
+	SOLID_BBOX = 2,	// an AABB
+	SOLID_OBB = 3,	// an OBB (not implemented yet)
+	SOLID_OBB_YAW = 4,	// an OBB, constrained so that it can only yaw
+	SOLID_CUSTOM = 5,	// Always call into the entity for tests
+	SOLID_VPHYSICS = 6,	// solid vphysics object, get vcollide from the model and collide with that
+	SOLID_LAST,
+};
+
+/*
+ * Collision groups
+ * Taken from hl2sdk-ob-valve/public/const.h
+ */
+enum Collision_Group_t
+{
+	COLLISION_GROUP_NONE  = 0,
+	COLLISION_GROUP_DEBRIS,				// Collides with nothing but world and static stuff
+	COLLISION_GROUP_DEBRIS_TRIGGER,		// Same as debris, but hits triggers
+	COLLISION_GROUP_INTERACTIVE_DEB,	// Collides with everything except other interactive debris or debris
+	COLLISION_GROUP_INTERACTIVE,		// Collides with everything except interactive debris or debris
+	COLLISION_GROUP_PLAYER,
+	COLLISION_GROUP_BREAKABLE_GLASS,
+	COLLISION_GROUP_VEHICLE,
+	COLLISION_GROUP_PLAYER_MOVEMENT,	// For HL2, same as Collision_Group_Player, for
+										// TF2, this filters out other players and CBaseObjects
+	COLLISION_GROUP_NPC,				// Generic NPC group
+	COLLISION_GROUP_IN_VEHICLE,			// for any entity inside a vehicle
+	COLLISION_GROUP_WEAPON,				// for any weapons that need collision detection
+	COLLISION_GROUP_VEHICLE_CLIP,		// vehicle clip brush to restrict vehicle movement
+	COLLISION_GROUP_PROJECTILE,			// Projectiles!
+	COLLISION_GROUP_DOOR_BLOCKER,		// Blocks entities not permitted to get near moving doors
+	COLLISION_GROUP_PASSABLE_DOOR,		// Doors that the player shouldn't collide with
+	COLLISION_GROUP_DISSOLVING,			// Things that are dissolving are in this group
+	COLLISION_GROUP_PUSHAWAY,			// Nonsolid on client and server, pushaway in player code
+
+	COLLISION_GROUP_NPC_ACTOR,			// Used so NPCs in scripts ignore the player.
+	COLLISION_GROUP_NPC_SCRIPTED		// USed for NPCs in scripts that should not collide with each other
+};
+
+enum MoveType
+{
+	MOVETYPE_NONE = 0,			/**< never moves */
+	MOVETYPE_ISOMETRIC,			/**< For players */
+	MOVETYPE_WALK,				/**< Player only - moving on the ground */
+	MOVETYPE_STEP,				/**< gravity, special edge handling -- monsters use this */
+	MOVETYPE_FLY,				/**< No gravity, but still collides with stuff */
+	MOVETYPE_FLYGRAVITY,		/**< flies through the air + is affected by gravity */
+	MOVETYPE_VPHYSICS,			/**< uses VPHYSICS for simulation */
+	MOVETYPE_PUSH,				/**< no clip to world, push and crush */
+	MOVETYPE_NOCLIP,			/**< No gravity, no collisions, still do velocity/avelocity */
+	MOVETYPE_LADDER,			/**< Used by players only when going onto a ladder */
+	MOVETYPE_OBSERVER,			/**< Observer movement, depends on player's observer mode */
+	MOVETYPE_CUSTOM,			/**< Allows the entity to describe its own physics */
+};
+
+enum RenderMode
+{
+	RENDER_NORMAL = 0,			/**< src */
+	RENDER_TRANSCOLOR,		/**< c*a+dest*(1-a) */
+	RENDER_TRANSTEXTURE,	/**< src*a+dest*(1-a) */
+	RENDER_GLOW,			/**< src*a+dest -- No Z buffer checks -- Fixed size in screen space */
+	RENDER_TRANSALPHA,		/**< src*srca+dest*(1-srca) */
+	RENDER_TRANSADD,		/**< src*a+dest */
+	RENDER_ENVIRONMENTAL,	/**< not drawn, used for environmental effects */
+	RENDER_TRANSADDFRAMEBLEND, /**< use a fractional frame value to blend between animation frames */
+	RENDER_TRANSALPHAADD,	/**< src + dest*(1-a) */
+	RENDER_WORLDGLOW,		/**< Same as kRenderGlow but not fixed size in screen space */
+	RENDER_NONE,			/**< Don't render. */
+};
+
+enum RenderFx
+{
+	RENDERFX_NONE = 0,
+	RENDERFX_PULSE_SLOW,
+	RENDERFX_PULSE_FAST,
+	RENDERFX_PULSE_SLOW_WIDE,
+	RENDERFX_PULSE_FAST_WIDE,
+	RENDERFX_FADE_SLOW,
+	RENDERFX_FADE_FAST,
+	RENDERFX_SOLID_SLOW,
+	RENDERFX_SOLID_FAST,
+	RENDERFX_STROBE_SLOW,
+	RENDERFX_STROBE_FAST,
+	RENDERFX_STROBE_FASTER,
+	RENDERFX_FLICKER_SLOW,
+	RENDERFX_FLICKER_FAST,
+	RENDERFX_NO_DISSIPATION,
+	RENDERFX_DISTORT,			/**< Distort/scale/translate flicker */
+	RENDERFX_HOLOGRAM,			/**< kRenderFxDistort + distance fade */
+	RENDERFX_EXPLODE,			/**< Scale up really big! */
+	RENDERFX_GLOWSHELL,			/**< Glowing Shell */
+	RENDERFX_CLAMP_MIN_SCALE,	/**< Keep this sprite from getting very small (SPRITES only!) */
+	RENDERFX_ENV_RAIN,			/**< for environmental rendermode, make rain */
+	RENDERFX_ENV_SNOW,			/**<  "        "            "    , make snow */
+	RENDERFX_SPOTLIGHT,			/**< TEST CODE for experimental spotlight */
+	RENDERFX_RAGDOLL,			/**< HACKHACK: TEST CODE for signalling death of a ragdoll character */
+	RENDERFX_PULSE_FAST_WIDER,
+	RENDERFX_MAX
+};
+
+//not too sure if these are correct
+enum TraceContents
+{
+	CONTENTS_EMPTY	=		(1 << 0),		/**< No contents. */
+	CONTENTS_SOLID	=		(1 << 1),	/**< an eye is never valid in a solid . */
+	CONTENTS_WINDOW	=		(1 << 2),		/**< translucent, but not watery (glass). */
+	CONTENTS_AUX	=		(1 << 3),
+	CONTENTS_GRATE	=		(1 << 4),	/**< alpha-tested "grate" textures.  Bullets/sight pass through, but solids don't. */
+	CONTENTS_SLIME	=		(1 << 5),
+	CONTENTS_WATER	=		(1 << 6),
+	CONTENTS_MIST	=		(1 << 7),
+	CONTENTS_OPAQUE	=		(1 << 8),		/**< things that cannot be seen through (may be non-solid though). */
+	CONTENTS_TESTFOGVOLUME = (1 << 9),
+	CONTENTS_UNUSED1	=	(1 << 10),
+	CONTENTS_UNUSED2	=	(1 << 11),
+	CONTENTS_TEAM1		=	(1 << 12),	/**< per team contents used to differentiate collisions. */
+	CONTENTS_TEAM2		=	(1 << 13),		/**< between players and objects on different teams. */
+	CONTENTS_IGNORE_NODRAW_OPAQUE = (1 << 14),		/**< ignore CONTENTS_OPAQUE on surfaces that have SURF_NODRAW. */
+	CONTENTS_MOVEABLE	=	(1 << 15),		/**< hits entities which are MOVETYPE_PUSH (doors, plats, etc) */
+	CONTENTS_AREAPORTAL	=	(1 << 16),	/**< remaining contents are non-visible, and don't eat brushes. */
+	CONTENTS_PLAYERCLIP	=	(1 << 17),
+	CONTENTS_MONSTERCLIP =	(1 << 18),
+	CONTENTS_CURRENT_0	=	(1 << 19),
+	CONTENTS_CURRENT_90	=	(1 << 20),
+	CONTENTS_CURRENT_180 =	(1 << 21),
+	CONTENTS_CURRENT_270 =	(1 << 22),
+	CONTENTS_CURRENT_UP	 =	(1 << 23),
+	CONTENTS_CURRENT_DOWN =	(1 << 24),
+	CONTENTS_ORIGIN		=	(1 << 25),	/**< removed before bsp-ing an entity. */
+	CONTENTS_MONSTER	=	(1 << 26),	/**< should never be on a brush, only in game. */
+	CONTENTS_DEBRIS		=	(1 << 27),
+	CONTENTS_DETAIL		=	(1 << 28),	/**< brushes to be added after vis leafs. */
+	CONTENTS_TRANSLUCENT =	(1 << 29),	/**< auto set if any surface has trans. */
+	CONTENTS_LADDER		=	(1 << 30),
+	CONTENTS_HITBOX		=	(1 << 31), /**< use accurate hitboxes on trace. */
+};
 
 struct thinkfunc_t
 {
@@ -37,7 +247,7 @@ struct CBaseEntity_data
 {
 	char unknown0[24]; // 0
 	CServerNetworkProperty m_Network; // 24
-	char unknown104[8]; // 104
+	char unknown104[20]; // 104
 	char * m_iClassname; // 112
 	char * m_iGlobalname; // 116
 	char * m_iParent; // 120
@@ -53,7 +263,6 @@ struct CBaseEntity_data
 	char *m_iszResponseContext; // 192
 	int m_nNextThinkTick; // 196
 	int m_fEffects; // 200
-	
 	void * m_pfnTouch; // 204 
 	void * m_pfnUse; // 208
 	void * m_pfnBlocked; // 212
@@ -81,8 +290,36 @@ struct CBaseEntity_data
 	int m_iEFlags; // 316
 	int m_fFlags; // 320
 	char *m_iName; // 324
-	char unknown328[260]; // 328
-	float m_flGroundChangeTime; // 588
+	char unknown344[40]; // 340 lux offsets are all shifted
+	char *m_pParent; // 384 lux
+	unsigned char m_nTransmitStateOwnedCounter; // 388 lux
+	unsigned char m_iParentAttachment; // 389 lux
+	unsigned char m_MoveType; // 390 lux
+	unsigned char m_MoveCollide; //391 lux
+	int m_hMoveParent; //392 lux
+	int m_hMoveChild; //396 lux
+	int m_hMovePeer; //400 lux
+	CCollisionProperty m_Collision; //404
+	CGlowProperty m_Glow; //496
+	char unknown514[24]; //514
+	char *m_hOwnerEntity; //544
+	char *m_hEffectEntity; //548
+	float m_fadeMinDist; //552
+	float m_fadeMaxDist; //556
+	float m_flFadeScale; //560
+	int m_CollisionGroup; //564
+	char *m_pPhysicsObject; //568
+	char padding572[4]; //572
+	float m_flShadowCastDistance; //576
+	float m_flDesiredShadowCastDistance; //580
+	int m_iInitialTeamNum; //584
+	int m_iTeamNum; //588
+	char padding592[2]; //592
+	unsigned char m_nWaterType; //594
+	unsigned char m_nWaterLevel; //595
+	float m_flNavIgnoreUntilTime; //596
+	char *m_hGroundEntity; //600
+	float m_flGroundChangeTime; // 604 lux updated offset preceeding
 	char * m_ModelName; // 592
 	char * m_AIAddOn; // 596
 	float m_vecBaseVelocity[3]; // 600
@@ -123,7 +360,8 @@ struct CBaseEntity_data
 	int m_cellZ; // 904
 	float m_vecOrigin[3]; // 908
 	float m_angRotation[3]; // 920
-	char unknown932[136]; // 932
+	float m_vecViewOffset[3]; //952 lux
+	char unknown932[102]; // 964
 }; // 1068
 
 struct CBaseAnimatingOverlay;
@@ -160,8 +398,47 @@ struct CBaseAnimatingOverlay_data
 
 struct CBaseAnimating_data
 {
-	char unknown[4024]; // 1072
-	// 1160 m_nSequence
+	/*everything seems to be out of alignment by 4bytes otherwise either i'm stupid or something is going on, 
+	i think it's the former*/
+	char wtf_hack[4]; //FIX ME PLS
+	char unknown_1072[20];
+	float m_flGroundSpeed; //1088
+	float m_flLastEventCheck; //1092
+	int m_nForceBone; //1096
+	float m_vecForce[3]; //1100
+	int m_nSkin; //1112
+	int m_nBody; //1116
+	int m_nHitboxSet; //1120
+	float m_flModelScale;  //1124
+	float m_flPlaybackRate; //1128
+	char unknown_1[20]; //1132
+	int *m_pIk; //1152
+	int m_iIKCounter; //1156
+	unsigned char m_bSequenceFinished; //1160
+	unsigned char m_bSequenceLoops; //1161
+	char padding2[2]; //1162
+	int m_flDissolveStartTime; //1164
+	int m_flCycle; //1168
+	int m_nSequence; //1172
+	float m_flPoseParameter[24]; //1176
+	float m_flEncodedController[4]; //1272
+	unsigned char m_bClientSideAnimation; //1288
+	unsigned char m_bClientSideFrameReset; //1289
+	char padding[2]; //1290
+	int m_nNewSequenceParity; //1292
+	int m_nResetEventsParity; //1296
+	int m_nMuzzleFlashParity; //1300
+	int m_hLightingOrigin; //EHANDLE
+	int m_iszLightingOrigin;
+	char unknown_2[4]; //1312
+	char m_fBoneCacheFlags[2]; //1316
+	char padding1318[2];
+	float m_flFrozen; //1320
+	char unknown_3[12];
+	float m_flFrozenThawRate; //1332
+	float m_flFrozenMax; //1336
+	int m_OnIgnite; //1340
+	char unknown_4[3746]; 
 };
 
 struct CSceneEventInfo 
@@ -295,7 +572,9 @@ struct CBaseMultiplayerPlayer_data
 struct CCSPlayer_data
 {
 	void * m_pHintMessageQueue; // 9120 CHintMessageQueue
-	char unknown[1708]; // 9124
+	char unknown[1420];
+	CTerrorPlayerAnimState m_TerrorPlayerAnimState;
+	char unknown_1[4];
 	CountdownTimer UnknownTimer; // 10832
 	
 	// TODO: MOVE ME TO WHERE I BELONG
@@ -305,6 +584,65 @@ struct CCSPlayer_data
 	char unknownWINBYTES[16];
 	#endif
 };
+
+//no idea the struct seems bigger 300+ into the object
+struct CTerrorPlayerAnimState
+{
+	CTerrorPlayerAnimState_vtable *vptr;
+	
+	char unknown[24];
+	CTerrorPlayer *Player;
+	char unknown_0[220];
+	char unknown_1[24];
+	int m_nSpecificMainSequence;
+	CTerrorPlayer *Client;
+};
+
+struct CMultiPlayerAnimState
+{
+	CTerrorPlayerAnimState;
+};
+
+struct CTerrorPlayerAnimState_vtable
+{
+	void * ClearAnimationState;
+	void * DoAnimationEvent;
+	void * CalcMainActivity;
+	void * Update;
+	void * Release;
+	void * ResetMainActivity;
+	void * TranslateActivity;
+	void * UnTranslateActivity;
+	void * ShowDebugInfo;
+	void * DebugShowAnimState;
+	void * OnGestureStart;
+	void * OnGestureStop;
+	void * Init;
+	void * SelectWeightedSequence;
+	void * RestartMainSequence;
+	void * GetGestureSequence;
+	void * HandleJumping;
+	void * HandleDucking;
+	void * HandleMoving;
+	void * HandleSwimming;
+	void * HandleDying;
+	void * PlayFlinchGesture;
+	void * CalcMovementPlaybackRate;
+	void * ComputePoseParam_MoveYaw;
+	void * ComputePoseParam_AimPitch;
+	void * ComputePoseParam_AimYaw;
+	void * EstimateYaw;
+	void * GetCurrentMaxGroundSpeed;
+	void * ComputeSequences;
+	void * ComputeMainSequence;
+	void * GetAccumulatedMotion;
+	void * ClearAccumulatedMotion;
+	void * GetEyeYaw;
+	void * GetFeetYaw;
+	void * FireEvent;
+};
+
+
 // size 92
 struct CTakeDamageInfo
 {
@@ -706,7 +1044,7 @@ struct CTerrorPlayer_data
 	// padding[1];
 	int m_nVariantType;
 	float m_TimeForceExternalView; 
-	char unknown5580[8]; 
+	char unknown5580[12]; 
 }; 
 
 struct CBaseEntity

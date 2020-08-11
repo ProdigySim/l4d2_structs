@@ -13,5 +13,8 @@
 #include "gamerules.h"
 #include "weapon_info.h"
 #include "abilities.h"
+#include "Activity_enum.h"
+#include "baseclient.h"
+#include "terror_bots.h"
 
 #endif

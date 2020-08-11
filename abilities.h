@@ -6,7 +6,7 @@
 struct CBaseAbility_iface
 {
 	void * OnOwnerLeaveActiveState;
-	void * OnOwnerLeaveActiveState; // OnOwnerLeaveActiveState(void)
+	void * OnOwnerLeaveActiveState2; // OnOwnerLeaveActiveState(void)
 	void * OnOwnerChanged; // OnOwnerChanged(CTerrorPlayer *)
 	void * IsAbilityReadyToFire; // IsAbilityReadyToFire(void)const
 	void * ActivateAbility; // ActivateAbility(void)
@@ -34,7 +34,7 @@ struct CBaseAbility_iface
 	void * HandleCustomCollision; // HandleCustomCollision(CBaseEntity *,Vector  const&,Vector  const&,CGameTrace *,CMoveData *)
 	void * OnDestroy; // OnDestroy(void)
 	void * AbilityDebug; // AbilityDebug(char  const*,...)
-	void * AbilityDebug; // AbilityDebug(CTerrorPlayer *,char  const*,...)
+	void * AbilityDebug2; // AbilityDebug(CTerrorPlayer *,char  const*,...)
 };
 
 struct CBaseAbility_vtable {

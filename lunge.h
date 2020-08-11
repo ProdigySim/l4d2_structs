@@ -56,7 +56,7 @@ struct CBaseAbility_iface
 	void (* HandleCustomCollision)(CBaseAbility *, CBaseEntity *,float[3],float[3],void *,void *);
 	void (* OnDestroy)(CBaseAbility *);
 	void (* AbilityDebug)(CBaseAbility *, char const*,...);
-	void (* AbilityDebug)(CBaseAbility *, CTerrorPlayer *,char const*,...);
+	void (* AbilityDebug2)(CBaseAbility *, CTerrorPlayer *,char const*,...);
 };
 
 struct CBaseAbility

@@ -12,5 +12,6 @@
 #include "lunge.h"
 #include "gamerules.h"
 #include "abilities.h"
+#include "activity_enum.h"
 
 #endif
