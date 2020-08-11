@@ -4,10 +4,15 @@
 
 struct IMemAlloc_iface
 {
+	//not sure why there is 2 of each in parent fork I thought was CTRL+D mistake
 	void * Alloc;
 	void * Realloc;
 	void * Free;
 	void * Expand_NoLongerSupported;
+	void * Alloc2;
+	void * Realloc2;
+	void * Free2;
+	void * Expand_NoLongerSupported2;
 	void * GetSize;
 	void * PushAllocDbgInfo;
 	void * PopAllocDbgInfo;
