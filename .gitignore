@@ -1,9 +1,8 @@
-
-.vs/L4D2_Structs/v15/.suo
-.vs/L4D2_Structs/v15/Browse.VC.db
-.vs/L4D2_Structs/v15/ipch/AutoPCH/c364110161f5add1/L4D2_LINUX.ipch
-.vs/L4D2_Structs/v15/ipch/AutoPCH/c73d49a150ef9bf0/L4D2_WINDOWS.ipch
 L4D2_Structs.sln
 L4D2_Structs.vcxproj
 L4D2_Structs.vcxproj.filters
 L4D2_Structs.vcxproj.user
+*.db
+*.opendb
+.vs/L4D2_Structs/v15/.suo
+*.ipch

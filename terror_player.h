@@ -12,6 +12,8 @@ struct CBaseEntity;
 #include "collision_property.h"
 #include "glow_property.h"
 
+// these enums could do with being in their own files
+
 enum Entity_Flags
 {
 	EFL_KILLME = (1 << 0),	// This entity is marked for death -- This allows the game to actually delete ents at a safe time
@@ -1036,7 +1038,8 @@ struct CTerrorPlayer_data
 	float m_flSurvivalRecordTime; 
 	int m_nSurvivalTopMedal; 
 	int m_iSpecialSlot; 
-	bool m_bBeingRevivedByDefibrillator; 
+	bool m_bBeingRevivedByDefibrillator;
+	char unknown_padding[4]; //unable to find anything assumed padding?
 	float m_flTimeIgnoreFallDamage; 
 	bool m_bIgnoreFallDamageResetAfterImpact; 
 	bool m_bEnableLedgeHang;
@@ -1044,7 +1047,7 @@ struct CTerrorPlayer_data
 	// padding[1];
 	int m_nVariantType;
 	float m_TimeForceExternalView; 
-	char unknown5580[12]; 
+	char unknown5580[8]; 
 }; 
 
 struct CBaseEntity
