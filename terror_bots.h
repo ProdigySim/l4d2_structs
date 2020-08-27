@@ -3,6 +3,24 @@
 
 #include "terror_player.h"
 
+struct SurvivorBot_data
+{
+	CBaseEntity_data CBaseEntity; // 4
+	CBaseAnimating_data CBaseAnimating; // 1072
+	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
+	CBaseFlex_data CBaseFlex; // 5116
+	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
+	CBasePlayer_data CBasePlayer; // 6736
+	CAI_ExpresserHost_data CAI_ExpresserHost; // 9080
+	CBaseMultiplayerPlayer_data CBaseMultiplayerPlayer; // 9084
+	CCSPlayer_data CCSPlayer; // 9120
+	CTerrorPlayer_data CTerrorPlayer; // 10844
+
+	char unknown0[744];
+	int m_humanSpectatorUserID;
+	int m_humanSpectatorEntIndex;
+};
+
 struct SurvivorBot
 {
 	SurvivorBot_vtable * vptr;
@@ -25,24 +43,6 @@ struct SurvivorBot_vtable
 	CBaseMultiplayerPlayer_iface CBaseMultiplayerPlayer; // 1964
 	CCSPlayer_iface CCSPlayer; // 2000
 	CTerrorPlayer_iface CTerrorPlayer; // 2224
-};
-
-struct SurvivorBot_data
-{
-	CBaseEntity_data CBaseEntity; // 4
-	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
-	CBaseFlex_data CBaseFlex; // 5116
-	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
-	CBasePlayer_data CBasePlayer; // 6736
-	CAI_ExpresserHost_data CAI_ExpresserHost; // 9080
-	CBaseMultiplayerPlayer_data CBaseMultiplayerPlayer; // 9084
-	CCSPlayer_data CCSPlayer; // 9120
-	CTerrorPlayer_data CTerrorPlayer; // 10844
-
-	char unknown0[744];
-	int m_humanSpectatorUserID;
-	int m_humanSpectatorEntIndex;
 };
 
 

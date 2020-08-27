@@ -14,50 +14,6 @@ Inheritance Tree:
          IGameSystem
 		 */
 
-struct CTerrorGameRules
-{
-	CTerrorGameRules_vtable * vptr;
-	char BaseClassStuff[884]; // 4 ignoring a bunch of stuff
-	int m_iSurvivorScore[2]; // 888
-	int m_iCampaignScore[2]; // 896
-	int m_iChapterScore[2]; // 904
-	int m_iChapterDamage[2]; // 912
-	int m_iScavengeTeamScore[10]; // 920 - 2 teams x 5 rounds
-	int m_iScavengeMatchScore[2]; // 960
-	float m_flTeamRoundTime[2]; // 968
-	int m_iVersusDistancePerSurvivor[8]; // 976
-	int m_iVersusSurvivorDeathDistance[8]; // 1008
-	bool m_bSurvivorIsAliveForFinale[4]; // 1040
-	int m_iUnknown1044; // 1044 Might be another bool array;
-	int m_iVersusSurvivalMultiplier[2]; // 1048
-	int m_iVersusDefibsUsed[2]; // 1056
-	int m_iUnknown1064; // 1064
-	bool m_bInIntro; // 1068
-	char padding[3]; // 1069 assume padding
-	float m_flRoundStartTime; // 1072
-	float m_flRoundEndTime; // 1076
-	float m_flAccumulatedTime; // 1080
-	int m_nRoundNumber; // 1084
-	int m_nRoundLimit; // 1088
-	int m_iWinningTeamNumber[5]; // 1092  up to 5 maps per campaign or rounds of scav?
-	float m_flTeamBestRoundTime; // 1112
-	float m_flRoundDuration[2]; // 1116
-	int m_nScavengeItemsRemaining; // 1124
-	int m_nScavengeItemsGoal; // 1128
-	int m_iServerRank; // 1132
-	int m_iServerPlayerCount; // 1136
-	bool m_bIsDedicatedServer; // 1140
-	// implied padding[3];
-	int m_iServerSteamGroupID; // 1144
-	bool m_bAreTeamsFlipped; // 1148
-	bool m_bInSecondHalfOfRound; // 1149
-	bool m_bIsTransitioningToNextMap; // 1150
-	bool m_bIsVersusVoteRestarting; // 1151
-	bool m_bChallengeModeActive; // 1152
-	// implied padding[3];
-	int m_iSacrificeEscapees; // 1156
-	float m_flUnknown1160; // 1160
-};
 
 struct CTerrorGameRules_vtable
 {
@@ -246,6 +202,50 @@ struct CTerrorGameRules_vtable
 	void * TrackPlayerZombieDamage;
 	void * GetPlayerZombieDamage;
 	void * ClearPlayerZombieDamage;
+};
+struct CTerrorGameRules
+{
+	CTerrorGameRules_vtable * vptr;
+	char BaseClassStuff[884]; // 4 ignoring a bunch of stuff
+	int m_iSurvivorScore[2]; // 888
+	int m_iCampaignScore[2]; // 896
+	int m_iChapterScore[2]; // 904
+	int m_iChapterDamage[2]; // 912
+	int m_iScavengeTeamScore[10]; // 920 - 2 teams x 5 rounds
+	int m_iScavengeMatchScore[2]; // 960
+	float m_flTeamRoundTime[2]; // 968
+	int m_iVersusDistancePerSurvivor[8]; // 976
+	int m_iVersusSurvivorDeathDistance[8]; // 1008
+	bool m_bSurvivorIsAliveForFinale[4]; // 1040
+	int m_iUnknown1044; // 1044 Might be another bool array;
+	int m_iVersusSurvivalMultiplier[2]; // 1048
+	int m_iVersusDefibsUsed[2]; // 1056
+	int m_iUnknown1064; // 1064
+	bool m_bInIntro; // 1068
+	char padding[3]; // 1069 assume padding
+	float m_flRoundStartTime; // 1072
+	float m_flRoundEndTime; // 1076
+	float m_flAccumulatedTime; // 1080
+	int m_nRoundNumber; // 1084
+	int m_nRoundLimit; // 1088
+	int m_iWinningTeamNumber[5]; // 1092  up to 5 maps per campaign or rounds of scav?
+	float m_flTeamBestRoundTime; // 1112
+	float m_flRoundDuration[2]; // 1116
+	int m_nScavengeItemsRemaining; // 1124
+	int m_nScavengeItemsGoal; // 1128
+	int m_iServerRank; // 1132
+	int m_iServerPlayerCount; // 1136
+	bool m_bIsDedicatedServer; // 1140
+	// implied padding[3];
+	int m_iServerSteamGroupID; // 1144
+	bool m_bAreTeamsFlipped; // 1148
+	bool m_bInSecondHalfOfRound; // 1149
+	bool m_bIsTransitioningToNextMap; // 1150
+	bool m_bIsVersusVoteRestarting; // 1151
+	bool m_bChallengeModeActive; // 1152
+	// implied padding[3];
+	int m_iSacrificeEscapees; // 1156
+	float m_flUnknown1160; // 1160
 };
 		 /*
 VTable for CTerrorGameRules: (0, 0)
