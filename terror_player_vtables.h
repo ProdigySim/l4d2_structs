@@ -27,6 +27,8 @@ struct CBaseEntity_iface
 	void * YouForgotToImplementOrDeclareServerClass; // 4
 	void * GetDataDescMap; // 8
 	void * GetScriptDesc; // 12
+	void * ScriptGetModelName; // 16
+	// ALL OFFSETS BELOW HERE ARE WRONG
 	void * GetAIAddOn; // 16
 	void * TestCollision; // 20
 	void * TestHitboxes; // 24
