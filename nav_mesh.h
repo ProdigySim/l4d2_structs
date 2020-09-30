@@ -31,7 +31,7 @@ struct CNavMesh_iface
 	void * OnAvoidanceObstacleLeftArea;
 	void * OnEditCreateNotify;
 	void * OnEditDestroyNotify;
-	void * OnEditDestroyNotify;
+	void * OnEditDestroyNotify2;
 	void * OnNodeAdded;
 	void * AddWalkableSeeds;
 	void * CommandNavFloodSelect;
@@ -73,10 +73,10 @@ struct CNavArea_iface
 	void * OnEnter;
 	void * OnExit;
 	void * OnDestroyNotify;
-	void * OnDestroyNotify;
+	void * OnDestroyNotify2;
 	void * OnEditCreateNotify;
 	void * OnEditDestroyNotify;
-	void * OnEditDestroyNotify;
+	void * OnEditDestroyNotify2;
 	void * Save;
 	void * Load;
 	void * PostLoad;
@@ -316,6 +316,7 @@ struct CNavMesh_data
 	bool unk4; // 4
 	bool unk5;
 	bool unk6;
+	/* // ERROR - SILVERSHOT
 	CUTLVECTOR(CUTLVECTOR(CNavArea*)) m_grid; // 8
 	float m_gridCellSize; // 28
 	
@@ -380,6 +381,7 @@ struct CNavMesh_data
 	NavAreaVector m_blockedAreas; // 1452
 	CUTLVECTOR(int) m_storedSelectedSet; // 1472
 	char unknown1492[28]; // 1492
+	// */
 };
 
 // starts at base + 1524

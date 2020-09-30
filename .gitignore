@@ -1,0 +1,8 @@
+L4D2_Structs.sln
+L4D2_Structs.vcxproj
+L4D2_Structs.vcxproj.filters
+L4D2_Structs.vcxproj.user
+*.db
+*.opendb
+.vs/L4D2_Structs/v15/.suo
+*.ipch

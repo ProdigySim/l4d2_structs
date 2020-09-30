@@ -152,11 +152,14 @@ struct CDirectorScavengeMode {
 	 And it's very hard for me to care about it.
 	 Names are mostly bullshit but they almost seem to make sense. Best test would be to read
 	 them during gameplay. */
+
+/* // ERROR - SILVERSHOT
 	CUTLVECTOR(CUTLVECTOR(CHandle)) m_scavengeClusterHandles; // 44
 	CUTLVECTOR(int) m_custerCounts; // 64 yaoright.jpg
 	float m_vecPourTargetOrigin[3]; // 84 point_prop_use_target's abs origin
 	int m_iCurrentCluster; // 96
 	int m_iNumClearedClusters; // 100
+// */
 };
 
 // 8 bytes

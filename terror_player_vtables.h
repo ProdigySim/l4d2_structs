@@ -622,7 +622,7 @@ struct CTerrorPlayer_iface
 	void * IsZoomed; // 84
 	void * CanPlayerJump; // 88
 	void * PlayerZombieAbortControl; // 92
-	void * CanBeShoved; // 96
+	void * CanBeShoved2; // 96
 	void * SetClass; // 100
 	void * SetCharacter; // 104
 	void * OnRevived; // 108
