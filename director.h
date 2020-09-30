@@ -288,7 +288,7 @@ struct CDirector {
 	bool m_bIsSecondRoundFinished; // This one too
 	bool m_bUnknownJunk; // probably related
 	CountdownTimer TransitionTimeoutTimer; // 0x428
-	char unknown1076[368]; // 0x434
+	char unknown1076[308]; // 0x434
 	CDirectorTacticalServices * TacticalServicesPtr; // 0x5a4
 	CDirectorItemManager * ItemManagerPtr;
 	CDirectorMusicBanks * MusicBanksPtr; 
