@@ -205,7 +205,7 @@ struct CTerrorGameRules_vtable
 };
 struct CTerrorGameRules
 {
-	void * vptr;
+	CTerrorGameRules_vtable * vptr;
 	char BaseClassStuff[912]; // ignoring a bunch of stuff
 	//int m_iSurvivorScore[2];
 	int m_iCampaignScore[2]; // 916
