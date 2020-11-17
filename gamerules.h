@@ -256,7 +256,7 @@ struct CTerrorGameRules
 	int m_iScriptedHUDTimerMode[4];
 	float m_fScriptedHUDTimerBase[4];
 	float m_fScriptedHUDTimerAdd[4];
-	float m_szScriptedHUDStringSet[15][255];//assumed 255 not checked it's actual size FIXME
+	char m_szScriptedHUDStringSet[15][255];//assumed 255 not checked it's actual size FIXME
 };
 		 /*
 VTable for CTerrorGameRules: (0, 0)
