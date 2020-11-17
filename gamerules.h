@@ -245,7 +245,18 @@ struct CTerrorGameRules
 	bool m_bChallengeModeActive;
 	// implied padding[3];
 	int m_iSacrificeEscapees;
-	float m_flUnknown1160;
+	float m_flHoldoutCooldownEndTime;
+	int m_iScriptedHUDInts[15];
+	float m_fScriptedHUDFloats[15];
+	int m_iScriptedHUDFlags[15];
+	float m_fScriptedHUDPosX[15];
+	float m_fScriptedHUDPosY[15];
+	float m_fScriptedHUDWidth[15];
+	float m_fScriptedHUDHeight[15];
+	int m_iScriptedHUDTimerMode[4];
+	float m_fScriptedHUDTimerBase[4];
+	float m_fScriptedHUDTimerAdd[4];
+	float m_szScriptedHUDStringSet[15][255];//assumed 255 not checked it's actual size FIXME
 };
 		 /*
 VTable for CTerrorGameRules: (0, 0)
