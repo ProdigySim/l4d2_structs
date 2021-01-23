@@ -21,11 +21,6 @@ struct SurvivorBot_data
 	int m_humanSpectatorEntIndex;
 };
 
-struct SurvivorBot
-{
-	SurvivorBot_vtable * vptr;
-	SurvivorBot_data SurvivorBot;
-};
 
 struct SurvivorBot_vtable
 {
@@ -45,5 +40,10 @@ struct SurvivorBot_vtable
 	CTerrorPlayer_iface CTerrorPlayer; // 2224
 };
 
+struct SurvivorBot
+{
+	SurvivorBot_vtable * vptr;
+	SurvivorBot_data SurvivorBot;
+};
 
 #endif //_INCLUDE_TERRORBOTS_H_

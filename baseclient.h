@@ -1,32 +1,7 @@
 #ifndef _INCLUDE_BASECLIENT_H_
 #define _INCLUDE_BASECLIENT_H_
 
-struct CBaseClient
-{
-	CBaseClient_vtable * vptr; //0
-	_BYTE gap4[56];
-	int field_3C;
-	_BYTE gap40[116];
-	int field_B4;
-	_BYTE gapB8[44];
-	int field_E4;
-	_BYTE gapE8[4];
-	int field_EC;
-	int field_F0;
-	_BYTE gapF4[4];
-	int field_F8;
-	_BYTE gapFC[272];
-	int field_20C;
-	char field_210;
-	_BYTE gap211[15];
-	int field_220;
-	_BYTE gap224[39996];
-	int field_9E60;
-	_BYTE gap9E64[79996];
-	int field_1D6E0;
-	_BYTE gap1D6E4[4];
-	int field_1D6E8;
-};
+
 
 struct CBaseClient_vtable
 {
@@ -100,6 +75,33 @@ struct CBaseClient_vtable
 	void * GetNumPlayers;
 	void * ProcessSignonStateMsg;
 	void * PerformDisconnection;
+};
+
+struct CBaseClient
+{
+	CBaseClient_vtable * vptr; //0
+	_BYTE gap4[56];
+	int field_3C;
+	_BYTE gap40[116];
+	int field_B4;
+	_BYTE gapB8[44];
+	int field_E4;
+	_BYTE gapE8[4];
+	int field_EC;
+	int field_F0;
+	_BYTE gapF4[4];
+	int field_F8;
+	_BYTE gapFC[272];
+	int field_20C;
+	char field_210;
+	_BYTE gap211[15];
+	int field_220;
+	_BYTE gap224[39996];
+	int field_9E60;
+	_BYTE gap9E64[79996];
+	int field_1D6E0;
+	_BYTE gap1D6E4[4];
+	int field_1D6E8;
 };
 
 #endif // _INCLUDE_BASECLIENT_H_

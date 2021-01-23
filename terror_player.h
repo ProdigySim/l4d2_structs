@@ -12,6 +12,10 @@ struct CBaseEntity;
 #include "collision_property.h"
 #include "glow_property.h"
 
+
+// Predefine so we can have circular pointer references.
+struct CTerrorPlayer;
+
 // these enums could do with being in their own files
 
 enum Entity_Flags
@@ -571,40 +575,6 @@ struct CBaseMultiplayerPlayer_data
 	void *m_pAchievementKV; // 9116 KeyValues *
 };
 
-struct CCSPlayer_data
-{
-	void * m_pHintMessageQueue; // 9120 CHintMessageQueue
-	char unknown[1420];
-	CTerrorPlayerAnimState m_TerrorPlayerAnimState;
-	char unknown_1[4];
-	CountdownTimer UnknownTimer; // 10832
-	
-	// TODO: MOVE ME TO WHERE I BELONG
-	// Anything in base classes could be wrong as well!
-	char unknownNEWBYTES[12];
-	#ifdef PLATFORM_WINDOWS
-	char unknownWINBYTES[16];
-	#endif
-};
-
-//no idea the struct seems bigger 300+ into the object
-struct CTerrorPlayerAnimState
-{
-	CTerrorPlayerAnimState_vtable *vptr;
-	
-	char unknown[24];
-	CTerrorPlayer *Player;
-	char unknown_0[220];
-	char unknown_1[24];
-	int m_nSpecificMainSequence;
-	CTerrorPlayer *Client;
-};
-
-struct CMultiPlayerAnimState
-{
-	CTerrorPlayerAnimState;
-};
-
 struct CTerrorPlayerAnimState_vtable
 {
 	void * ClearAnimationState;
@@ -643,6 +613,36 @@ struct CTerrorPlayerAnimState_vtable
 	void * GetFeetYaw;
 	void * FireEvent;
 };
+
+//no idea the struct seems bigger 300+ into the object
+struct CTerrorPlayerAnimState
+{
+	CTerrorPlayerAnimState_vtable *vptr;
+	
+	char unknown[24];
+	CTerrorPlayer *Player;
+	char unknown_0[220];
+	char unknown_1[24];
+	int m_nSpecificMainSequence;
+	CTerrorPlayer *Client;
+};
+
+struct CCSPlayer_data
+{
+	void * m_pHintMessageQueue; // 9120 CHintMessageQueue
+	char unknown[1420];
+	CTerrorPlayerAnimState m_TerrorPlayerAnimState;
+	char unknown_1[4];
+	CountdownTimer UnknownTimer; // 10832
+	
+	// TODO: MOVE ME TO WHERE I BELONG
+	// Anything in base classes could be wrong as well!
+	char unknownNEWBYTES[12];
+	#ifdef PLATFORM_WINDOWS
+	char unknownWINBYTES[16];
+	#endif
+};
+
 
 
 // size 92
