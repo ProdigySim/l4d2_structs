@@ -16,5 +16,6 @@
 #include "Activity_enum.h"
 #include "baseclient.h"
 #include "terror_bots.h"
+#include "zombie_manager.h"
 
 #endif
