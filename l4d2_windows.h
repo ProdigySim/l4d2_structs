@@ -13,5 +13,6 @@
 #include "gamerules.h"
 #include "abilities.h"
 #include "activity_enum.h"
+#include "zombie_manager.h"
 
 #endif
