@@ -436,7 +436,7 @@ struct CBaseAnimating_data
 	int m_nMuzzleFlashParity; //1300
 	int m_hLightingOrigin; //EHANDLE
 	int m_iszLightingOrigin;
-	char unknown_2[4]; //1312
+	int m_hBoneCacheHandle; //1312
 	char m_fBoneCacheFlags[2]; //1316
 	char padding1318[2];
 	float m_flFrozen; //1320
@@ -444,7 +444,7 @@ struct CBaseAnimating_data
 	float m_flFrozenThawRate; //1332
 	float m_flFrozenMax; //1336
 	int m_OnIgnite; //1340
-	char unknown_4[3746]; 
+	char unknown_4[3758]; 
 };
 
 struct CSceneEventInfo 
@@ -506,15 +506,20 @@ struct Relationship_t
 // size 644, offset 6092 in CTerrorPlayer
 struct CBaseCombatCharacter_data
 {
-	bool m_bForceServerRagdoll; // 0
+	char m_unknown0;
 	bool m_bPreventWeaponPickup; // 1
 	float m_flNextAttack; // 4 CNetworkVar( float, m_flNextAttack );
 	unsigned int m_eHull; // 8 Hull_t
-	int m_bloodColor; // 12
-	float m_flFieldOfView; // 16
-	float m_HackedGunPos[3]; // 20 Vector
-	char * m_RelationshipString; // 32 string_t
-	float m_impactEnergyScale; // 36
+	char unknown12[8];
+	bool m_bForceServerRagdoll; // 20
+	char unknown21[11];
+	int m_bloodColor; // 32 CONFIRMED 2.2.2.0
+	
+	// <!-- begin unconfirmed -->
+	float m_flFieldOfView; 
+	float m_HackedGunPos[3]; // Vector
+	char * m_RelationshipString; // string_t
+	float m_impactEnergyScale; // 
 	unsigned char m_weaponIDToIndex[38]; // 40
 	
 	char padding78[2]; // 78, padding will probably be automatic
@@ -529,36 +534,31 @@ struct CBaseCombatCharacter_data
 	int m_hLastFogTrigger; // 152 EHANDLE
 		
 	int m_iAmmo[32]; // 156 CNetworkArrayForDerived( int, m_iAmmo, MAX_AMMO_SLOTS );
-	unsigned int m_hMyWeapons[64]; // 284 CNetworkArray( CBaseCombatWeaponHandle, m_hMyWeapons, MAX_WEAPONS );
-	int m_hActiveWeapon; // 540 CNetworkHandle( CBaseCombatWeapon, m_hActiveWeapon );
+	unsigned int m_hMyWeapons[56]; // 284 CNetworkArray( CBaseCombatWeaponHandle, m_hMyWeapons, MAX_WEAPONS );
+	int m_hActiveWeapon; // CNetworkHandle( CBaseCombatWeapon, m_hActiveWeapon );
 	
-	IntervalTimer UnknownITimer544; // 544
-	int m_iUnknown552; // 552
-	int m_iUnknown556; // 556
-	IntervalTimer UnknownITimer560; // 560
-	int m_iUnknown568; // 568
-	IntervalTimer UnknownITimer572; // 572
-	int m_iUnknown580; // 580
-	IntervalTimer UnknownITimer584; // 584
-	int m_iUnknown592; // 592
-	IntervalTimer UnknownITimer596; // 596
+	IntervalTimer UnknownITimer544; // 
+	int m_iUnknown552; //
+	int m_iUnknown556; // 
+	IntervalTimer UnknownITimer560; // 
+	int m_iUnknown568; // 
+	IntervalTimer UnknownITimer572; // 
+	int m_iUnknown580; // 
+	IntervalTimer UnknownITimer584; // 
+	int m_iUnknown592; // 
+	IntervalTimer UnknownITimer596; // 
 	
-	void *m_lastNavArea; // 604 CNavArea *
-	CAI_MoveMonitor m_NavAreaUpdateMonitor; // 608
-	int m_registeredNavTeam; // 624
-	CountdownTimer UnknownCTimer628; // 628
-	int m_iLastUnknown; // 640 set to -1 in constructor
+	void *m_lastNavArea; //  CNavArea *
+	CAI_MoveMonitor m_NavAreaUpdateMonitor; // 
+	int m_registeredNavTeam; //
+	CountdownTimer UnknownCTimer628; // 
+	int m_iLastUnknown; // 628 set to -1 in constructor
+	// <!-- end unconfirmed -->
 };
 
 struct CBasePlayer_data
 {
 	char unknown[2344]; // 6736
-};
-
-
-struct CAI_ExpresserHost_data
-{
-	CAI_ExpresserSink_vtable * vptr; // 9080
 };
 
 // From game/server/basemultiplayerplayer.h
@@ -635,9 +635,6 @@ struct CCSPlayer_data
 	char unknown_1[4];
 	CountdownTimer UnknownTimer; // 10832
 	
-	// TODO: MOVE ME TO WHERE I BELONG
-	// Anything in base classes could be wrong as well!
-	char unknownNEWBYTES[12];
 	#ifdef PLATFORM_WINDOWS
 	char unknownWINBYTES[16];
 	#endif
@@ -1061,7 +1058,6 @@ struct CBaseFlex
 	CBaseFlex_vtable * vptr; // 0
 	CBaseEntity_data CBaseEntity; // 4
 	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
 	CBaseFlex_data CBaseFlex; // 5116
 };
 
@@ -1070,7 +1066,6 @@ struct CBaseCombatCharacter
 	CBaseCombatCharacter_vtable * vptr; // 0
 	CBaseEntity_data CBaseEntity; // 4
 	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
 	CBaseFlex_data CBaseFlex; // 5116
 	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
 };
@@ -1079,13 +1074,12 @@ struct CTerrorPlayer
 {
 	CTerrorPlayer_vtable * vptr; // 0
 	CBaseEntity_data CBaseEntity; // 4
-	CBaseAnimating_data CBaseAnimating; // 1072
-	CBaseAnimatingOverlay_data CBaseAnimatingOverlay; // 5096
-	CBaseFlex_data CBaseFlex; // 5116
-	CBaseCombatCharacter_data CBaseCombatCharacter; // 6092
-	CBasePlayer_data CBasePlayer; // 6736
-	CAI_ExpresserHost_data CAI_ExpresserHost; // 9080
-	CBaseMultiplayerPlayer_data CBaseMultiplayerPlayer; // 9084
+	CBaseAnimating_data CBaseAnimating;
+	CBaseFlex_data CBaseFlex;
+	CBaseCombatCharacter_data CBaseCombatCharacter;
+	CBasePlayer_data CBasePlayer;
+	CAI_ExpresserSink_vtable * expressorsinkVtable; // 9060
+	CBaseMultiplayerPlayer_data CBaseMultiplayerPlayer;
 	CCSPlayer_data CCSPlayer; // 9120
 	CTerrorPlayer_data CTerrorPlayer; // 10844
 };
