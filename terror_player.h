@@ -561,6 +561,10 @@ struct CBasePlayer_data
 	char unknown[2344]; // 6736
 };
 
+struct CAI_ExpresserHost_data {
+	char unknown[12];
+};
+
 // From game/server/basemultiplayerplayer.h
 struct CBaseMultiplayerPlayer_data
 {
@@ -1078,7 +1082,7 @@ struct CTerrorPlayer
 	CBaseFlex_data CBaseFlex;
 	CBaseCombatCharacter_data CBaseCombatCharacter;
 	CBasePlayer_data CBasePlayer;
-	CAI_ExpresserSink_vtable * expressorsinkVtable; // 9060
+	CAI_ExpresserHost_data * CAI_ExpressorHost; // 9060
 	CBaseMultiplayerPlayer_data CBaseMultiplayerPlayer;
 	CCSPlayer_data CCSPlayer; // 9120
 	CTerrorPlayer_data CTerrorPlayer; // 10844
