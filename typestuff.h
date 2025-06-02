@@ -3,6 +3,16 @@
 
 #define bool unsigned char
 
+// Define these types for Ghidra so you don't have to add them as -D flags
+
+#ifndef _DWORD
+#define _DWORD unsigned int
+#endif
+
+#ifndef _BYTE
+#define _BYTE unsigned char
+#endif
+
 enum ZombieClassType
 {
 	ZC_NONE,
